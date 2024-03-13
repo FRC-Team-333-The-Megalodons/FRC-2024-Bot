@@ -1,0 +1,24 @@
+{
+  "robotWidth": 0.8,
+  "robotLength": 0.8,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Amp Side",
+    "Leave",
+    "Under Stage",
+    "Source Side"
+  ],
+  "autoFolders": [
+    "2pc - Center Line",
+    "2pc - Spike Mark",
+    "3pc - Center Line",
+    "3pc - Spike Mark",
+    "4pc - Center Line",
+    "4pc - Spike Mark"
+  ],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "maxModuleSpeed": 5.0
+}
