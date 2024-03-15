@@ -23,11 +23,11 @@ public final class Constants {
 
   public static final class WristConstants {
     public static final int MOTOR_ID = 4;
-    public static final double ZERO_OFFSET = 0.67;
-    public static final double INTAKE_SETPOINT_POS = 0.162235856056213;
-    public static final double SHOOTING_SETPOINT_POS = 0.364192873239517;
-    public static final double AMP_SETPOINT_POS = 0.488;
-    public static final double kP = 0.5;
+    public static final double ZERO_OFFSET = 0.0;
+    public static final double INTAKE_SETPOINT_POS = 0.328485667705536;
+    public static final double SHOOTING_SETPOINT_POS = 0.15;
+    public static final double AMP_SETPOINT_POS = 0.581158638000488;
+    public static final double kP = 4.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
@@ -44,8 +44,8 @@ public final class Constants {
     public static final int TROLLEY_OUT_LIMIT_SWITCH_ID = 7; // digital sensor port
     public static final int TROLLEY_IN_LIMIT_SWITCH_ID = 2; // digital sensor port
     public static final int TROLLEY_POTENTIOMETER_ID = 0; // analog sensor port
-    public static final double TROLLEY_FORWARD_SPEED = -0.5;
-    public static final double TROLLEY_REVERSE_SPEED = 0.5;
+    public static final double TROLLEY_FORWARD_SPEED = -1.0;
+    public static final double TROLLEY_REVERSE_SPEED = 1.0;
     public static final double HOME_SETPOINT_POS = 0.0;
     public static final double INTAKE_SETPOINT_POS = 107.47097778320312;
     public static final double AMP_SETPOINT_POS = 69;
@@ -70,21 +70,21 @@ public final class Constants {
     public static final int PIVOT_ENCODER_ID = 9; 
     public static final double PIVOT_SPEED = 0.2;
     public static final double ZERO_OFFSET = 0.0;
-    public static final double HOME_SETPOINT_POS = 0.558592213964805;
-    public static final double INTAKE_SETPOINT_POS = 0.620574640514366;
-    public static final double SUBWOFFER_SETPOINT_POS = 0.700878617521965;
+    public static final double HOME_SETPOINT_POS = 0.214587305364683;
+    public static final double INTAKE_SETPOINT_POS = 0.149223078730577;
+    public static final double SUBWOFFER_SETPOINT_POS = 0.105357302633933;
     public static final double PODIUM_SETPOINT_POS = 0.0;
     public static final double WING_SETPOINT_POS = 0.0;
-    public static final double AMP_SETPOINT_POS = 0.375752884393822;
-    public static final double kP = 0.5;
+    public static final double AMP_SETPOINT_POS = 0.431371160784279;
+    public static final double kP = 4.1;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
-    public static final double PIVOT_MIN_DOWN = 0.245; // This is the lowest point the intake can be down
-    public static final double PIVOT_MAX_UP = 0.70; // This is also the Amp scoring position.
-    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.592305139807628;
+    public static final double PIVOT_MIN_DOWN = 0.1; // This is the lowest point the intake can be down
+    public static final double PIVOT_MAX_UP = 0.45; // This is also the Amp scoring position.
+    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.149223078730577;
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.44;
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_UNDERBELLY = 0.48;
   }

@@ -32,7 +32,7 @@ public class Wrist extends SubsystemBase {
     wristMotor.restoreFactoryDefaults();
 
     wristEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
-    wristEncoder.setInverted(true);
+    wristEncoder.setInverted(false);
 
     wristController = wristMotor.getPIDController();
     wristController.setFeedbackDevice(wristEncoder);

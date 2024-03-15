@@ -124,6 +124,10 @@ public class RobotContainer {
       operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM)));
       // operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM));
       // operatorController.square().whileTrue(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM));)
+
+      operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist));
+      operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
+      operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     } else {
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 

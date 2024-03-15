@@ -114,7 +114,7 @@ public class Pivot extends SubsystemBase {
   public boolean isOkToMovePivotDown() {
     if (trolleyRef.isTrolleyOut()) {
       // If the Trolley is out, then we can only move down if we're above the "trolley can move safely" setpoint.
-      return getPosition() < PivotConstants.PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE;
+      return getPosition() > PivotConstants.PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE;
     }
     return true;
   }
@@ -137,7 +137,7 @@ public class Pivot extends SubsystemBase {
 
   public void setPosition(double setpoint) {
     double speed = pivotController.calculate(getPosition(), setpoint);
-    runPivot(speed);
+    runPivot(-speed);
   }
 
   public void trackTarget() {

@@ -71,13 +71,13 @@ public class Trolley extends SubsystemBase {
   }
 
   public void runTrolley(double speed) {
-    // Negative number means moving trolley in; positive number means moving trolley out.
-    if (speed > 0) {
+    // Negative number means moving trolley out; positive number means moving trolley in.
+    if (speed < 0) {
       if (isTrolleyAtMaxOutLimitSwitch()) {
         stopTrolley();
         return;
       }
-    } else if (speed < 0) {
+    } else if (speed > 0) {
       if (isTrolleyAtMinInLimitSwitch()) {
         stopTrolley();
         return;
@@ -160,6 +160,7 @@ public class Trolley extends SubsystemBase {
     SmartDashboard.putBoolean("TrolleyMaxOutLimit", isTrolleyAtMaxOutLimitSwitch());
     SmartDashboard.putBoolean("TrolleyMinInLimit", isTrolleyAtMinInLimitSwitch());
     SmartDashboard.putNumber("TrolleyEncoder" , trolleyMotor.getEncoder().getPosition());
-    SmartDashboard.putBoolean("TrolleyAtSetpoint", atSetpoint(getPotentiometerPosition()));
+    SmartDashboard.putBoolean("Trolley In?", isTrolleyIn());
+    SmartDashboard.putBoolean("Trolley Out?", isTrolleyOut());
   }
 }
