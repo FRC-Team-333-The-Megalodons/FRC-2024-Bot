@@ -59,6 +59,7 @@ public class RobotContainer {
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final SwerveRequest.FieldCentricFacingAngle angle = new FieldCentricFacingAngle();
+  private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
   /* Path Follower */
@@ -72,7 +73,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
 
-  private final boolean manualMode = true;
+  private final boolean manualMode = false;
 
   private void configureBindings() {
     // Drivetrain
@@ -91,7 +92,8 @@ public class RobotContainer {
     driverController.L1().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
     // TODO: test snap-to functionality
-    // driverController.povUp().onTrue(drivetrain.applyRequest(() -> angle));
+    driverController.povUp().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
+    driverController.povDown().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
@@ -129,16 +131,21 @@ public class RobotContainer {
       operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     } else {
+
+      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.setBlinkLED(255,0,255), leds));
+
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 
       operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
+      
       operatorController.L1().whileTrue(new RunIntake(intake, -IntakeConstatnts.INTAKE_SPEED)); // eject
+      operatorController.R2().whileTrue(new RunIntake(intake, IntakeConstatnts.INTAKE_SPEED)); // intake
 
       operatorController.povUp().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)); // trolley out
       operatorController.povDown().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)); // trolley in
 
-      operatorController.triangle().whileTrue(new ShootingPosition(PivotConstants.SUBWOFFER_SETPOINT_POS));
-      operatorController.square().whileTrue(new ShootingPosition(PivotConstants.PODIUM_SETPOINT_POS));
+      operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS));
+      operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS));
       
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     }

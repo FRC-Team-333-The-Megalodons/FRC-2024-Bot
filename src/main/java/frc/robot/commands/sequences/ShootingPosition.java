@@ -21,18 +21,11 @@ import frc.robot.subsystems.Wrist;
 
 public class ShootingPosition extends ParallelCommandGroup {
 
-  private Intake intake;
-  private Wrist wrist;
-  private Trolley trolley;
-  private Pivot pivot;
-  private Indexer indexer;
-  private Shooter shooter;
-
   /** Creates a new ShootingPosition. */
-  public ShootingPosition(double position) {
+  public ShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, double position) {
     addCommands(
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
-      new AutoPivot(pivot, position).withTimeout(0.5),
+      new AutoPivot(pivot, position).withTimeout(1.0),
       new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM))
     );
   }
