@@ -10,101 +10,171 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LEDStrip extends SubsystemBase {
   private AddressableLED rightLED, leftLED;
   private AddressableLEDBuffer rightLEDBuffer, leftLEDBuffer;
+
+  private AddressableLEDBuffer offBuffer, redBuffer, orangeBuffer, yellowBuffer, greenBuffer, blueBuffer, violetBuffer;
+
+  private LEDColor lastColor;
+
+  public enum LEDColor
+  {
+    OFF, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET;
+  }
+
   /** Creates a new LEDS. */
   public LEDStrip() {
+    initializeBuffers();
+
     // leftLED = new AddressableLED(1); // left LEDs
     rightLED = new AddressableLED(0); // right LEDs
     leftLEDBuffer = new  AddressableLEDBuffer(100);
     rightLEDBuffer = new  AddressableLEDBuffer(100);
+
     // leftLED.setLength(leftLEDBuffer.getLength());
     // leftLED.setData(leftLEDBuffer);
     // leftLED.start();
     rightLED.setLength(rightLEDBuffer.getLength());
     rightLED.setData(rightLEDBuffer);
     rightLED.start();
+
+    
+    setColor(LEDColor.OFF);
   }
 
-  public void noLED() {
-    for (var i=0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 0, 0, 0);
-      rightLEDBuffer.setRGB(i, 0, 0, 0);
-    } 
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
-  }
-
-  public void setBlinkLED(int r, int g, int b) {
-    int length = rightLEDBuffer.getLength();
-
-    for (int i = 0; i<length; i++) {
-      // leftLEDBuffer.setRGB(i, r, g, b);
-      rightLEDBuffer.setRGB(i, r, g, b);
-    }
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
-
-    try {
-      Thread.sleep(200);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    for (int i = 0; i<length; i++) {
-      // leftLEDBuffer.setRGB(i , 0, 0, 0);
-      rightLEDBuffer.setRGB(i , 0, 0, 0);
-    }
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
-
-    try {
-      Thread.sleep(200);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+  private AddressableLEDBuffer getBufferByColorEnum(LEDColor color)
+  {
+    switch (color) {
+      case OFF: return offBuffer;
+      case RED: return redBuffer;
+      case ORANGE: return orangeBuffer;
+      case YELLOW: return yellowBuffer;
+      case GREEN: return greenBuffer;
+      case BLUE: return blueBuffer;
+      case VIOLET: return violetBuffer;
+      default: return offBuffer;
     }
   }
 
-  public void royalBlueLED() {
-    for (var i = 0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 0, 59, 174);
-      rightLEDBuffer.setRGB(i, 0, 59, 174);
+  private void initializeBuffers()
+  {
+    final int LED_COUNT = 100; 
+    offBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< offBuffer.getLength(); i++) {
+      offBuffer.setRGB(i, 0, 0, 0);
     } 
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
+
+    redBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< redBuffer.getLength(); i++) {
+      redBuffer.setRGB(i, 250, 0, 0);
+    }
+
+    orangeBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< orangeBuffer.getLength(); i++) {
+      orangeBuffer.setRGB(i, 255, 43, 0);
+    }
+      
+    yellowBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< yellowBuffer.getLength(); i++) {
+      yellowBuffer.setRGB(i, 230, 223, 0);
+    }
+
+    greenBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< greenBuffer.getLength(); i++) {
+      greenBuffer.setRGB(i, 0, 250, 0);
+    }
+
+    blueBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< blueBuffer.getLength(); i++) {
+      blueBuffer.setRGB(i, 0, 59, 174);
+    }
+
+    violetBuffer = new AddressableLEDBuffer(LED_COUNT);
+    for (int i=0; i< violetBuffer.getLength(); i++) {
+      violetBuffer.setRGB(i, 255, 0, 255);
+    }
+
+
   }
 
-  public void orangeLED() {
-    for (var i = 0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 255, 43, 0);
-      rightLEDBuffer.setRGB(i, 255, 43, 0);
-    }  
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
+  public void setBlinkColor(LEDColor color) {
+    final long interval = 250;
+    long millis = System.currentTimeMillis() % 1000;
+
+    // If we're between [250,500) ms, or [750,1000)ms, then make the color "off":
+    if ((millis >= 1*interval && millis < 2*interval) || (millis >= 3*interval && millis < 4*interval)) 
+    {
+      setColor(LEDColor.OFF);
+    }
+    else
+    {
+      setColor(color);
+    }
   }
 
-  public void yellowLED() {
-    for (var i = 0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 230, 223, 0);
-      rightLEDBuffer.setRGB(i, 230, 223, 0);
-    }  
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
+  public void setColor(LEDColor color)
+  {
+    // We cache the last color we set, so that we don't have
+    //  to overwrite it except for when we actually are changing the colors.
+    if (color == lastColor) {
+      return;
+    }
+
+    // If we've made it this far, it means we're actually changing the colors!
+    lastColor = color;
+    AddressableLEDBuffer buff = getBufferByColorEnum(color);
+    // leftLED.setData(buff);
+    rightLED.setData(buff);
   }
 
-  public void greenLED() {
-    for (var i = 0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 0, 250, 0);
-      rightLEDBuffer.setRGB(i, 0, 250, 0);
-    } 
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
+  public void off() {
+    setColor(LEDColor.OFF);
   }
 
-  public void redLED() {
-    for (var i = 0; i< rightLEDBuffer.getLength(); i++) {
-      // leftLEDBuffer.setRGB(i, 250, 0, 0);
-      rightLEDBuffer.setRGB(i, 250, 0, 0);
-    } 
-    // leftLED.setData(leftLEDBuffer);
-    rightLED.setData(rightLEDBuffer);
+  public void red() {
+    setColor(LEDColor.RED);
   }
+
+  public void blinkRed() {
+    setBlinkColor(LEDColor.RED);
+  }
+
+  public void orange() {
+    setColor(LEDColor.ORANGE);
+  }
+
+  public void blinkOrange() {
+    setBlinkColor(LEDColor.ORANGE);
+  }
+  
+  public void yellow() {
+    setColor(LEDColor.YELLOW);
+  }
+
+  public void blinkYellow() {
+    setBlinkColor(LEDColor.YELLOW);
+  }
+
+  public void green() {
+    setColor(LEDColor.GREEN);
+  }
+
+  public void blinkGreen() {
+    setBlinkColor(LEDColor.GREEN);
+  }
+
+  public void blue() {
+    setColor(LEDColor.BLUE);
+  }
+
+  public void blinkBlue() {
+    setBlinkColor(LEDColor.BLUE);
+  }
+
+  public void violet() {
+    setColor(LEDColor.VIOLET);
+  }
+
+  public void blinkViolet() {
+    setBlinkColor(LEDColor.VIOLET);
+  }
+
 }

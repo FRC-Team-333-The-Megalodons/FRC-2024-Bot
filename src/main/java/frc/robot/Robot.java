@@ -20,7 +20,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
+    CommandScheduler.getInstance().run();
+    
+    // TODO: Remove this when done testing
+    m_robotContainer.setManualIndicatorLEDs();
   }
 
   @Override
@@ -55,7 +58,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+  }
 
   @Override
   public void teleopExit() {}

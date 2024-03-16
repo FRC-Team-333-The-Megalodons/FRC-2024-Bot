@@ -33,6 +33,7 @@ public class Wrist extends SubsystemBase {
 
     wristEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
     wristEncoder.setInverted(false);
+    wristEncoder.setZeroOffset(0.55);
 
     wristController = wristMotor.getPIDController();
     wristController.setFeedbackDevice(wristEncoder);
@@ -74,7 +75,12 @@ public class Wrist extends SubsystemBase {
     wristMotor.set(0.0);
   }
 
-  public void setPosition(double setpoint) {
+  public boolean isWristDown()
+  {
+    return (getPosition() >= WristConstants.WRIST_DOWN_THRESHOLD);
+  }
+
+  public void setReferencePosition(double setpoint) {
     // TODO: How can we apply the limits here and cancel the controller?
     // We can "guess" at what direction it'll set:
     // double direction = (setpoint > getPosition() ? 1.0 : -1.0);

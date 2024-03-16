@@ -13,7 +13,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConstatnts;
+import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
   
@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-    intakeMotor = new CANSparkFlex(IntakeConstatnts.MOTOR_ID, MotorType.kBrushless);
+    intakeMotor = new CANSparkFlex(IntakeConstants.MOTOR_ID, MotorType.kBrushless);
 
     intakeMotor.restoreFactoryDefaults();
 
@@ -35,14 +35,14 @@ public class Intake extends SubsystemBase {
 
     intakeController = intakeMotor.getPIDController();
     intakeController.setFeedbackDevice(intakeMotor.getEncoder());
-    intakeController.setP(IntakeConstatnts.kP);
-    intakeController.setI(IntakeConstatnts.kI);
-    intakeController.setD(IntakeConstatnts.kD);
-    intakeController.setFF(IntakeConstatnts.kFF);
-    intakeController.setOutputRange(IntakeConstatnts.MIN_INPUT, IntakeConstatnts.MAX_INPUT);
+    intakeController.setP(IntakeConstants.kP);
+    intakeController.setI(IntakeConstants.kI);
+    intakeController.setD(IntakeConstants.kD);
+    intakeController.setFF(IntakeConstants.kFF);
+    intakeController.setOutputRange(IntakeConstants.MIN_INPUT, IntakeConstants.MAX_INPUT);
 
-    leftSensor = new DigitalInput(IntakeConstatnts.LEFT_SENSOR_ID);
-    rightSensor = new DigitalInput(IntakeConstatnts.RIGHT_SENSOR_ID);
+    leftSensor = new DigitalInput(IntakeConstants.LEFT_SENSOR_ID);
+    rightSensor = new DigitalInput(IntakeConstants.RIGHT_SENSOR_ID);
   }
 
   public void runIntake(double value) {

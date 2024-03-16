@@ -67,18 +67,20 @@ public class Trolley extends SubsystemBase {
   }
 
   public void resetEncoder() {
-    trolleyMotor.getEncoder().setPosition(0.0);
+    // Don't do anything here. The potentiometer is absolute. Do not invalidate that.
+    
+    // trolleyMotor.getEncoder().setPosition(0.0);
   }
 
   public void runTrolley(double speed) {
     // Negative number means moving trolley out; positive number means moving trolley in.
     if (speed < 0) {
-      if (isTrolleyAtMaxOutLimitSwitch()) {
+      if (!isOkToMoveTrolleyOut()) {
         stopTrolley();
         return;
       }
     } else if (speed > 0) {
-      if (isTrolleyAtMinInLimitSwitch()) {
+      if (!isOkToMoveTrolleyIn()) {
         stopTrolley();
         return;
       }
@@ -107,10 +109,15 @@ public class Trolley extends SubsystemBase {
   public double getPotentiometerPosition() {
       // We flip the sign, add a constant, and multiply by 100 to
       //  make this number more "intuitive" / legible.
-      return potentiometer.get() * -100 + 7;
+      return potentiometer.get();
   }
 
   public boolean isOkToMoveTrolleyOut() {
+    // IF the PIVOT is DOWN, then no matter what, the TROLLEY cannot move OUT
+    if (pivotRef.isPivotDownFarEnoughThatTrolleyCantMoveOut()) {
+      return false;
+    }
+  
     if (isTrolleyAtMaxOutLimitSwitch()) {
       return false;
     }
@@ -118,6 +125,12 @@ public class Trolley extends SubsystemBase {
   }
 
   public boolean isOkToMoveTrolleyIn() {
+    if (pivotRef.isPivotUpFarEnoughThatTrolleyCantMoveIn()) {
+      if (isTrolleyTooFarInToPivotUpPastBumper()) {
+        return false;
+      }
+    }
+
     if (isTrolleyAtMinInLimitSwitch()) {
       return false;
     }
@@ -152,14 +165,19 @@ public class Trolley extends SubsystemBase {
   }
 
   public boolean isTrolleyTooFarInToPivotUpPastBumper() {
-    return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER;
+    return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
+  }
+
+  public boolean isTrolleyTooFarOutToPivotDown()
+  {
+    return getPotentiometerPosition() >= TrolleyConstants.TROLLEY_IN_OUT_THRESHOLD;
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("TrolleyMaxOutLimit", isTrolleyAtMaxOutLimitSwitch());
     SmartDashboard.putBoolean("TrolleyMinInLimit", isTrolleyAtMinInLimitSwitch());
-    SmartDashboard.putNumber("TrolleyEncoder" , trolleyMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("TrolleyEncoder" , getPotentiometerPosition());
     SmartDashboard.putBoolean("Trolley In?", isTrolleyIn());
     SmartDashboard.putBoolean("Trolley Out?", isTrolleyOut());
   }

@@ -96,7 +96,16 @@ public class Pivot extends SubsystemBase {
   }
 
   public boolean isOkToMovePivotUp() {
+    // Furthest possible limit. Nothing can invalidate this constraint.
+    if (getPosition() >= PivotConstants.PIVOT_MAX_UP) {
+      return false;
+    }
+
     // For now, just return true here because my checks aren't working
+    if (trolleyRef.isTrolleyTooFarInToPivotUpPastBumper()) {
+      return !isPivotUpFarEnoughThatTrolleyCantMoveIn();
+    }
+
     return true;
     /*
     if (m_trolleyRef.isTrolleyTooFarInToPivotUpPastBumper())
@@ -112,11 +121,33 @@ public class Pivot extends SubsystemBase {
   }
 
   public boolean isOkToMovePivotDown() {
-    if (trolleyRef.isTrolleyOut()) {
-      // If the Trolley is out, then we can only move down if we're above the "trolley can move safely" setpoint.
-      return getPosition() > PivotConstants.PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE;
+    // Furthest possible limit. Nothing can invalidate this constraint.
+    if (getPosition() <= PivotConstants.PIVOT_MIN_DOWN) {
+      return false;
     }
+
+    if (trolleyRef.isTrolleyOut()) {
+      // In the special case that the wrist is in the intake position, and that the trolley is all the way out, we can move down a bit further!
+      if (trolleyRef.isTrolleyAtMaxOutLimitSwitch() && wristRef.isWristDown())
+      {
+        // IF we're in Intake Position, we can only go as far down as intake height.
+        return getPosition() >= PivotConstants.INTAKE_SETPOINT_POS;
+      }
+      // Otherwise, if the Trolley is out, then we can only move down if we're above the "trolley can move safely" setpoint.
+      return !isPivotDownFarEnoughThatTrolleyCantMoveOut();
+    }
+
     return true;
+  }
+
+  public boolean isPivotDownFarEnoughThatTrolleyCantMoveOut()
+  {
+    return getPosition() <= PivotConstants.PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE; 
+  }
+
+  public boolean isPivotUpFarEnoughThatTrolleyCantMoveIn()
+  {
+    return getPosition() >= PivotConstants.PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER;
   }
 
   public boolean isPivotAtMaxUp() {
@@ -124,9 +155,9 @@ public class Pivot extends SubsystemBase {
     return false;
   }
 
+
   public boolean isPivotAtMaxDown() {
-    // TODO
-    return false;
+    return getPosition() <= PivotConstants.SUBWOFFER_SETPOINT_POS;
   }
 
   public double getPosition() {
@@ -183,5 +214,6 @@ public class Pivot extends SubsystemBase {
     final String PREFIX = "Pivot ";
     SmartDashboard.putNumber(PREFIX+"Position", getPosition());
     SmartDashboard.putBoolean(PREFIX+"Setpoint", pivotController.atSetpoint());
+    SmartDashboard.putBoolean(PREFIX+"IsPivotDown", isPivotDownFarEnoughThatTrolleyCantMoveOut());
   }
 }
