@@ -19,7 +19,7 @@ public class GoHome extends SequentialCommandGroup {
   /** Creates a new GoHome. */
   public GoHome(Pivot pivot, Trolley trolley, Wrist wrist) {
     addCommands(
-      new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS).withTimeout(1.0),
+      new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS).withTimeout(2.0),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
     );

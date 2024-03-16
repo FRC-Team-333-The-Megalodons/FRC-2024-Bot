@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -23,7 +24,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     
     // TODO: Remove this when done testing
-    m_robotContainer.setManualIndicatorLEDs();
+
+    m_robotContainer.toggleManualModeWhenButtonPressed();
   }
 
   @Override

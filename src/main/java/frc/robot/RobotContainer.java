@@ -14,6 +14,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -81,7 +82,6 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
 
-
   private void configureBindings() {
     // Drivetrain
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -121,10 +121,29 @@ public class RobotContainer {
   public class ManualModeEvaluator implements BooleanSupplier {
     public ManualModeEvaluator() {}
     public boolean getAsBoolean() {
-        return SmartDashboard.getBoolean("MANUAL_MODE", true);
+        return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
     }
   }
   
+  final String MANUAL_MODE_KEY = "MANUAL_MODE";
+
+  boolean lastMicButtonState = false;
+
+  public void toggleManualModeWhenButtonPressed()
+  {
+    if (operatorController.getHID().getRawButtonPressed(15)) {
+      boolean before = SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
+      boolean after = !before;
+      System.out.println("TOGGLE MANUAL MODE from "+before+" to "+after+".");
+      SmartDashboard.putBoolean(MANUAL_MODE_KEY, after);
+      if (after) {
+        leds.green();
+      } else {
+        leds.orange();
+      }
+    }
+  }
+
   ManualModeEvaluator manualModeEvaluator = new ManualModeEvaluator(); // We only need one instance of this class.
 
   public Command smartOrManual(Command smart, Command manual)
@@ -164,9 +183,9 @@ public class RobotContainer {
       // operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM));
       // operatorController.square().whileTrue(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM));)
 
-      operatorController.touchpad().whileTrue(smartOrManual(
-         /* SMART */ new RunCommand(() -> leds.blinkOrange(), leds), // TODO: Do we need repeatedly here?
-        /* MANUAL */ new RunCommand(() -> leds.blinkViolet(), leds)
+      operatorController.touchpad().onTrue(smartOrManual(
+         /* SMART */ new RunCommand(() -> leds.blinkOrange(), leds).repeatedly().withTimeout(2.0), // TODO: Do we need repeatedly here?
+        /* MANUAL */ new RunCommand(() -> leds.blinkViolet(), leds).repeatedly().withTimeout(2.0)
       ));
 
       operatorController.L1().whileTrue(smartOrManual(
@@ -289,15 +308,6 @@ public class RobotContainer {
   //   operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
   // }
 
-  public void setManualIndicatorLEDs()
-  {
-    if (manualModeEvaluator.getAsBoolean()) {
-      leds.orange();
-    } else {
-      leds.green();
-    }
-  }
-
   public RobotContainer() {
     trolley.setPivotRef(pivot);
     trolley.setWristRef(wrist);
@@ -307,7 +317,8 @@ public class RobotContainer {
     pivot.setWristRef(wrist);
     configureBindings();
 
-    SmartDashboard.putBoolean("MANUAL_MODE", false);
+    // Default to non-manual mode (i.e. false)
+    SmartDashboard.putBoolean(MANUAL_MODE_KEY, false);
   }
 
   SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
