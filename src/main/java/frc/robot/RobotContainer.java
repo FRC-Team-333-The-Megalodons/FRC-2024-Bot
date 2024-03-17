@@ -10,6 +10,7 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -70,8 +71,11 @@ public class RobotContainer {
   private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
+
+
+
   /* Path Follower */
-  private Command runAuto = drivetrain.getAutoPath("2 - Far Center");
+  //private Command runAuto = drivetrain.getAutoPath("2 - Far Center");
 
   private final Intake intake = new Intake();
   private final Trolley trolley = new Trolley();
@@ -250,8 +254,7 @@ public class RobotContainer {
     pivot.setTrolleyRef(trolley);
     pivot.setWristRef(wrist);
 
-    NamedCommands.registerCommand("AutoIntake", new AutoIntake(intake, wrist, trolley, pivot, leds));
-    NamedCommands.registerCommand("SubWooferShot", new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter));
+    NamedCommands.registerCommand("SubWooferShootPoistion",new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter) );
     configureBindings();
 
     // Default to non-manual mode (i.e. false)
@@ -261,6 +264,6 @@ public class RobotContainer {
   SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
 
   public Command getAutonomousCommand() {
-    return runAuto;
+    return new PathPlannerAuto("2 - Far Center");
   }
 }

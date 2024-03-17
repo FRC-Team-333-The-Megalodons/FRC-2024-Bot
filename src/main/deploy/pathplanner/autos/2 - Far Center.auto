@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "SubWooferShot"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Leave - Center"
