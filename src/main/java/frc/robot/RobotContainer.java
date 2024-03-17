@@ -9,6 +9,7 @@ import java.util.function.BooleanSupplier;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -315,6 +316,10 @@ public class RobotContainer {
     wrist.setTrolleyRef(trolley);
     pivot.setTrolleyRef(trolley);
     pivot.setWristRef(wrist);
+    NamedCommands.registerCommand("AutoIntake", new AutoIntake(intake, wrist, trolley, pivot, leds));
+    NamedCommands.registerCommand("AutoAmp", new AutoAmp(intake, wrist, trolley, pivot));
+    NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist));
+    NamedCommands.registerCommand("ShootingPosition", new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, MaxAngularRate));
     configureBindings();
 
     // Default to non-manual mode (i.e. false)
