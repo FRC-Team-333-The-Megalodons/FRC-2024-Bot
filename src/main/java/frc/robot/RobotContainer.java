@@ -250,6 +250,10 @@ public class RobotContainer {
     wrist.setTrolleyRef(trolley);
     pivot.setTrolleyRef(trolley);
     pivot.setWristRef(wrist);
+    NamedCommands.registerCommand("AutoIntake", new AutoIntake(intake, wrist, trolley, pivot, leds));
+    NamedCommands.registerCommand("AutoAmp", new AutoAmp(intake, wrist, trolley, pivot));
+    NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist));
+    NamedCommands.registerCommand("ShootingPosition", new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, MaxAngularRate));
     configureBindings();
 
     // Default to non-manual mode (i.e. false)
