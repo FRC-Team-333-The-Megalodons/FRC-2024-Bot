@@ -32,6 +32,7 @@ import frc.robot.commands.advanced.AutoIndexer;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
+import frc.robot.commands.auto.SubWooferShootingPosition;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunPivot;
 import frc.robot.commands.basic.RunTrolley;
@@ -79,8 +80,6 @@ public class RobotContainer {
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
-
-  // Register Named Commands
 
   private void configureBindings() {
     // Drivetrain
@@ -250,10 +249,9 @@ public class RobotContainer {
     wrist.setTrolleyRef(trolley);
     pivot.setTrolleyRef(trolley);
     pivot.setWristRef(wrist);
+
     NamedCommands.registerCommand("AutoIntake", new AutoIntake(intake, wrist, trolley, pivot, leds));
-    NamedCommands.registerCommand("AutoAmp", new AutoAmp(intake, wrist, trolley, pivot));
-    NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist));
-    NamedCommands.registerCommand("ShootingPosition", new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, MaxAngularRate));
+    NamedCommands.registerCommand("SubWooferShot", new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter));
     configureBindings();
 
     // Default to non-manual mode (i.e. false)
