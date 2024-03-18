@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -16,13 +17,13 @@ import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
 
-  private CANSparkMax indexMotor;
+  private CANSparkFlex indexMotor;
 
   private SparkPIDController indexController;
 
   /** Creates a new Indexer. */
   public Indexer() {
-    indexMotor = new CANSparkMax(IndexerConstants.MOTOR_ID, MotorType.kBrushless);
+    indexMotor = new CANSparkFlex(IndexerConstants.MOTOR_ID, MotorType.kBrushless);
 
     indexMotor.restoreFactoryDefaults();
 
