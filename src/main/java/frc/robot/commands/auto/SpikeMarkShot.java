@@ -5,15 +5,8 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.WristConstants;
-import frc.robot.commands.advanced.AutoPivot;
-import frc.robot.commands.advanced.AutoWrist;
-import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
-import frc.robot.commands.basic.RunShooter;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -25,11 +18,11 @@ import frc.robot.subsystems.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SubWooferShootingPosition extends SequentialCommandGroup {
-  /** Creates a new SubWooferShootingPosition. */
-  public SubWooferShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter) {
+public class SpikeMarkShot extends SequentialCommandGroup {
+  /** Creates a new SpikeMarkShot. */
+  public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter) {
     addCommands(
-      new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS).withTimeout(3),
+      new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS).withTimeout(3),
       new RunIntake(intake, 0.75).withTimeout(0.5)
     );
   }

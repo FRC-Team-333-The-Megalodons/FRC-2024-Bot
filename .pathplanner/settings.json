@@ -14,7 +14,8 @@
     "3pc - Center Line",
     "3pc - Spike Mark",
     "4pc - Center Line",
-    "4pc - Spike Mark"
+    "4pc - Spike Mark",
+    "1pc"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

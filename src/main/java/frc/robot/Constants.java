@@ -79,8 +79,9 @@ public final class Constants {
     public static final double PIVOT_SPEED = 0.2;
     public static final double ZERO_OFFSET = 0.0;
     public static final double HOME_SETPOINT_POS = 0.214587305364683;
-    public static final double INTAKE_SETPOINT_POS = 0.14922307873; // 0.149223078730577;
+    public static final double INTAKE_SETPOINT_POS = 0.15122307873; // 0.149223078730577;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
+    public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.052;
     public static final double PODIUM_SETPOINT_POS = 0.120947403023685;
     public static final double WING_SETPOINT_POS = 0.0;
     public static final double AMP_SETPOINT_POS = 0.44; // 0.464868961621724;
@@ -90,7 +91,7 @@ public final class Constants {
     public static final double kFF = 0.0;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
-    public static final double PIVOT_MIN_DOWN = 0.053; // This is the lowest point the intake can be down. Just past the subwoofer.
+    public static final double PIVOT_MIN_DOWN = 0.05; // This is the lowest point the intake can be down. Just past the subwoofer.
     public static final double PIVOT_MAX_UP = 0.46; // This is also the Amp scoring position.
     
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235;
