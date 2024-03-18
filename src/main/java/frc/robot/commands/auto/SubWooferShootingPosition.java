@@ -6,6 +6,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
@@ -30,7 +31,7 @@ public class SubWooferShootingPosition extends SequentialCommandGroup {
   public SubWooferShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter) {
     addCommands(
       new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS).withTimeout(3),
-      new RunIntake(intake, 0.75).withTimeout(0.5)
+      new RunIntake(intake, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(0.5)
     );
   }
 }

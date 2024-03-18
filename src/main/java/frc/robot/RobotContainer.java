@@ -120,8 +120,8 @@ public class RobotContainer {
     if (manualMode) {
       // operatorController.circle().whileTrue(new RunIntake(intake, 0.5).until(intake::hasNote));
       operatorController.circle().whileTrue(((new RunIntake(intake, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkRed(), leds))).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkBlue(), leds)));
-      operatorController.cross().whileTrue(new RunIntake(intake, 0.75));
-      operatorController.triangle().whileTrue(new RunIntake(intake, -IntakeConstants.INTAKE_SPEED));
+      operatorController.cross().whileTrue(new RunIntake(intake, IntakeConstants.INTAKE_FIRE_SPEED));
+      operatorController.triangle().whileTrue(new RunIntake(intake, IntakeConstants.INTAKE_EJECT_SPEED));
 
       operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkViolet(), leds));
 

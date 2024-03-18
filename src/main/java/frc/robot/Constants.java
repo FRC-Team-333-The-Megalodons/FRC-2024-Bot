@@ -12,6 +12,8 @@ public final class Constants {
     public static final int LEFT_SENSOR_ID = 0;
     public static final int RIGHT_SENSOR_ID = 1;
     public static final double INTAKE_SPEED = 0.5;
+    public static final double INTAKE_EJECT_SPEED = -0.5;
+    public static final double INTAKE_FIRE_SPEED = 0.75;
     public static final double NOTE_SETPOINT = 0.0;
     public static final double kP = 5.0;
     public static final double kI = 0.0;
