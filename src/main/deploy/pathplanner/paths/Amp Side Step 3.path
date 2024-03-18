@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.485434427179534,
-        "y": 6.0
+        "x": 7.704054914282669,
+        "y": 7.409038027952599
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9626351958144117,
-        "y": 6.33438788053729
+        "x": 5.624888286813611,
+        "y": 7.019194285302151
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp Side Step 2"
     },
     {
       "anchor": {
-        "x": 2.39,
-        "y": 6.6
+        "x": 3.963411383612891,
+        "y": 5.431973333082468
       },
       "prevControl": {
-        "x": 1.5710482215590615,
-        "y": 6.026137660594089
+        "x": 5.188634574800014,
+        "y": 6.972784315939003
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -39,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 36.51105611949533,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 35.556488497632174,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.506138345610025,
+        "y": 4.37382603160268
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.5803942965910625,
+        "y": 5.766125112497138
+      },
+      "isLocked": false,
+      "linkedName": "Center Step2"
+    },
+    {
+      "anchor": {
+        "x": 2.506138345610025,
+        "y": 6.6943244997601115
+      },
+      "prevControl": {
+        "x": 2.589676290463692,
+        "y": 5.459819314700358
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 35.65532809790038,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Center",
+  "previewStartingState": {
+    "rotation": -36.674349669573175,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

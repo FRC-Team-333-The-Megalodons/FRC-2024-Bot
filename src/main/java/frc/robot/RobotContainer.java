@@ -34,6 +34,7 @@ import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.auto.AutonIntake;
+import frc.robot.commands.auto.EventMarkIntake;
 import frc.robot.commands.auto.SpikeMarkShot;
 import frc.robot.commands.auto.SubWooferShootingPosition;
 import frc.robot.commands.basic.RunIntake;
@@ -310,6 +311,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist));
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
     NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter));
+    NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
     configureBindings();
 
     // Default to non-manual mode (i.e. false)

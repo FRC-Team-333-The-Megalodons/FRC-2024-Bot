@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7815863793056181,
+      "y": 4.499045012324901
+    },
+    "rotation": -60.68007608122021
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SubWooferShot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Source Side Step 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpikeMarkShot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "SOURCE-SIDE",
+  "choreoAuto": false
+}
