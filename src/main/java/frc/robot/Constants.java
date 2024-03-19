@@ -79,7 +79,7 @@ public final class Constants {
     public static final int PIVOT_ENCODER_ID = 9; 
     public static final double PIVOT_SPEED = 0.2;
     public static final double ZERO_OFFSET = 0.0;
-    public static final double HOME_SETPOINT_POS = 0.214587305364683;
+    public static final double HOME_SETPOINT_POS = 0.192314154807854;
     public static final double INTAKE_SETPOINT_POS = 0.15122307873;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.052;

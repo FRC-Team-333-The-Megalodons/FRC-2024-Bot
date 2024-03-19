@@ -9,6 +9,7 @@ import java.util.function.BooleanSupplier;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
@@ -65,6 +66,7 @@ public class RobotContainer {
   private final CommandPS5Controller driverController = new CommandPS5Controller(0);
   private final CommandPS5Controller operatorController = new CommandPS5Controller(1);
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
+  private final SendableChooser<Command> autoChooser;
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -308,6 +310,8 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     trolley.setPivotRef(pivot);
     trolley.setWristRef(wrist);
     wrist.setPivotRef(pivot);
@@ -329,6 +333,6 @@ public class RobotContainer {
   SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
 
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("1pc-auto");
+    return autoChooser.getSelected();
   }
 }

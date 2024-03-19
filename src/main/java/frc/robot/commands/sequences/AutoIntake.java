@@ -26,9 +26,9 @@ public class AutoIntake extends SequentialCommandGroup {
     addCommands(
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
-      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
+      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(1.0),
       new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
-      new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(0.5)
+      new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(3.33)
     );
   }
 }
