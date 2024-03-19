@@ -37,7 +37,6 @@ public class Shooter extends SubsystemBase {
     shooterController.setOutputRange(ShooterConstants.MIN_INPUT, ShooterConstants.MAX_INPUT);
 
     topMotor.setInverted(true);
-
     topMotor.setIdleMode(IdleMode.kCoast);
     bottomMotor.setIdleMode(IdleMode.kCoast);
 

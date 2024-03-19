@@ -16,6 +16,7 @@ import frc.robot.commands.basic.RunShooter;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Trolley;
@@ -26,12 +27,12 @@ import frc.robot.subsystems.Wrist;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunIntakeAlongWithShooter extends SequentialCommandGroup {
   /** Creates a new RunIntakeAlongWithShooter. */
-  public RunIntakeAlongWithShooter(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter) {
+  public RunIntakeAlongWithShooter(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
           
           new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
           new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS).withTimeout(1.0),
-          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).alongWith(new RunIntake(intake, 0.1))
+          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).alongWith(new RunIntake(intake, leds, 0.1))
           );
   
   }

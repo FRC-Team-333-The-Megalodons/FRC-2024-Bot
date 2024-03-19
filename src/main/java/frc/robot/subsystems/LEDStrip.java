@@ -24,14 +24,10 @@ public class LEDStrip extends SubsystemBase {
   public LEDStrip() {
     initializeBuffers();
 
-    // leftLED = new AddressableLED(1); // left LEDs
     rightLED = new AddressableLED(0); // right LEDs
     leftLEDBuffer = new  AddressableLEDBuffer(100);
     rightLEDBuffer = new  AddressableLEDBuffer(100);
 
-    // leftLED.setLength(leftLEDBuffer.getLength());
-    // leftLED.setData(leftLEDBuffer);
-    // leftLED.start();
     rightLED.setLength(rightLEDBuffer.getLength());
     rightLED.setData(rightLEDBuffer);
     rightLED.start();
@@ -40,8 +36,7 @@ public class LEDStrip extends SubsystemBase {
     setColor(LEDColor.OFF);
   }
 
-  private AddressableLEDBuffer getBufferByColorEnum(LEDColor color)
-  {
+  private AddressableLEDBuffer getBufferByColorEnum(LEDColor color) {
     switch (color) {
       case OFF: return offBuffer;
       case RED: return redBuffer;
@@ -54,8 +49,7 @@ public class LEDStrip extends SubsystemBase {
     }
   }
 
-  private void initializeBuffers()
-  {
+  private void initializeBuffers() {
     final int LED_COUNT = 100; 
     offBuffer = new AddressableLEDBuffer(LED_COUNT);
     for (int i=0; i< offBuffer.getLength(); i++) {
@@ -110,8 +104,7 @@ public class LEDStrip extends SubsystemBase {
     }
   }
 
-  public void setColor(LEDColor color)
-  {
+  public void setColor(LEDColor color) {
     // We cache the last color we set, so that we don't have
     //  to overwrite it except for when we actually are changing the colors.
     if (color == lastColor) {
@@ -121,7 +114,6 @@ public class LEDStrip extends SubsystemBase {
     // If we've made it this far, it means we're actually changing the colors!
     lastColor = color;
     AddressableLEDBuffer buff = getBufferByColorEnum(color);
-    // leftLED.setData(buff);
     rightLED.setData(buff);
   }
 
@@ -176,5 +168,30 @@ public class LEDStrip extends SubsystemBase {
   public void blinkViolet() {
     setBlinkColor(LEDColor.VIOLET);
   }
-
+  
+  public void shadesOFBlue() {
+    int length = rightLEDBuffer.getLength();
+    int blue = 80;
+    int red = 20;
+    int green = 20;
+    while (true) {
+        blue = (blue + 1) % 210;
+        red = (red + 1) % 120;
+        green = (green + 1) % 100;
+        blue = (blue + 50) % 200;
+        red = (red - 20) % 20;
+        green = (green - 20) % 20;
+        for (var i = 0; i < length; i++) {
+            rightLEDBuffer.setRGB(i, red, green, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
+            rightLEDBuffer.setRGB(i, 0, 0, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
+        }
+        rightLED.setData(rightLEDBuffer);
+        try {
+            Thread.sleep(40); // Подождите некоторое время перед обновлением цвета
+            Thread.sleep(300); // Подождите некоторое время перед обновлением цвета
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      }
+    }
 }

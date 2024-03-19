@@ -11,6 +11,7 @@ import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Trolley;
@@ -21,10 +22,10 @@ import frc.robot.subsystems.Wrist;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SpikeMarkShot extends SequentialCommandGroup {
   /** Creates a new SpikeMarkShot. */
-  public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter) {
+  public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
       new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS).withTimeout(3),
-      new RunIntake(intake, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(0.5)
+      new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(0.5)
     );
   }
 }

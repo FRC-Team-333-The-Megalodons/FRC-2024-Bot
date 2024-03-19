@@ -16,6 +16,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -74,12 +76,6 @@ public class RobotContainer {
   private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-
-
-
-  /* Path Follower */
-  //private Command runAuto = drivetrain.getAutoPath("2 - Far Center");
-
   private final Intake intake = new Intake();
   private final Trolley trolley = new Trolley();
   private final Pivot pivot = new Pivot();
@@ -91,7 +87,8 @@ public class RobotContainer {
   private final boolean manualMode = false;
 
   private void configureBindings() {
-    // Drivetrain
+
+    /* Drivetrain */ 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with
                                                                                            // negative Y (forward)
@@ -109,24 +106,25 @@ public class RobotContainer {
     // TODO: test snap-to functionality
     driverController.povUp().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
     driverController.povDown().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
+    driverController.povDownLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(0.5)));
+    driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-0.5)));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    // Robot Mech
-    // registerButtons();
+    /* Robot Mech */ 
     if (manualMode) {
-      // operatorController.circle().whileTrue(new RunIntake(intake, 0.5).until(intake::hasNote));
-      operatorController.circle().whileTrue(((new RunIntake(intake, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkRed(), leds))).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkBlue(), leds)));
-      operatorController.cross().whileTrue(new RunIntake(intake, IntakeConstants.INTAKE_FIRE_SPEED));
-      operatorController.triangle().whileTrue(new RunIntake(intake, IntakeConstants.INTAKE_EJECT_SPEED));
 
-      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkViolet(), leds));
+      operatorController.circle().whileTrue((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds)));
+      operatorController.cross().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED));
+      operatorController.triangle().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_EJECT_SPEED));
 
-      operatorController.L1().whileTrue(new RunWrist(wrist, -0.2));
-      operatorController.R1().whileTrue(new RunWrist(wrist, 0.2));
+      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds));
+
+      operatorController.L1().whileTrue(new RunWrist(wrist, 0.5));
+      operatorController.R1().whileTrue(new RunWrist(wrist, -0.5));
       operatorController.L3().whileTrue(new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS));
       operatorController.R3().whileTrue(new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS));
 
@@ -140,22 +138,25 @@ public class RobotContainer {
 
       // operatorController.square().whileTrue(new RunShooter(shooter, 0.9).alongWith(new RunIndexer(indexer, 1.0)));
       operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM)));
-      // operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM));
-      // operatorController.square().whileTrue(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM));)
 
       operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist));
       operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
+
     } else {
 
-      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkViolet(), leds));
+      if (DriverStation.getAlliance().get() == Alliance.Blue) {
+        operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds));
+      } else {
+        operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkOrange(), leds));
+      }
 
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 
       operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
       
-      operatorController.L1().whileTrue(new RunIntake(intake, -IntakeConstants.INTAKE_SPEED)); // eject
-      operatorController.R2().whileTrue(new RunIntake(intake, IntakeConstants.INTAKE_SPEED)); // intake
+      operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkGreen(), leds))); // eject
+      operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkRed(), leds))); // intake
 
       operatorController.povUp().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)); // trolley out
       operatorController.povDown().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)); // trolley in
@@ -167,6 +168,12 @@ public class RobotContainer {
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     }
   }
+
+
+
+
+
+
 
   public class ManualModeEvaluator implements BooleanSupplier {
     public ManualModeEvaluator() {}
@@ -186,9 +193,9 @@ public class RobotContainer {
       System.out.println("TOGGLE MANUAL MODE from "+before+" to "+after+".");
       SmartDashboard.putBoolean(MANUAL_MODE_KEY, after);
       if (after) {
-        leds.green();
+        leds.violet();
       } else {
-        leds.orange();
+        leds.yellow();
       }
     }
   }
@@ -207,18 +214,18 @@ public class RobotContainer {
     // operatorController.circle().whileTrue(new RunIntake(intake, 0.5).until(intake::hasNote));
     operatorController.circle().whileTrue(smartOrManual(
       /* SMART */ NullCommand(), /*TODO - Implement Circle for Smart Mode */
-      /* MANUAL */  ((new RunIntake(intake, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.red(), leds))).
+      /* MANUAL */  ((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.red(), leds))).
                             until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(1))
     ));
 
     operatorController.cross().whileTrue(smartOrManual(
       /* SMART */  new AutoAmp(intake, wrist, trolley, pivot),
-      /* MANUAL */  new RunIntake(intake, 0.75)
+      /* MANUAL */  new RunIntake(intake, leds, 0.75)
     ));
 
     operatorController.triangle().whileTrue(smartOrManual(
         /* SMART */ new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS),
-      /* MANUAL */ new RunIntake(intake, -IntakeConstants.INTAKE_SPEED)
+      /* MANUAL */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)
     ));
 
     // operatorController.square().whileTrue(new RunShooter(shooter, 0.9).alongWith(new RunIndexer(indexer, 1.0)));
@@ -235,7 +242,7 @@ public class RobotContainer {
     ));
 
     operatorController.L1().whileTrue(smartOrManual(
-        /* SMART */ new RunIntake(intake, -IntakeConstants.INTAKE_SPEED), // Eject
+        /* SMART */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED), // Eject
       /* MANUAL */ new RunWrist(wrist, -0.2)
     ));
 
@@ -265,7 +272,7 @@ public class RobotContainer {
     ));
 
     operatorController.R2().whileTrue(smartOrManual(
-        /* SMART */ new RunIntake(intake, IntakeConstants.INTAKE_SPEED), // Intake
+        /* SMART */ new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED), // Intake
       /* MANUAL */ new RunPivot(pivot, PivotConstants.PIVOT_SPEED)
     ));
 
@@ -308,10 +315,10 @@ public class RobotContainer {
     pivot.setTrolleyRef(trolley);
     pivot.setWristRef(wrist);
 
-    NamedCommands.registerCommand("SubWooferShot",new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter) );
+    NamedCommands.registerCommand("SubWooferShot",new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, leds) );
     NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist));
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
-    NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter));
+    NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
     configureBindings();
 

@@ -36,7 +36,7 @@ public class Indexer extends SubsystemBase {
     indexController.setOutputRange(IndexerConstants.MIN_INPUT, IndexerConstants.MAX_INPUT);
 
     indexMotor.setIdleMode(IdleMode.kCoast);
-    indexMotor.setInverted(true);
+    indexMotor.setInverted(false);
 
     indexMotor.burnFlash();
   }

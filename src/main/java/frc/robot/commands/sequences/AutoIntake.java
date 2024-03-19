@@ -19,7 +19,6 @@ import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
-import frc.robot.subsystems.LEDStrip.LEDColor;
 
 public class AutoIntake extends SequentialCommandGroup {
   /** Creates a new AutoIntake. */
@@ -27,9 +26,9 @@ public class AutoIntake extends SequentialCommandGroup {
     addCommands(
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
-      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(1),
-      new RunIntake(intake, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
-      new RunCommand(() -> leds.blinkViolet(), leds).repeatedly().withTimeout(0.5)
+      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
+      new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
+      new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(0.5)
     );
   }
 }

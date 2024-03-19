@@ -6,16 +6,19 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDStrip;
 
 public class RunIntake extends Command {
   private final Intake intake;
+  private final LEDStrip leds;
   
   private final double value;
 
   /** Creates a new IntakeNote. */
-  public RunIntake(Intake intake, double value) {
+  public RunIntake(Intake intake, LEDStrip leds, double value) {
     this.intake = intake;
     this.value = value;
+    this.leds = leds;
     addRequirements(intake);
   }
 
@@ -29,12 +32,14 @@ public class RunIntake extends Command {
   @Override
   public void execute() {
     intake.runIntake(value);
+    leds.red();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.stopIntake();
+    leds.off();
   }
 
   // Returns true when the command should end.

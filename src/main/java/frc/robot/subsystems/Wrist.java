@@ -33,7 +33,7 @@ public class Wrist extends SubsystemBase {
 
     wristEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
     wristEncoder.setInverted(false);
-    wristEncoder.setZeroOffset(0.55);
+    wristEncoder.setZeroOffset(WristConstants.ZERO_OFFSET);
 
     wristController = wristMotor.getPIDController();
     wristController.setFeedbackDevice(wristEncoder);
@@ -43,6 +43,7 @@ public class Wrist extends SubsystemBase {
     wristController.setFF(WristConstants.kFF);
     wristController.setOutputRange(WristConstants.MIN_INPUT, WristConstants.MAX_INPUT);
 
+    wristMotor.setInverted(true);
     wristMotor.setIdleMode(IdleMode.kBrake);
 
     wristMotor.burnFlash();
