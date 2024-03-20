@@ -17,8 +17,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -146,12 +145,6 @@ public class RobotContainer {
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
 
     } else {
-
-      if (DriverStation.getAlliance().get() == Alliance.Blue) {
-        operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds));
-      } else {
-        operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkOrange(), leds));
-      }
 
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 
@@ -312,6 +305,7 @@ public class RobotContainer {
   public RobotContainer() {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
     trolley.setPivotRef(pivot);
     trolley.setWristRef(wrist);
     wrist.setPivotRef(pivot);

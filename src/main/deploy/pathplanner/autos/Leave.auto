@@ -1,20 +1,14 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 0.7518415036830074,
-      "y": 6.647914530396961
-    },
-    "rotation": 59.03624346792656
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "SubWooferShot"
+            "pathName": "Leave - Center"
           }
         }
       ]

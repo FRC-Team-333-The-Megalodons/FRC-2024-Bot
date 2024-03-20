@@ -84,27 +84,27 @@ public class Telemetry {
             pose.getRotation().getDegrees()
         });
 
-        /* Telemeterize the robot's general speeds */
-        double currentTime = Utils.getCurrentTimeSeconds();
-        double diffTime = currentTime - lastTime;
-        lastTime = currentTime;
-        Translation2d distanceDiff = pose.minus(m_lastPose).getTranslation();
-        m_lastPose = pose;
+        // /* Telemeterize the robot's general speeds */
+        // double currentTime = Utils.getCurrentTimeSeconds();
+        // double diffTime = currentTime - lastTime;
+        // lastTime = currentTime;
+        // Translation2d distanceDiff = pose.minus(m_lastPose).getTranslation();
+        // m_lastPose = pose;
 
-        Translation2d velocities = distanceDiff.div(diffTime);
+        // Translation2d velocities = distanceDiff.div(diffTime);
 
-        speed.set(velocities.getNorm());
-        velocityX.set(velocities.getX());
-        velocityY.set(velocities.getY());
-        odomPeriod.set(state.OdometryPeriod);
+        // speed.set(velocities.getNorm());
+        // velocityX.set(velocities.getX());
+        // velocityY.set(velocities.getY());
+        // odomPeriod.set(state.OdometryPeriod);
 
-        /* Telemeterize the module's states */
-        for (int i = 0; i < 4; ++i) {
-            m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
-            m_moduleDirections[i].setAngle(state.ModuleStates[i].angle);
-            m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
+        // /* Telemeterize the module's states */
+        // for (int i = 0; i < 4; ++i) {
+        //     m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
+        //     m_moduleDirections[i].setAngle(state.ModuleStates[i].angle);
+        //     m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
 
-            SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
-        }
+        //     SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
+        // }
     }
 }
