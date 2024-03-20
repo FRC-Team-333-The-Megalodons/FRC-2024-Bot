@@ -12,15 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "GoHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SubWooferShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "GoHome"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubWooferShot"
+                }
+              }
+            ]
           }
         },
         {

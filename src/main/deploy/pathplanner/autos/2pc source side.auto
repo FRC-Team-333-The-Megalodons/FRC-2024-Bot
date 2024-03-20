@@ -34,6 +34,12 @@
           "data": {
             "name": "SpikeMarkShot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Source Side Step 2"
+          }
         }
       ]
     }

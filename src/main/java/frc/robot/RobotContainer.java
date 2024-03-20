@@ -47,6 +47,7 @@ import frc.robot.commands.sequences.AutoAmp;
 import frc.robot.commands.sequences.AutoIntake;
 import frc.robot.commands.sequences.GoHome;
 import frc.robot.commands.sequences.ShootingPosition;
+import frc.robot.commands.sequences.SourceIntake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Indexer;
@@ -111,7 +112,7 @@ public class RobotContainer {
     driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-0.5)));
 
     if (Utils.isSimulation()) {
-      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -137,8 +138,8 @@ public class RobotContainer {
       operatorController.create().whileTrue(new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS));
       operatorController.options().whileTrue(new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS));
 
-      // operatorController.square().whileTrue(new RunShooter(shooter, 0.9).alongWith(new RunIndexer(indexer, 1.0)));
-      operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM)));
+      // operatorController.square().whileTrue(new RunShooter(shooter, 0.3).alongWith(new RunIndexer(indexer, 0.3)));
+      operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.IDLE_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.IDLE_RPM)));
 
       operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist));
       operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
@@ -146,19 +147,22 @@ public class RobotContainer {
 
     } else {
 
+      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
+
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 
       operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
-      
-      operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkGreen(), leds))); // eject
-      operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.blinkRed(), leds))); // intake
+      operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
+
+      operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)); // eject
+      operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED)); // intake
 
       operatorController.povUp().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)); // trolley out
       operatorController.povDown().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)); // trolley in
 
       operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS));
       operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS));
-      operatorController.circle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS));
+      operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS));
       
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     }
@@ -318,6 +322,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
     NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
+
     configureBindings();
 
     // Default to non-manual mode (i.e. false)

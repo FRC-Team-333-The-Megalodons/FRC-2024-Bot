@@ -6,8 +6,7 @@ package frc.robot;
 
 public final class Constants {
 
-  public static final class IntakeConstants
-  {
+  public static final class IntakeConstants {
     public static final int MOTOR_ID = 3;
     public static final int LEFT_SENSOR_ID = 0;
     public static final int RIGHT_SENSOR_ID = 1;
@@ -29,6 +28,7 @@ public final class Constants {
     public static final double INTAKE_SETPOINT_POS = 0.68;
     public static final double SHOOTING_SETPOINT_POS = 0.441275894641876;
     public static final double AMP_SETPOINT_POS = 0.803184986114502;
+    public static final double SOURCE_SETPOINT_POS = 0.42;
     public static final double kP = 6.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;

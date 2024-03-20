@@ -4,25 +4,31 @@
 
 package frc.robot.commands.sequences;
 
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.TrolleyConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoWrist;
+import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunTrolley;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
 
-public class AutoAmp extends SequentialCommandGroup {
-  /** Creates a new AutoAmp. */
-  public AutoAmp(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot) {
+public class SourceIntake extends SequentialCommandGroup {
+  /** Creates a new SourceIntake. */
+  public SourceIntake(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, LEDStrip leds) {
     addCommands(
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoPivot(pivot, PivotConstants.AMP_SETPOINT_POS).withTimeout(1.5),
-      new AutoWrist(wrist, WristConstants.AMP_SETPOINT_POS).withTimeout(0.5)
+      new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS).withTimeout(0.5),
+      new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
+      new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(3.33)
     );
   }
 }

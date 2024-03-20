@@ -32,7 +32,11 @@ public class RunIntake extends Command {
   @Override
   public void execute() {
     intake.runIntake(value);
-    leds.red();
+    if (value < 0) {
+      leds.green();
+    } else {
+      leds.red();
+    }
   }
 
   // Called once the command ends or is interrupted.
