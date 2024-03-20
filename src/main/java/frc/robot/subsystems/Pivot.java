@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,8 +49,6 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(PivotConstants.PIVOT_ENCODER_ID);
 
     pivotController = new PIDController(PivotConstants.kP, PivotConstants.kI, PivotConstants.kD);
-
-    // camera = new PhotonCamera("camera");
   }
 
   public void setTrolleyRef(Trolley _trolleyRef) {
@@ -134,13 +131,11 @@ public class Pivot extends SubsystemBase {
     return true;
   }
 
-  public boolean isPivotDownFarEnoughThatTrolleyCantMoveOut()
-  {
+  public boolean isPivotDownFarEnoughThatTrolleyCantMoveOut() {
     return getPosition() <= PivotConstants.PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE; 
   }
 
-  public boolean isPivotUpFarEnoughThatTrolleyCantMoveIn()
-  {
+  public boolean isPivotUpFarEnoughThatTrolleyCantMoveIn() {
     return getPosition() >= PivotConstants.PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER;
   }
 
@@ -165,11 +160,12 @@ public class Pivot extends SubsystemBase {
     runPivot(-speed);
   }
 
-  public Command trackTarget(PhotonCamera camera) {
+  // pivot shoot to look at april tag
+  public Command aimAtTarget(PhotonCamera camera) {
     return run(() -> {
       PhotonPipelineResult result = camera.getLatestResult();
       if (result.hasTargets()) {
-        pivotMotorLeader.set(pivotController.calculate(getPosition(), result.getBestTarget().getYaw()));
+        pivotMotorLeader.set(pivotController.calculate(getPosition(), result.getBestTarget().getPitch()));
       }
     });
 
