@@ -30,9 +30,8 @@ public class ShootingPosition extends ParallelCommandGroup {
     addCommands(
       
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(1.0),
-      new AutoPivot(pivot, position).withTimeout(1.0),
-      new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9))
-      // new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM))
+      new AutoPivot(pivot, position).alongWith(
+      new RunShooter(shooter, 0.75))
     );
   }
 }

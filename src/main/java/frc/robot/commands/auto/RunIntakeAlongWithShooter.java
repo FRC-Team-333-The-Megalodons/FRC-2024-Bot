@@ -13,6 +13,7 @@ import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunShooter;
+import frc.robot.commands.sequences.ShootingPose;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -29,11 +30,13 @@ public class RunIntakeAlongWithShooter extends SequentialCommandGroup {
   /** Creates a new RunIntakeAlongWithShooter. */
   public RunIntakeAlongWithShooter(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
+      new ShootingPose(intake, wrist, trolley, pivot, indexer).alongWith(new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.75))),
+      new RunIntake(intake, leds, 0.75).alongWith(new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.75))).withTimeout(2)
+    );
+          //new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).alongWith(new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).withTimeout(2)),
+          //new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS).withTimeout(1.0).alongWith(new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).withTimeout(2)),
+          //new RunIntake(intake, leds, 0.5)).withTimeout(2));
           
-          new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
-          new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS).withTimeout(1.0),
-          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).alongWith(new RunIntake(intake, leds, 0.1))
-          );
   
   }
 }

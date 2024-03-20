@@ -20,7 +20,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,8 +39,11 @@ import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.auto.AutonIntake;
 import frc.robot.commands.auto.EventMarkIntake;
+import frc.robot.commands.auto.RunIntakeAlongWithShooter;
+import frc.robot.commands.auto.Shoot;
 import frc.robot.commands.auto.SpikeMarkShot;
 import frc.robot.commands.auto.SubWooferShootingPosition;
+import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunPivot;
 import frc.robot.commands.basic.RunTrolley;
@@ -89,6 +91,8 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
 
+  PhotonCamera camera = new PhotonCamera("shooterCam");
+
   private final boolean manualMode = false;
 
   private void configureBindings() {
@@ -114,6 +118,8 @@ public class RobotContainer {
     driverController.povLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(2)));
     driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-2)));
 
+    driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
+
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
     }
@@ -121,6 +127,8 @@ public class RobotContainer {
 
     /* Robot Mech */ 
     if (manualMode) {
+
+      driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
 
       operatorController.circle().whileTrue((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds)));
       operatorController.cross().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED));
@@ -149,6 +157,8 @@ public class RobotContainer {
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
 
     } else {
+
+      driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
 
       operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
 
@@ -324,6 +334,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
     NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
+    NamedCommands.registerCommand("SubWooferShoot", new RunIntakeAlongWithShooter(intake, wrist, trolley, pivot, indexer, shooter, leds));
+    NamedCommands.registerCommand("Shoot", new Shoot(shooter, indexer));
 
     configureBindings();
 
@@ -334,6 +346,7 @@ public class RobotContainer {
   SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+    return new PathPlannerAuto("1pc-auto");
   }
 }

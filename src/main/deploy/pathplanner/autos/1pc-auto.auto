@@ -6,21 +6,41 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "GoHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SubWooferShot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "GoHome"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SubWooferShot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

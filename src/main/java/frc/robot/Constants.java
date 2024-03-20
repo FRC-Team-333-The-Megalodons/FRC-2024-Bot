@@ -10,7 +10,7 @@ public final class Constants {
     public static final int MOTOR_ID = 3;
     public static final int LEFT_SENSOR_ID = 0;
     public static final int RIGHT_SENSOR_ID = 1;
-    public static final double INTAKE_SPEED = 0.5;
+    public static final double INTAKE_SPEED = 0.4;
     public static final double INTAKE_EJECT_SPEED = -0.5;
     public static final double INTAKE_FIRE_SPEED = 0.75;
     public static final double NOTE_SETPOINT = 0.0;
@@ -28,7 +28,7 @@ public final class Constants {
     public static final double INTAKE_SETPOINT_POS = 0.68;
     public static final double SHOOTING_SETPOINT_POS = 0.441275894641876;
     public static final double AMP_SETPOINT_POS = 0.803184986114502;
-    public static final double SOURCE_SETPOINT_POS = 0.42;
+    public static final double SOURCE_SETPOINT_POS = 0.599242329597473;
     public static final double kP = 6.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
@@ -82,17 +82,18 @@ public final class Constants {
     public static final double HOME_SETPOINT_POS = 0.192314154807854;
     public static final double INTAKE_SETPOINT_POS = 0.15122307873;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
-    public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.052;
+    public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;
     public static final double PODIUM_SETPOINT_POS = 0.120947403023685;
     public static final double WING_SETPOINT_POS = 0.0;
     public static final double AMP_SETPOINT_POS = 0.44;
+    public static final double SOURCE_SETPOINT_POS = 0.396183559904589;
     public static final double kP = 4.1;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
-    public static final double PIVOT_MIN_DOWN = 0.05; // This is the lowest point the intake can be down. Just past the subwoofer.
+    public static final double PIVOT_MIN_DOWN = 0.052; // This is the lowest point the intake can be down. Just past the subwoofer.
     public static final double PIVOT_MAX_UP = 0.46; // This is also the Amp scoring position.
     
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235;
