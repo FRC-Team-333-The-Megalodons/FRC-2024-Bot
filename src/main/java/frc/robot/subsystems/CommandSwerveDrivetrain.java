@@ -2,11 +2,15 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -40,6 +44,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     private boolean hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
+    private final SwerveRequest.FieldCentricFacingAngle angle = new FieldCentricFacingAngle();
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -82,6 +87,17 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public Command getAutoPath(String pathName) {
         return new PathPlannerAuto(pathName);
+    }
+
+    // turn robot to face apriltag
+    public Command aimAtTarget(PhotonCamera camera) {
+        return run(() -> {
+        PhotonPipelineResult result = camera.getLatestResult();
+        if (result.hasTargets())
+        {
+            this.applyRequest(() -> angle.withTargetDirection(Rotation2d.fromDegrees(result.getBestTarget().getYaw())));
+        }
+        });
     }
 
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {

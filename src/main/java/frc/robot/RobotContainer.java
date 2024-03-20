@@ -6,6 +6,9 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
@@ -167,7 +170,6 @@ public class RobotContainer {
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
     }
   }
-
 
 
 

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.TrolleyConstants;
@@ -22,16 +24,8 @@ public class Pivot extends SubsystemBase {
 
   private CANSparkFlex pivotMotorLeader, pivotMotorFollower;
   private DutyCycleEncoder pivotEncoder;
-  private PhotonCamera camera;
 
   private PIDController pivotController;
-
-  private final double cameraHeightMeters = Units.inchesToMeters(0);
-  private final double targetHeightMeters = Units.inchesToMeters(0);
-  private final double cameraPitchRadians = Units.degreesToRadians(0);
-
-  // How far from the target we want to be
-  private final double goalRangeMeters = Units.feetToMeters(0);
 
   private Trolley trolleyRef; 
   private Wrist wristRef;
@@ -171,14 +165,19 @@ public class Pivot extends SubsystemBase {
     runPivot(-speed);
   }
 
-  public void trackTarget() {
-    var result = camera.getLatestResult();
+  public Command trackTarget(PhotonCamera camera) {
+    return run(() -> {
+      PhotonPipelineResult result = camera.getLatestResult();
+      if (result.hasTargets()) {
+        pivotMotorLeader.set(pivotController.calculate(getPosition(), result.getBestTarget().getYaw()));
+      }
+    });
 
-    if (result.hasTargets()) {
-      pivotMotorLeader.set(pivotController.calculate(result.getBestTarget().getYaw(), 0));
-    } else {
-      stopPivot();
-    }
+    // if (result.hasTargets()) {
+    //   pivotMotorLeader.set(pivotController.calculate(result.getBestTarget().getYaw(), 0));
+    // } else {
+    //   stopPivot();
+    // }
   }
 
   private boolean mustStopDueToLimit(double speed) {
