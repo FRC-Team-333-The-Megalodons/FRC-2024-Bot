@@ -37,8 +37,12 @@ import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.auto.AutonIntake;
 import frc.robot.commands.auto.EventMarkIntake;
+import frc.robot.commands.auto.ShootAndLeave;
 import frc.robot.commands.auto.SpikeMarkShot;
 import frc.robot.commands.auto.SubWooferShootingPosition;
+import frc.robot.commands.auto.TwoPcAmpSide;
+import frc.robot.commands.auto.TwoPcCenter;
+import frc.robot.commands.auto.TwoPcSourceSide;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunPivot;
 import frc.robot.commands.basic.RunTrolley;
@@ -65,7 +69,7 @@ public class RobotContainer {
   private final CommandPS5Controller driverController = new CommandPS5Controller(0);
   private final CommandPS5Controller operatorController = new CommandPS5Controller(1);
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
-  private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -303,8 +307,12 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    autoChooser.setDefaultOption("None", null);
+    autoChooser.addOption("Shoot+Leave", new ShootAndLeave(intake, wrist, trolley, pivot, indexer, shooter, leds));
+    autoChooser.addOption("2pc-amp side", new TwoPcAmpSide(intake, wrist, trolley, pivot, indexer, shooter, leds));
+    autoChooser.addOption("2pc-center", new TwoPcCenter(intake, wrist, trolley, pivot, indexer, shooter, leds));
+    autoChooser.addOption("2pc-source side", new TwoPcSourceSide(intake, wrist, trolley, pivot, indexer, shooter, leds));
+    SmartDashboard.putData(autoChooser);
 
     trolley.setPivotRef(pivot);
     trolley.setWristRef(wrist);

@@ -17,14 +17,21 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
 
-public class ShootAndLeave extends SequentialCommandGroup {
-  PathPlannerPath path = PathPlannerPath.fromPathFile("Leave - Center");
-  /** Creates a new ShootAndLeave. */
-  public ShootAndLeave(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip ledStrip){
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class TwoPcSourceSide extends SequentialCommandGroup {
+  /** Creates a new TwoPcSourceSide. */
+  PathPlannerPath path = PathPlannerPath.fromPathFile("Source Side Step 1");
+  public TwoPcSourceSide(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip ledStrip){
     addCommands(
       new GoHome(pivot, trolley, wrist),
       new RunIntakeAlongWithShooter(intake, wrist, trolley, pivot, indexer, shooter, ledStrip),
-      AutoBuilder.followPath(path)
+      AutoBuilder.followPath(path),
+      new AutonIntake(intake, wrist, trolley, pivot, ledStrip),
+      new GoHome(pivot, trolley, wrist),
+      new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, ledStrip)
+
     );
   }
 }

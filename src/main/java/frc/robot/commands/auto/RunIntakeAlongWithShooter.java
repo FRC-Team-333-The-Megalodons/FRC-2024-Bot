@@ -32,7 +32,8 @@ public class RunIntakeAlongWithShooter extends SequentialCommandGroup {
           
           new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
           new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS).withTimeout(1.0),
-          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).alongWith(new RunIntake(intake, leds, 0.1))
+          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).withTimeout(2.5),
+          new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.9)).alongWith(new RunIntake(intake, leds, 0.75))
           );
   
   }
