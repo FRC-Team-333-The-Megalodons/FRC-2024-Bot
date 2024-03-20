@@ -109,10 +109,10 @@ public class RobotContainer {
     driverController.L1().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
     // TODO: test snap-to functionality
-    driverController.povUp().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
-    driverController.povDown().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
-    driverController.povDownLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(0.5)));
-    driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-0.5)));
+    driverController.povUp().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(2).withVelocityY(0)));
+    driverController.povDown().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-2).withVelocityY(0)));
+    driverController.povLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(2)));
+    driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-2)));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
