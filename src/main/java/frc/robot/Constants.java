@@ -61,19 +61,22 @@ public final class Constants {
     public static final double MAX_INPUT = 0.3;
 
     // TODO: Redo numbers for Trolley based on Real Robot
-    public static final double INTAKE_SETPOINT_POS = 107.47097778320312;
-    public static final double AMP_SETPOINT_POS = 69;
-    public static final double WRIST_POS_LOWER_LIMIT_WHILE_TROLLEY_DOWN = 0.7024;
-    public static final double TROLLEY_POS_LOWEST_POINT_WRIST_CAN_MOVE = 4.185;                                               
-    public static final double TROLLEY_IN_OUT_THRESHOLD = 1.16; // Can use this to decide if it's in or out
-    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP = 1.33;
+    //public static final double INTAKE_SETPOINT_POS = 107.47097778320312;
+    //public static final double AMP_SETPOINT_POS = 69;
+    //public static final double WRIST_POS_LOWER_LIMIT_WHILE_TROLLEY_DOWN = 0.7024;
+    //public static final double TROLLEY_POS_LOWEST_POINT_WRIST_CAN_MOVE = 4.185;                                               
+    //public static final double TROLLEY_IN_OUT_THRESHOLD = 1.16; // Can use this to decide if it's in or out
+    //public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP = 1.33;
     // have updated as of 3/16/14
-    public static final double TROLLEY_MIN_IN = 0.325;
-    public static final double TROLLEY_MAX_OUT = 0.761;
+    public static final double TROLLEY_MIN_IN = 0.546;   // Changed from 0.325 after Tech Valley 3/21/24 reseat of Trolley (after it fell off)
+    public static final double TROLLEY_MAX_OUT = 1.001;  // Changed from 0.761 after Tech Valley 3/21/24 reseat of Trolley (after it fell off)
     
-    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.585; // will go back to 0.585 soon
-    public static final double TROLLEY_FURTHEST_IN_FOR_CLIMBING = 0.45;
+    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.925; //0.806; // Delta to min is (0.585-0.325 = 0.26)
+    public static final double TROLLEY_FURTHEST_IN_FOR_CLIMBING = 0.795; //0.671; // Delta to min is (0.45-0.325 = 0.125)
     
+    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_CLIMB = 50.5; // 52 was just... too close.
+    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_BUMPERCLEAR = 28.25; // 33.3 was just... too close
+    public static final double TROLLEY_NEO_MIN_POSITION_RESET_VALUE = 110;
   }
 
   public static final class PivotConstants { 

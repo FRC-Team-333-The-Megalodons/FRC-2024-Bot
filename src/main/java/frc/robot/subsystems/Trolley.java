@@ -10,10 +10,12 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ModeConstants;
@@ -32,8 +34,11 @@ public class Trolley extends SubsystemBase {
   private AnalogInput potInput;
   private AnalogPotentiometer potentiometer;
 
+  private RelativeEncoder neoEncoder;
+
   public Trolley() {
     trolleyMotor = new CANSparkFlex(TrolleyConstants.TROLLEY_MOTOR_ID, MotorType.kBrushless);
+    neoEncoder = trolleyMotor.getEncoder();
     maxOutLimitSwitch = new DigitalInput(TrolleyConstants.TROLLEY_OUT_LIMIT_SWITCH_ID);
     minInLimitSwitch = new DigitalInput(TrolleyConstants.TROLLEY_IN_LIMIT_SWITCH_ID);
 
@@ -67,10 +72,19 @@ public class Trolley extends SubsystemBase {
     wristRef = _wristRef;
   }
 
-  public void resetEncoder() {
-    // Don't do anything here. The potentiometer is absolute. Do not invalidate that.
-    
-    // trolleyMotor.getEncoder().setPosition(0.0);
+  boolean hasNeoEncoderBeenZeroed = false; 
+
+  public void zeroNeoEncoder(boolean minPosition) {
+    hasNeoEncoderBeenZeroed = true;
+    if (minPosition) {
+      neoEncoder.setPosition(TrolleyConstants.TROLLEY_NEO_MIN_POSITION_RESET_VALUE);
+    } else {
+      neoEncoder.setPosition(0);
+    }
+  }
+
+  public double getNeoPosition() {
+    return neoEncoder.getPosition();
   }
 
   public void runTrolley(double speed) {
@@ -143,9 +157,6 @@ public class Trolley extends SubsystemBase {
   }
 
   public boolean isTrolleyAtMinInLimitSwitch() {
-    if (!minInLimitSwitch.get()) {
-      resetEncoder();
-    }
     return !minInLimitSwitch.get();
   }
 
@@ -161,29 +172,47 @@ public class Trolley extends SubsystemBase {
     return !isTrolleyOut();
   }
 
-  public boolean isTrolleyTooFarInToPivotVertical() {
-    return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP;
-  }
+  // public boolean isTrolleyTooFarInToPivotVertical() {
+  //   return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP;
+  // }
 
   public boolean isTrolleyTooFarInToPivotUpPastBumper() {
-    double limit = TrolleyConstants.TROLLEY_FURTHEST_IN_FOR_CLIMBING;
-    if (ModeConstants.isManualMode()) {
-      limit = TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
+    // If we haven't been zero-ed yet, then we just gotta hope.
+    if (!hasNeoEncoderBeenZeroed) {
+      return false;
     }
-    return getPotentiometerPosition() < limit;
+
+    double limit = TrolleyConstants.TROLLEY_NEO_DISTANCE_FROM_MAX_TO_CLIMB;
+    if (ModeConstants.isManualMode()) {
+      limit = TrolleyConstants.TROLLEY_NEO_DISTANCE_FROM_MAX_TO_BUMPERCLEAR;
+    }
+
+    return getNeoPosition() > limit; // I'm assuming it goes UP from Zero when the trolley comes in.
+
+    // double limit = TrolleyConstants.TROLLEY_FURTHEST_IN_FOR_CLIMBING;
+    // if (ModeConstants.isManualMode()) {
+    //   limit = TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
+    // }
+    // return getPotentiometerPosition() < limit;
   }
 
-  public boolean isTrolleyTooFarOutToPivotDown()
-  {
-    return getPotentiometerPosition() >= TrolleyConstants.TROLLEY_IN_OUT_THRESHOLD;
-  }
+  // public boolean isTrolleyTooFarOutToPivotDown()
+  // {
+  //   return getPotentiometerPosition() >= TrolleyConstants.TROLLEY_IN_OUT_THRESHOLD;
+  // }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("TrolleyMaxOutLimit", isTrolleyAtMaxOutLimitSwitch());
     SmartDashboard.putBoolean("TrolleyMinInLimit", isTrolleyAtMinInLimitSwitch());
     SmartDashboard.putNumber("TrolleyEncoder" , getPotentiometerPosition());
+    SmartDashboard.putNumber("TrolleyNeoEncoder", getNeoPosition());
     SmartDashboard.putBoolean("Trolley In?", isTrolleyIn());
     SmartDashboard.putBoolean("Trolley Out?", isTrolleyOut());
+    if (isTrolleyAtMaxOutLimitSwitch()) {
+      zeroNeoEncoder(false);
+    } else if (isTrolleyAtMinInLimitSwitch()) {
+      zeroNeoEncoder(true);
+    }
   }
 }

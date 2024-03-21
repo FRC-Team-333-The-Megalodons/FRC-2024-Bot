@@ -11,7 +11,8 @@
   ],
   "autoFolders": [
     "1pc-auto",
-    "2pc-auto"
+    "2pc-auto",
+    "shootAndLeave"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

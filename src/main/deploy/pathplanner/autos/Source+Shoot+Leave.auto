@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5
+      "x": 0.7577722922446928,
+      "y": 4.50109861384734
     },
-    "rotation": 0
+    "rotation": -59.79676224505735
   },
   "command": {
     "type": "sequential",
@@ -40,25 +40,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Leave - Center"
+                        "pathName": "SourceLeave"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "AutonIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "GoHome"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SpikeMarkShot"
                       }
                     }
                   ]
