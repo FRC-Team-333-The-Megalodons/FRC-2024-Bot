@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.3987758655128966,
-        "y": 7.0
+        "x": 2.301934480412171,
+        "y": 6.954220328193742
       },
       "prevControl": {
-        "x": 1.3987758655128966,
-        "y": 7.0
+        "x": 1.301934480412171,
+        "y": 6.954220328193742
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,10 +30,28 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -48,5 +66,5 @@
     "rotation": 60.751173663453,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

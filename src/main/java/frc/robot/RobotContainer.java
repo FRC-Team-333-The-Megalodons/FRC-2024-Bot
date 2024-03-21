@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.w3c.dom.NamedNodeMap;
 
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -39,7 +40,6 @@ import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.auto.AutonIntake;
 import frc.robot.commands.auto.EventMarkIntake;
-import frc.robot.commands.auto.RunIntakeAlongWithShooter;
 import frc.robot.commands.auto.Shoot;
 import frc.robot.commands.auto.SpikeMarkShot;
 import frc.robot.commands.auto.SubWooferShootingPosition;
@@ -157,7 +157,6 @@ public class RobotContainer {
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
 
     } else {
-
       driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
 
       operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
@@ -319,8 +318,7 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    
 
     trolley.setPivotRef(pivot);
     trolley.setWristRef(wrist);
@@ -334,9 +332,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
     NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
-    NamedCommands.registerCommand("SubWooferShoot", new RunIntakeAlongWithShooter(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("Shoot", new Shoot(shooter, indexer));
 
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     configureBindings();
 
     // Default to non-manual mode (i.e. false)
@@ -346,7 +345,7 @@ public class RobotContainer {
   SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
 
   public Command getAutonomousCommand() {
-    //return autoChooser.getSelected();
-    return new PathPlannerAuto("1pc-auto");
+    return autoChooser.getSelected();
+    //return new PathPlannerAuto("1pc-auto");
   }
 }

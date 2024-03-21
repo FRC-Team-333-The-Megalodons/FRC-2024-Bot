@@ -15,7 +15,7 @@ import frc.robot.commands.advanced.AutoWrist;
 import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunShooter;
-import frc.robot.commands.sequences.ShootingPose;
+import frc.robot.commands.sequences.AutoShootingPose;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -32,7 +32,7 @@ public class SubWooferShootingPosition extends SequentialCommandGroup {
   /** Creates a new SubWooferShootingPosition. */
   public SubWooferShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
-      new ShootingPose(intake, wrist, trolley, pivot, indexer).withTimeout(3),
+      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS).withTimeout(3),
       new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(2)
     );
   }

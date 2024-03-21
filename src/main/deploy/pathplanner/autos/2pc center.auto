@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2809151544229016,
-      "y": 5.571203241171914
+      "x": 1.3,
+      "y": 5.5
     },
     "rotation": 0
   },
@@ -12,32 +12,64 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubWooferShot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Step 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpikeMarkShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SubWooferShot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Leave - Center"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutonIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpikeMarkShot"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2pc-auto",
   "choreoAuto": false
 }

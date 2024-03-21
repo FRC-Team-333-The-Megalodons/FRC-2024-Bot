@@ -19,12 +19,12 @@ import frc.robot.subsystems.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootingPose extends SequentialCommandGroup {
+public class AutoShootingPose extends SequentialCommandGroup {
   /** Creates a new ShootingPose. */
-  public ShootingPose(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer) {
+  public AutoShootingPose(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer,double position) {
     addCommands(
       
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(1.0),
-      new AutoPivot(pivot,PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS));
+      new AutoPivot(pivot,position));
   }
 }

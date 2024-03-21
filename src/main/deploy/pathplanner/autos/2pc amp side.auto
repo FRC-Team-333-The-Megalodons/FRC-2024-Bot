@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7815863793056181,
-      "y": 4.499045012324901
+      "x": 0.7518415036830074,
+      "y": 6.647914530396961
     },
-    "rotation": -60.68007608122021
+    "rotation": 59.03624346792656
   },
   "command": {
     "type": "sequential",
@@ -40,13 +40,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Source Side Step 1"
+                        "pathName": "Leave - Amp Side"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "AutonIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
                       }
                     },
                     {

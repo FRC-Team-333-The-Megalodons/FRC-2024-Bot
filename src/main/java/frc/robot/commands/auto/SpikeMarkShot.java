@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.commands.basic.RunIntake;
+import frc.robot.commands.sequences.AutoShootingPose;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -24,8 +25,8 @@ public class SpikeMarkShot extends SequentialCommandGroup {
   /** Creates a new SpikeMarkShot. */
   public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
-      new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS).withTimeout(3),
-      new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(0.5)
+      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.PODIUM_SETPOINT_POS).withTimeout(3),
+      new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(1.5)
     );
   }
 }
