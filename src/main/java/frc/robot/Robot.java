@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,14 +18,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    CameraServer.startAutomaticCapture();
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     
-    // TODO: Remove this when done testing
     m_robotContainer.toggleManualModeWhenButtonPressed();
+    m_robotContainer.updateDashboard();
   }
 
   @Override

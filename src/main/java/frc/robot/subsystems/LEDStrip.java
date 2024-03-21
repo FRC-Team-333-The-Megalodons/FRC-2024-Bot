@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDStrip extends SubsystemBase {
-  private AddressableLED rightLED, leftLED;
-  private AddressableLEDBuffer rightLEDBuffer, leftLEDBuffer;
+  private AddressableLED m_led;
 
   private AddressableLEDBuffer offBuffer, redBuffer, orangeBuffer, yellowBuffer, greenBuffer, blueBuffer, violetBuffer;
 
+  private final int LED_COUNT = 100; 
   private LEDColor lastColor;
 
   public enum LEDColor
@@ -24,16 +24,11 @@ public class LEDStrip extends SubsystemBase {
   public LEDStrip() {
     initializeBuffers();
 
-    rightLED = new AddressableLED(0); // right LEDs
-    leftLEDBuffer = new  AddressableLEDBuffer(100);
-    rightLEDBuffer = new  AddressableLEDBuffer(100);
+    m_led = new AddressableLED(0); // LEDs
 
-    rightLED.setLength(rightLEDBuffer.getLength());
-    rightLED.setData(rightLEDBuffer);
-    rightLED.start();
-
-    
+    m_led.setLength(LED_COUNT);
     setColor(LEDColor.OFF);
+    m_led.start();
   }
 
   private AddressableLEDBuffer getBufferByColorEnum(LEDColor color) {
@@ -49,44 +44,24 @@ public class LEDStrip extends SubsystemBase {
     }
   }
 
+  private AddressableLEDBuffer makeBuffer(int count, int r, int g, int b)
+  {
+    AddressableLEDBuffer buffer = new AddressableLEDBuffer(count);
+    for (int i = 0; i < buffer.getLength(); ++i) {
+      buffer.setRGB(i, r, g, b);
+    }
+    return buffer;
+  }
+
   private void initializeBuffers() {
-    final int LED_COUNT = 100; 
-    offBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< offBuffer.getLength(); i++) {
-      offBuffer.setRGB(i, 0, 0, 0);
-    } 
-
-    redBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< redBuffer.getLength(); i++) {
-      redBuffer.setRGB(i, 250, 0, 0);
-    }
-
-    orangeBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< orangeBuffer.getLength(); i++) {
-      orangeBuffer.setRGB(i, 255, 43, 0);
-    }
-      
-    yellowBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< yellowBuffer.getLength(); i++) {
-      yellowBuffer.setRGB(i, 230, 223, 0);
-    }
-
-    greenBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< greenBuffer.getLength(); i++) {
-      greenBuffer.setRGB(i, 0, 250, 0);
-    }
-
-    blueBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< blueBuffer.getLength(); i++) {
-      blueBuffer.setRGB(i, 0, 59, 174);
-    }
-
-    violetBuffer = new AddressableLEDBuffer(LED_COUNT);
-    for (int i=0; i< violetBuffer.getLength(); i++) {
-      violetBuffer.setRGB(i, 255, 0, 255);
-    }
-
-
+    offBuffer = makeBuffer(LED_COUNT, 0, 0, 0);
+    //
+    redBuffer = makeBuffer(LED_COUNT, 250, 0, 0);
+    orangeBuffer = makeBuffer(LED_COUNT, 255, 43, 0);
+    yellowBuffer = makeBuffer(LED_COUNT, 230, 223, 0);
+    greenBuffer = makeBuffer(LED_COUNT, 0, 250, 0);
+    blueBuffer = makeBuffer(LED_COUNT, 0, 59, 174);
+    violetBuffer = makeBuffer(LED_COUNT, 255, 0, 255);
   }
 
   public void setBlinkColor(LEDColor color) {
@@ -114,7 +89,7 @@ public class LEDStrip extends SubsystemBase {
     // If we've made it this far, it means we're actually changing the colors!
     lastColor = color;
     AddressableLEDBuffer buff = getBufferByColorEnum(color);
-    rightLED.setData(buff);
+    m_led.setData(buff);
   }
 
   public void off() {
@@ -169,8 +144,11 @@ public class LEDStrip extends SubsystemBase {
     setBlinkColor(LEDColor.VIOLET);
   }
   
+  // WARNING: This function never exits, it loops forever!!!
   public void shadesOFBlue() {
-    int length = rightLEDBuffer.getLength();
+    
+    AddressableLEDBuffer m_ledBuffer = new  AddressableLEDBuffer(100);
+    int length = m_ledBuffer.getLength();
     int blue = 80;
     int red = 20;
     int green = 20;
@@ -182,10 +160,10 @@ public class LEDStrip extends SubsystemBase {
         red = (red - 20) % 20;
         green = (green - 20) % 20;
         for (var i = 0; i < length; i++) {
-            rightLEDBuffer.setRGB(i, red, green, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
-            rightLEDBuffer.setRGB(i, 0, 0, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
+            m_ledBuffer.setRGB(i, red, green, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
+            m_ledBuffer.setRGB(i, 0, 0, blue); // Измените значения R, G и B, чтобы создать разноцветный эффект
         }
-        rightLED.setData(rightLEDBuffer);
+        m_led.setData(m_ledBuffer);
         try {
             Thread.sleep(40); // Подождите некоторое время перед обновлением цвета
             Thread.sleep(300); // Подождите некоторое время перед обновлением цвета

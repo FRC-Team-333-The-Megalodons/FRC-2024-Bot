@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public final class Constants {
 
   public static final class IntakeConstants {
@@ -69,7 +71,8 @@ public final class Constants {
     public static final double TROLLEY_MIN_IN = 0.325;
     public static final double TROLLEY_MAX_OUT = 0.761;
     
-    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.45;
+    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.585; // will go back to 0.585 soon
+    public static final double TROLLEY_FURTHEST_IN_FOR_CLIMBING = 0.45;
     
   }
 
@@ -129,4 +132,14 @@ public final class Constants {
     public static final double MIN_INPUT = -1;
     public static final double MAX_INPUT = 1;
   }
+
+  public static final class ModeConstants {
+    public static  final String MANUAL_MODE_KEY = "MANUAL_MODE";
+    
+    public static boolean isManualMode()
+    {
+      return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
+    }
+  }
+
 }

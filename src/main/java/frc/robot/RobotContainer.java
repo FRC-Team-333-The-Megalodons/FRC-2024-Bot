@@ -24,12 +24,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ModeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TrolleyConstants;
@@ -93,17 +95,33 @@ public class RobotContainer {
 
   PhotonCamera camera = new PhotonCamera("shooterCam");
 
-  private final boolean manualMode = false;
+  private final boolean startInManualMode = false;
 
-  private void configureBindings() {
-
+  private void configureInitialControllerBindings()
+  {
     /* Drivetrain */ 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with
-                                                                                           // negative Y (forward)
-            .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-        ));
+    drivetrain.applyRequest(() -> drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with
+                                                                                        // negative Y (forward)
+        .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+        .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+    ));
+
+    configureDriverControllerBindings();
+
+    if (Utils.isSimulation()) {
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
+    }
+    drivetrain.registerTelemetry(logger::telemeterize);
+
+    if (startInManualMode) {
+      configureOperatorControllerManualModeBindings();
+    } else {
+      configureOperatorControllerSmartModeBindings();
+    }
+  }
+
+  private void configureDriverControllerBindings() {
 
     driverController.cross().whileTrue(drivetrain.applyRequest(() -> brake));
     driverController.circle().whileTrue(drivetrain
@@ -117,19 +135,25 @@ public class RobotContainer {
     driverController.povDown().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-2).withVelocityY(0)));
     driverController.povLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(2)));
     driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-2)));
+    
+    driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
 
     driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
+  }
 
-    if (Utils.isSimulation()) {
-      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
-    }
-    drivetrain.registerTelemetry(logger::telemeterize);
+  public void removeOperatorControllerBindings()
+  {
+    // This should (hopefully) clear all buttons. 
+    CommandScheduler.getInstance().getActiveButtonLoop().clear(); 
+    // If all the button bindings have been cleared, that means the driver controller too.
+    // Since our intention is to only clear the Operator controller bindings, it means we'll
+    //  need to immediately re-instate the Driver Controller bindings.
+    configureDriverControllerBindings();
+  }
 
-    /* Robot Mech */ 
-    if (manualMode) {
-
-      driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
-
+  public void configureOperatorControllerManualModeBindings()
+  {
+      leds.violet();
       operatorController.circle().whileTrue((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds)));
       operatorController.cross().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED));
       operatorController.triangle().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_EJECT_SPEED));
@@ -155,10 +179,12 @@ public class RobotContainer {
       operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist));
       operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
       operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
+  }
 
-    } else {
-      driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
-
+  public void configureOperatorControllerSmartModeBindings()
+  {
+    
+      leds.yellow();
       operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
 
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
@@ -177,145 +203,136 @@ public class RobotContainer {
       operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS));
       
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
-    }
   }
-
-
-
-
-
-
-  public class ManualModeEvaluator implements BooleanSupplier {
-    public ManualModeEvaluator() {}
-    public boolean getAsBoolean() {
-        return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
-    }
-  }
-  
-  final String MANUAL_MODE_KEY = "MANUAL_MODE";
-
-  boolean lastMicButtonState = false;
 
   public void toggleManualModeWhenButtonPressed() {
     if (operatorController.getHID().getRawButtonPressed(15)) {
-      boolean before = SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
+      boolean before = ModeConstants.isManualMode();
       boolean after = !before;
       System.out.println("TOGGLE MANUAL MODE from "+before+" to "+after+".");
-      SmartDashboard.putBoolean(MANUAL_MODE_KEY, after);
+      removeOperatorControllerBindings();
+      SmartDashboard.putBoolean(ModeConstants.MANUAL_MODE_KEY, after);
       if (after) {
-        leds.violet();
+        configureOperatorControllerManualModeBindings();
       } else {
-        leds.yellow();
+        configureOperatorControllerSmartModeBindings();
       }
     }
   }
 
-  ManualModeEvaluator manualModeEvaluator = new ManualModeEvaluator(); // We only need one instance of this class.
+  // public class ManualModeEvaluator implements BooleanSupplier {
+  //   public ManualModeEvaluator() {}
+  //   public boolean getAsBoolean() {
+  //       return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
+  //   }
+  // }
 
-  public Command smartOrManual(Command smart, Command manual) {
-    return new ConditionalCommand(manual, smart, manualModeEvaluator);
-  }
+  // ManualModeEvaluator manualModeEvaluator = new ManualModeEvaluator(); // We only need one instance of this class.
 
-  public Command NullCommand() {
-    return new WaitCommand(0);
-  }
+  // public Command smartOrManual(Command smart, Command manual) {
+  //   return new ConditionalCommand(manual, smart, manualModeEvaluator);
+  // }
 
-  public void registerButtons() {
-    // operatorController.circle().whileTrue(new RunIntake(intake, 0.5).until(intake::hasNote));
-    operatorController.circle().whileTrue(smartOrManual(
-      /* SMART */ NullCommand(), /*TODO - Implement Circle for Smart Mode */
-      /* MANUAL */  ((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.red(), leds))).
-                            until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(1))
-    ));
+  // public Command NullCommand() {
+  //   return new WaitCommand(0);
+  // }
 
-    operatorController.cross().whileTrue(smartOrManual(
-      /* SMART */  new AutoAmp(intake, wrist, trolley, pivot),
-      /* MANUAL */  new RunIntake(intake, leds, 0.75)
-    ));
+  // public void registerButtons() {
+  //   // operatorController.circle().whileTrue(new RunIntake(intake, 0.5).until(intake::hasNote));
+  //   operatorController.circle().whileTrue(smartOrManual(
+  //     /* SMART */ NullCommand(), /*TODO - Implement Circle for Smart Mode */
+  //     /* MANUAL */  ((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).alongWith(new RunCommand(() -> leds.red(), leds))).
+  //                           until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(1))
+  //   ));
 
-    operatorController.triangle().whileTrue(smartOrManual(
-        /* SMART */ new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS),
-      /* MANUAL */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)
-    ));
+  //   operatorController.cross().whileTrue(smartOrManual(
+  //     /* SMART */  new AutoAmp(intake, wrist, trolley, pivot),
+  //     /* MANUAL */  new RunIntake(intake, leds, 0.75)
+  //   ));
 
-    // operatorController.square().whileTrue(new RunShooter(shooter, 0.9).alongWith(new RunIndexer(indexer, 1.0)));
-    operatorController.square().whileTrue(smartOrManual(
-        /* SMART */ new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS),
-      /* MANUAL */ new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM))
-    ));
-    // operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM));
-    // operatorController.square().whileTrue(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM));)
+  //   operatorController.triangle().whileTrue(smartOrManual(
+  //       /* SMART */ new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS),
+  //     /* MANUAL */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)
+  //   ));
 
-    operatorController.touchpad().onTrue(smartOrManual(
-        /* SMART */ new RunCommand(() -> leds.blinkOrange(), leds).repeatedly().withTimeout(2.0), // TODO: Do we need repeatedly here?
-      /* MANUAL */ new RunCommand(() -> leds.blinkViolet(), leds).repeatedly().withTimeout(2.0)
-    ));
+  //   // operatorController.square().whileTrue(new RunShooter(shooter, 0.9).alongWith(new RunIndexer(indexer, 1.0)));
+  //   operatorController.square().whileTrue(smartOrManual(
+  //       /* SMART */ new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS),
+  //     /* MANUAL */ new AutoShooter(shooter, ShooterConstants.SHOT_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM))
+  //   ));
+  //   // operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.SHOT_RPM));
+  //   // operatorController.square().whileTrue(new AutoIndexer(indexer, IndexerConstants.SHOT_RPM));)
 
-    operatorController.L1().whileTrue(smartOrManual(
-        /* SMART */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED), // Eject
-      /* MANUAL */ new RunWrist(wrist, -0.2)
-    ));
+  //   operatorController.touchpad().onTrue(smartOrManual(
+  //       /* SMART */ new RunCommand(() -> leds.blinkOrange(), leds).repeatedly().withTimeout(2.0), // TODO: Do we need repeatedly here?
+  //     /* MANUAL */ new RunCommand(() -> leds.blinkViolet(), leds).repeatedly().withTimeout(2.0)
+  //   ));
 
-    operatorController.R1().whileTrue(smartOrManual(
-        /* SMART */ new AutoIntake(intake, wrist, trolley, pivot, leds),
-      /* MANUAL */ new RunWrist(wrist, 0.2)
-    ));
+  //   operatorController.L1().whileTrue(smartOrManual(
+  //       /* SMART */ new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED), // Eject
+  //     /* MANUAL */ new RunWrist(wrist, -0.2)
+  //   ));
 
-    operatorController.L3().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS)
-    ));
+  //   operatorController.R1().whileTrue(smartOrManual(
+  //       /* SMART */ new AutoIntake(intake, wrist, trolley, pivot, leds),
+  //     /* MANUAL */ new RunWrist(wrist, 0.2)
+  //   ));
 
-    operatorController.R3().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS)
-    ));
+  //   operatorController.L3().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS)
+  //   ));
 
-    operatorController.povUp().whileTrue(smartOrManual(
-        /* SMART */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch), // trolley out,
-      /* MANUAL */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)
-    ));
+  //   operatorController.R3().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS)
+  //   ));
 
-    operatorController.povDown().whileTrue(smartOrManual(
-        /* SMART */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch), // trolley in,
-      /* MANUAL */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
-    ));
+  //   operatorController.povUp().whileTrue(smartOrManual(
+  //       /* SMART */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch), // trolley out,
+  //     /* MANUAL */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)
+  //   ));
 
-    operatorController.R2().whileTrue(smartOrManual(
-        /* SMART */ new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED), // Intake
-      /* MANUAL */ new RunPivot(pivot, PivotConstants.PIVOT_SPEED)
-    ));
+  //   operatorController.povDown().whileTrue(smartOrManual(
+  //       /* SMART */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch), // trolley in,
+  //     /* MANUAL */ new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
+  //   ));
 
-    operatorController.L2().whileTrue(smartOrManual(
-        /* SMART */ new GoHome(pivot, trolley, wrist),
-      /* MANUAL */ new RunPivot(pivot, -PivotConstants.PIVOT_SPEED)
-    ));
+  //   operatorController.R2().whileTrue(smartOrManual(
+  //       /* SMART */ new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED), // Intake
+  //     /* MANUAL */ new RunPivot(pivot, PivotConstants.PIVOT_SPEED)
+  //   ));
 
-    operatorController.create().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS)
-    ));
+  //   operatorController.L2().whileTrue(smartOrManual(
+  //       /* SMART */ new GoHome(pivot, trolley, wrist),
+  //     /* MANUAL */ new RunPivot(pivot, -PivotConstants.PIVOT_SPEED)
+  //   ));
 
-    operatorController.options().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS)
-    ));
+  //   operatorController.create().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS)
+  //   ));
 
-    operatorController.povLeft().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new GoHome(pivot, trolley, wrist)
-    ));
+  //   operatorController.options().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS)
+  //   ));
 
-    operatorController.povRight().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoIntake(intake, wrist, trolley, pivot, leds)
-    ));
+  //   operatorController.povLeft().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new GoHome(pivot, trolley, wrist)
+  //   ));
 
-    operatorController.PS().whileTrue(smartOrManual(
-        /* SMART */ NullCommand(),
-      /* MANUAL */ new AutoAmp(intake, wrist, trolley, pivot)
-    ));
-  }
+  //   operatorController.povRight().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoIntake(intake, wrist, trolley, pivot, leds)
+  //   ));
+
+  //   operatorController.PS().whileTrue(smartOrManual(
+  //       /* SMART */ NullCommand(),
+  //     /* MANUAL */ new AutoAmp(intake, wrist, trolley, pivot)
+  //   ));
+  // }
 
   public RobotContainer() {
     
@@ -336,13 +353,28 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    configureBindings();
+    configureInitialControllerBindings();
 
     // Default to non-manual mode (i.e. false)
-    SmartDashboard.putBoolean(MANUAL_MODE_KEY, false);
+    SmartDashboard.putBoolean(ModeConstants.MANUAL_MODE_KEY, false);
   }
 
-  SendableChooser<Boolean> manualModeToggle = new SendableChooser<>();
+  private int dashboardErrorCounter = 0;
+  public void updateDashboard()
+  {
+    try {
+      SmartDashboard.putBoolean("CAMERA_HAS_TARGET",camera.getLatestResult().hasTargets());
+    //SmartDashboard.putBoolean("CAMERA_HAS_TARGET", camera.hasTargets());
+    } catch (Exception e) {
+      // Avoid printing this constantly. Maybe just every 50 iterations or so.
+      if (dashboardErrorCounter >= 50) {
+        System.out.println("UpdateDashboard Exception:"+e.getMessage());
+        dashboardErrorCounter = 0;
+      } else {
+        ++dashboardErrorCounter;
+      }
+    }
+  }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();

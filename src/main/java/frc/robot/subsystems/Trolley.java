@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ModeConstants;
 import frc.robot.Constants.TrolleyConstants;
 
 public class Trolley extends SubsystemBase {
@@ -165,7 +166,11 @@ public class Trolley extends SubsystemBase {
   }
 
   public boolean isTrolleyTooFarInToPivotUpPastBumper() {
-    return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
+    double limit = TrolleyConstants.TROLLEY_FURTHEST_IN_FOR_CLIMBING;
+    if (ModeConstants.isManualMode()) {
+      limit = TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
+    }
+    return getPotentiometerPosition() < limit;
   }
 
   public boolean isTrolleyTooFarOutToPivotDown()
