@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ModeConstants;
+import frc.robot.Constants.GlobalState;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TrolleyConstants;
@@ -207,11 +207,11 @@ public class RobotContainer {
 
   public void toggleManualModeWhenButtonPressed() {
     if (operatorController.getHID().getRawButtonPressed(15)) {
-      boolean before = ModeConstants.isManualMode();
+      boolean before = GlobalState.isManualMode();
       boolean after = !before;
       System.out.println("TOGGLE MANUAL MODE from "+before+" to "+after+".");
       removeOperatorControllerBindings();
-      SmartDashboard.putBoolean(ModeConstants.MANUAL_MODE_KEY, after);
+      SmartDashboard.putBoolean(GlobalState.MANUAL_MODE_KEY, after);
       if (after) {
         configureOperatorControllerManualModeBindings();
       } else {
@@ -356,7 +356,7 @@ public class RobotContainer {
     configureInitialControllerBindings();
 
     // Default to non-manual mode (i.e. false)
-    SmartDashboard.putBoolean(ModeConstants.MANUAL_MODE_KEY, false);
+    SmartDashboard.putBoolean(GlobalState.MANUAL_MODE_KEY, false);
   }
 
   private int dashboardErrorCounter = 0;

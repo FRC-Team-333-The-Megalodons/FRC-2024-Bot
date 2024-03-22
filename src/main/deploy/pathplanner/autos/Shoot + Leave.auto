@@ -60,6 +60,18 @@
                       "data": {
                         "name": "SpikeMarkShot"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Leave - Center Step2"
+                      }
                     }
                   ]
                 }

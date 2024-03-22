@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.3390624559026896,
+        "x": 2.303427034038534,
         "y": 5.5
       },
       "prevControl": {
-        "x": 1.9006902539155672,
+        "x": 1.8650548320514115,
         "y": 5.494733805001591
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Leave - Center Step 1"
     }
   ],
   "rotationTargets": [],
@@ -50,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 0.4,
-    "maxAcceleration": 0.5,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

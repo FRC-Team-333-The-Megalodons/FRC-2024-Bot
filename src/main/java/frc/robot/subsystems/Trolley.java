@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ModeConstants;
+import frc.robot.Constants.GlobalState;
 import frc.robot.Constants.TrolleyConstants;
 
 public class Trolley extends SubsystemBase {
@@ -183,7 +183,7 @@ public class Trolley extends SubsystemBase {
     }
 
     double limit = TrolleyConstants.TROLLEY_NEO_DISTANCE_FROM_MAX_TO_CLIMB;
-    if (ModeConstants.isManualMode()) {
+    if (GlobalState.isManualMode()) {
       limit = TrolleyConstants.TROLLEY_NEO_DISTANCE_FROM_MAX_TO_BUMPERCLEAR;
     }
 

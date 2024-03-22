@@ -87,6 +87,7 @@ public final class Constants {
     public static final double ZERO_OFFSET = 0.0;
     public static final double HOME_SETPOINT_POS = 0.192314154807854;
     public static final double INTAKE_SETPOINT_POS = 0.15122307873;
+    public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;
     public static final double PODIUM_SETPOINT_POS = 0.120947403023685;
@@ -136,13 +137,35 @@ public final class Constants {
     public static final double MAX_INPUT = 1;
   }
 
-  public static final class ModeConstants {
+  public static final class GlobalState {
     public static  final String MANUAL_MODE_KEY = "MANUAL_MODE";
+
+    private static BotState ROBOT_STATE = BotState.UNKNOWN_POSITION;
     
     public static boolean isManualMode()
     {
       return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
     }
+
+    public static void setRobotState(BotState state)
+    {
+      ROBOT_STATE = state;
+    }
+
+    public static BotState getRobotState()
+    {
+      return ROBOT_STATE;
+    }
+  }
+
+
+  public enum BotState {
+    UNKNOWN_POSITION,
+    HOME_POSITION,
+    SHOOTER_POSITION,
+    FLOOR_INTAKE_POSITION, 
+    SOURCE_INTAKE_POSITION,
+    AMP_POSITION
   }
 
 }
