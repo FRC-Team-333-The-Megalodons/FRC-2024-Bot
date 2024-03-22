@@ -149,6 +149,10 @@ public final class Constants {
 
     public static void setRobotState(BotState state)
     {
+      if (ROBOT_STATE == state) { return; }
+
+      // If we're entering the Shooter Position, we need to switch out our Intake Button Mapping
+      //  to do the new intake sequence instead. 
       ROBOT_STATE = state;
     }
 

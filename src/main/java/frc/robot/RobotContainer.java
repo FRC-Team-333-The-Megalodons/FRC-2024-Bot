@@ -52,6 +52,7 @@ import frc.robot.commands.basic.RunTrolley;
 import frc.robot.commands.basic.RunWrist;
 import frc.robot.commands.sequences.AutoAmp;
 import frc.robot.commands.sequences.AutoIntake;
+import frc.robot.commands.sequences.AutoShootingPoseToFloorIntake;
 import frc.robot.commands.sequences.GoHome;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.commands.sequences.SourceIntake;
@@ -190,7 +191,6 @@ public class RobotContainer {
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 
       operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
-      operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
 
       operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)); // eject
       operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED)); // intake
@@ -200,9 +200,11 @@ public class RobotContainer {
 
       operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS));
       operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS));
-      operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS));
-      
       operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
+      operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
+      
+      operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS));
+      operatorController.PS().whileTrue(new AutoShootingPoseToFloorIntake(intake, wrist, trolley, pivot, leds));
   }
 
   public void toggleManualModeWhenButtonPressed() {

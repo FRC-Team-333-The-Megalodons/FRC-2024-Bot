@@ -25,10 +25,10 @@ public class AutoShootingPose extends SequentialCommandGroup {
   /** Creates a new ShootingPose. */
   public AutoShootingPose(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer,double position) {
     addCommands(
-      new MarkBotState(BotState.UNKNOWN_POSITION),
+      //new MarkBotState(BotState.UNKNOWN_POSITION),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(1.0),
-      new AutoPivot(pivot,position),
-      new MarkBotState(BotState.SHOOTER_POSITION)
+      new AutoPivot(pivot,position)
+      //,new MarkBotState(BotState.SHOOTER_POSITION)
     );
   }
 }

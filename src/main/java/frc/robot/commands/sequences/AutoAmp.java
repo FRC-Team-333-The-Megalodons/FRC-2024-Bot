@@ -22,11 +22,11 @@ public class AutoAmp extends SequentialCommandGroup {
   /** Creates a new AutoAmp. */
   public AutoAmp(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot) {
     addCommands(
-      new MarkBotState(BotState.UNKNOWN_POSITION),
+      //new MarkBotState(BotState.UNKNOWN_POSITION),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoPivot(pivot, PivotConstants.AMP_SETPOINT_POS).withTimeout(1.5),
-      new AutoWrist(wrist, WristConstants.AMP_SETPOINT_POS).withTimeout(0.5),
-      new MarkBotState(BotState.AMP_POSITION)
+      new AutoWrist(wrist, WristConstants.AMP_SETPOINT_POS).withTimeout(0.5)
+      //,new MarkBotState(BotState.AMP_POSITION)
     );
   }
 }

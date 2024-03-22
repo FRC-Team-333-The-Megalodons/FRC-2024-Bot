@@ -21,11 +21,11 @@ public class GoHome extends SequentialCommandGroup {
   /** Creates a new GoHome. */
   public GoHome(Pivot pivot, Trolley trolley, Wrist wrist) {
     addCommands(
-      new MarkBotState(BotState.UNKNOWN_POSITION),
+      //new MarkBotState(BotState.UNKNOWN_POSITION),
       new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS).withTimeout(0.75),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(0.5),
-      new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch),
-      new MarkBotState(BotState.HOME_POSITION)
+      new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
+      //,new MarkBotState(BotState.HOME_POSITION)
     );
   }
 }

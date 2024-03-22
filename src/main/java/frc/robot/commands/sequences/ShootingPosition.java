@@ -30,7 +30,7 @@ public class ShootingPosition extends ParallelCommandGroup {
   /** Creates a new ShootingPosition. */
   public ShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, double position) {
     addCommands(
-      new MarkBotState(BotState.UNKNOWN_POSITION),
+      //new MarkBotState(BotState.UNKNOWN_POSITION),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS).withTimeout(1.0),
       new AutoPivot(pivot, position).alongWith(
       new RunShooter(shooter, 0.75))

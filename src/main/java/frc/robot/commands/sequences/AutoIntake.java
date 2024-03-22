@@ -26,11 +26,11 @@ public class AutoIntake extends SequentialCommandGroup {
   /** Creates a new AutoIntake. */
   public AutoIntake(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, LEDStrip leds) {
     addCommands(
-      new MarkBotState(BotState.UNKNOWN_POSITION),
+      //new MarkBotState(BotState.UNKNOWN_POSITION),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
       new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(1.0),
-      new MarkBotState(BotState.FLOOR_INTAKE_POSITION),
+      //new MarkBotState(BotState.FLOOR_INTAKE_POSITION),
       new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
       new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(3.33)
     );
