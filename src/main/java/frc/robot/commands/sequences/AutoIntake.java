@@ -32,7 +32,8 @@ public class AutoIntake extends SequentialCommandGroup {
       new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(1.0),
       //new MarkBotState(BotState.FLOOR_INTAKE_POSITION),
       new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
-      new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(3.33)
+      //new RunCommand(() -> leds.blinkGreen(), leds).repeatedly().withTimeout(3.33)
+      new RunCommand(() -> leds.green(), leds)
     );
   }
 }

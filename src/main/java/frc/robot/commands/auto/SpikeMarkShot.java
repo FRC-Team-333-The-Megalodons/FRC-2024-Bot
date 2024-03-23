@@ -25,8 +25,8 @@ public class SpikeMarkShot extends SequentialCommandGroup {
   /** Creates a new SpikeMarkShot. */
   public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
-      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.PODIUM_SETPOINT_POS).withTimeout(3),
-      new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(1.5)
+      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.PODIUM_SETPOINT_POS).withTimeout(2),
+      new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(1.75)
     );
   }
 }

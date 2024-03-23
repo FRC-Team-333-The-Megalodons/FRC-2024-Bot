@@ -42,12 +42,6 @@
                       "data": {
                         "pathName": "SourceLeave"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutonIntake"
-                      }
                     }
                   ]
                 }

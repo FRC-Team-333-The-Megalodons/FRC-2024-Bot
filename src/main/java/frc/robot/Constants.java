@@ -27,7 +27,7 @@ public final class Constants {
   public static final class WristConstants {
     public static final int MOTOR_ID = 4;
     public static final double ZERO_OFFSET = 0.55;
-    public static final double INTAKE_SETPOINT_POS = 0.68;
+    public static final double INTAKE_SETPOINT_POS = 0.642;
     public static final double SHOOTING_SETPOINT_POS = 0.441275894641876;
     public static final double AMP_SETPOINT_POS = 0.803184986114502;
     public static final double SOURCE_SETPOINT_POS = 0.599242329597473;
@@ -86,7 +86,7 @@ public final class Constants {
     public static final double PIVOT_SPEED = 0.2;
     public static final double ZERO_OFFSET = 0.0;
     public static final double HOME_SETPOINT_POS = 0.192314154807854;
-    public static final double INTAKE_SETPOINT_POS = 0.15122307873;
+    public static final double INTAKE_SETPOINT_POS = 0.15332;//0.15122307873;
     public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;

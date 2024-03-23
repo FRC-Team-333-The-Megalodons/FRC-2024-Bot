@@ -159,7 +159,7 @@ public class RobotContainer {
       operatorController.cross().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED));
       operatorController.triangle().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_EJECT_SPEED));
 
-      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds));
+      //operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds));
 
       operatorController.L1().whileTrue(new RunWrist(wrist, 0.5));
       operatorController.R1().whileTrue(new RunWrist(wrist, -0.5));
@@ -186,7 +186,7 @@ public class RobotContainer {
   {
     
       leds.yellow();
-      operatorController.touchpad().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
+      operatorController.create().whileTrue(new RunCommand(() -> leds.blinkBlue(), leds).repeatedly().withTimeout(5));
 
       operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist));
 

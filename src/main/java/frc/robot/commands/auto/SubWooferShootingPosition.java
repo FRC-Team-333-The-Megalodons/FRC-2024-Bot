@@ -32,7 +32,7 @@ public class SubWooferShootingPosition extends SequentialCommandGroup {
   /** Creates a new SubWooferShootingPosition. */
   public SubWooferShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {
     addCommands(
-      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS).withTimeout(3),
+      new AutoShootingPose(intake, wrist, trolley, pivot, indexer,PivotConstants.AUTO_SUBWOFFER_SETPOINT_POS).withTimeout(4),
       new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).withTimeout(2)
     );
   }

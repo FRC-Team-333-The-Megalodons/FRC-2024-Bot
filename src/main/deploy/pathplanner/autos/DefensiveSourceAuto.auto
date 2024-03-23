@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7527539326923315,
+      "y": 4.486043535193867
+    },
+    "rotation": -59.839939161913
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Defense Step1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Defense Step2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

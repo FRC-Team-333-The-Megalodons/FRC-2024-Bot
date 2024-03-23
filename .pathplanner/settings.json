@@ -3,11 +3,12 @@
   "robotLength": 0.8,
   "holonomicMode": true,
   "pathFolders": [
-    "Under Stage",
-    "Source Side",
+    "Amp Side",
     "Center",
     "Leave",
-    "Amp Side"
+    "DefensivePaths",
+    "Source Side",
+    "Under Stage"
   ],
   "autoFolders": [
     "1pc-auto",

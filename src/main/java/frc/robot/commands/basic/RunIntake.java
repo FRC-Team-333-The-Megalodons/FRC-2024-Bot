@@ -33,7 +33,7 @@ public class RunIntake extends Command {
   public void execute() {
     intake.runIntake(value);
     if (value < 0) {
-      leds.green();
+      leds.blue();
     } else {
       leds.red();
     }
