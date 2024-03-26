@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.TrolleyConstants;
 
 public class Pivot extends SubsystemBase {
 
@@ -49,6 +48,7 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(PivotConstants.PIVOT_ENCODER_ID);
 
     pivotController = new PIDController(PivotConstants.kP, PivotConstants.kI, PivotConstants.kD);
+    pivotController.setTolerance(PivotConstants.kTolerance);
   }
 
   public void setTrolleyRef(Trolley _trolleyRef) {
@@ -80,12 +80,6 @@ public class Pivot extends SubsystemBase {
     pivotMotorFollower.set(0.0);
   }
 
-  
-  public boolean fuzzyEquals(double a, double b) {
-    final double epsilon = 0.001;
-    return Math.abs(a-b) < epsilon;
-  }
-
   public boolean isOkToMovePivotUp() {
     // Furthest possible limit. Nothing can invalidate this constraint.
     if (getPosition() >= PivotConstants.PIVOT_MAX_UP) {
@@ -96,19 +90,7 @@ public class Pivot extends SubsystemBase {
     if (trolleyRef.isTrolleyTooFarInToPivotUpPastBumper()) {
       return !isPivotUpFarEnoughThatTrolleyCantMoveIn();
     }
-
     return true;
-    /*
-    if (m_trolleyRef.isTrolleyTooFarInToPivotUpPastBumper())
-    {
-        return getPivotPosition() > PivotConstants.PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER;
-    }
-    if (m_trolleyRef.isTrolleyTooFarInToPivotVertical())
-    {
-        return getPivotPosition() > PivotConstants.PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_UNDERBELLY;
-    }
-    return true;
-    */
   }
 
   public boolean isOkToMovePivotDown() {
@@ -139,25 +121,21 @@ public class Pivot extends SubsystemBase {
     return getPosition() >= PivotConstants.PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER;
   }
 
-  public boolean isPivotAtMaxUp() {
-    // TODO
-    return false;
-  }
-
-
   public boolean isPivotAtMaxDown() {
     return getPosition() <= PivotConstants.SUBWOFFER_SETPOINT_POS;
   }
 
   public double getPosition() {
-    // return (pivotEncoder.getAbsolutePosition() * -1) + 1.0;
     return pivotEncoder.getAbsolutePosition();
   }
-
 
   public void setPosition(double setpoint) {
     double speed = pivotController.calculate(getPosition(), setpoint);
     runPivot(-speed);
+  }
+
+  public boolean atSetpoint() {
+    return pivotController.atSetpoint();
   }
 
   // pivot shoot to look at april tag
@@ -168,47 +146,12 @@ public class Pivot extends SubsystemBase {
         pivotMotorLeader.set(pivotController.calculate(getPosition(), result.getBestTarget().getPitch()));
       }
     });
-
-    // if (result.hasTargets()) {
-    //   pivotMotorLeader.set(pivotController.calculate(result.getBestTarget().getYaw(), 0));
-    // } else {
-    //   stopPivot();
-    // }
   }
-
-  private boolean mustStopDueToLimit(double speed) {
-    return false;
-    // // TODO: Is positive Up or Down? This code assumes value > 0 means "go Up", might need to be flipped if not so.
-    // return ((speed > 0 && getPosition() >= getUpLimitFromState()) ||
-    //         (speed < 0 && getPosition() <= getDownLimitFromState()));
-  }
-
-  // // Note: DOWN means the shooter is down, and the Intake is up.
-  // private double getDownLimitFromState()
-  // {
-  //   if (trolleyRef.getPivotPosition() > TrolleyConstants.INTAKE_SETPOINT_POS) {
-  //     // This intends to say "if the trolley position is towards the front, don't let us move the Pivot down"
-  //     return PivotConstants.HOME_SETPOINT_POS; 
-  //   }
-  //   return PivotConstants.AMP_SETPOINT_POS;
-  // }
-
-  // // Note: UP means the shooter is up, and the Intake is down.
-  // private double getUpLimitFromState()
-  // {
-  //   if (trolleyRef.getPosition() < TrolleyConstants.HOME_SETPOINT_POS) {
-  //     // This intends to say "if the trolley position is towards the back, don't let us move the Pivot up"
-  //     return PivotConstants.HOME_SETPOINT_POS;
-  //   }
-
-  //   return PivotConstants.SHOOTING_SETPOINT_POS;
-  // }
 
   @Override
   public void periodic() {
     final String PREFIX = "Pivot ";
     SmartDashboard.putNumber(PREFIX+"Position", getPosition());
-    SmartDashboard.putBoolean(PREFIX+"Setpoint", pivotController.atSetpoint());
-    SmartDashboard.putBoolean(PREFIX+"IsPivotDown", isPivotDownFarEnoughThatTrolleyCantMoveOut());
+    SmartDashboard.putBoolean(PREFIX+"Setpoint", atSetpoint());
   }
 }

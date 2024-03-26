@@ -4,32 +4,24 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.TrolleyConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoWrist;
-import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunTrolley;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class EventMarkIntake extends SequentialCommandGroup {
   /** Creates a new EventMarkIntake. */
   public EventMarkIntake(Wrist wrist, Trolley trolley, Pivot pivot) {
     addCommands(
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
-      new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS).withTimeout(0.5),
-      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).withTimeout(1)
+      new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS),
+      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS)
     );
   }
 }

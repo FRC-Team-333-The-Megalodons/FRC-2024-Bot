@@ -9,7 +9,6 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.sequences.AutoShootingPose;
-import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDStrip;
@@ -18,9 +17,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SpikeMarkShot extends SequentialCommandGroup {
   /** Creates a new SpikeMarkShot. */
   public SpikeMarkShot(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, LEDStrip leds) {

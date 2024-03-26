@@ -15,8 +15,8 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GlobalState;
 import frc.robot.Constants.TrolleyConstants;
@@ -61,7 +61,6 @@ public class Trolley extends SubsystemBase {
     potInput = new AnalogInput(TrolleyConstants.TROLLEY_POTENTIOMETER_ID);
     potInput.setAverageBits(2); // enable 2-bit averaging to smooth it out
     potentiometer = new AnalogPotentiometer(potInput);
-
   }
 
   public void setPivotRef(Pivot _pivotRef) {
@@ -72,10 +71,10 @@ public class Trolley extends SubsystemBase {
     wristRef = _wristRef;
   }
 
-  boolean hasNeoEncoderBeenZeroed = false; 
+  boolean hasEncoderBeenZeroed = false; 
 
   public void zeroNeoEncoder(boolean minPosition) {
-    hasNeoEncoderBeenZeroed = true;
+    hasEncoderBeenZeroed = true;
     if (minPosition) {
       neoEncoder.setPosition(TrolleyConstants.TROLLEY_NEO_MIN_POSITION_RESET_VALUE);
     } else {
@@ -172,13 +171,9 @@ public class Trolley extends SubsystemBase {
     return !isTrolleyOut();
   }
 
-  // public boolean isTrolleyTooFarInToPivotVertical() {
-  //   return getPotentiometerPosition() < TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP;
-  // }
-
   public boolean isTrolleyTooFarInToPivotUpPastBumper() {
     // If we haven't been zero-ed yet, then we just gotta hope.
-    if (!hasNeoEncoderBeenZeroed) {
+    if (!hasEncoderBeenZeroed) {
       return false;
     }
 
@@ -188,18 +183,7 @@ public class Trolley extends SubsystemBase {
     }
 
     return getNeoPosition() > limit; // I'm assuming it goes UP from Zero when the trolley comes in.
-
-    // double limit = TrolleyConstants.TROLLEY_FURTHEST_IN_FOR_CLIMBING;
-    // if (ModeConstants.isManualMode()) {
-    //   limit = TrolleyConstants.TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP;
-    // }
-    // return getPotentiometerPosition() < limit;
   }
-
-  // public boolean isTrolleyTooFarOutToPivotDown()
-  // {
-  //   return getPotentiometerPosition() >= TrolleyConstants.TROLLEY_IN_OUT_THRESHOLD;
-  // }
 
   @Override
   public void periodic() {

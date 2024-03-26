@@ -35,13 +35,14 @@ public final class Constants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
+    public static final double kTolerance = 0.02;
     public static final double MIN_INPUT = -1.0;
     public static final double MAX_INPUT = 1.0;
     public static final double WRIST_DOWN_THRESHOLD = 0.62;
-    // TODO: Measure on Real Robot for below 3 values!
     public static final double WRIST_MIN_DOWN = 0.14;
     public static final double WRIST_MAX_UP = 0.82;
     public static final double WRIST_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE_FREELY = 0.46;
+    
   }
 
   public static final class TrolleyConstants {
@@ -59,23 +60,13 @@ public final class Constants {
     public static final double kFF = 0.0;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
-
-    // TODO: Redo numbers for Trolley based on Real Robot
-    //public static final double INTAKE_SETPOINT_POS = 107.47097778320312;
-    //public static final double AMP_SETPOINT_POS = 69;
-    //public static final double WRIST_POS_LOWER_LIMIT_WHILE_TROLLEY_DOWN = 0.7024;
-    //public static final double TROLLEY_POS_LOWEST_POINT_WRIST_CAN_MOVE = 4.185;                                               
-    //public static final double TROLLEY_IN_OUT_THRESHOLD = 1.16; // Can use this to decide if it's in or out
-    //public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_MOVE_ALL_THE_WAY_UP = 1.33;
-    // have updated as of 3/16/14
-    public static final double TROLLEY_MIN_IN = 0.546;   // Changed from 0.325 after Tech Valley 3/21/24 reseat of Trolley (after it fell off)
-    public static final double TROLLEY_MAX_OUT = 1.001;  // Changed from 0.761 after Tech Valley 3/21/24 reseat of Trolley (after it fell off)
+    public static final double TROLLEY_MIN_IN = 0.546;
+    public static final double TROLLEY_MAX_OUT = 1.001;
     
-    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.925; //0.806; // Delta to min is (0.585-0.325 = 0.26)
-    public static final double TROLLEY_FURTHEST_IN_FOR_CLIMBING = 0.795; //0.671; // Delta to min is (0.45-0.325 = 0.125)
-    
-    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_CLIMB = 50.5; // 52 was just... too close.
-    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_BUMPERCLEAR = 28.25; // 33.3 was just... too close
+    public static final double TROLLEY_FURTHEST_IN_WHERE_PIVOT_CAN_CLEAR_BACK_BUMPER_AND_MOVE_ALL_THE_WAY_UP = 0.925; // Delta to min is (0.585-0.325 = 0.26)
+    public static final double TROLLEY_FURTHEST_IN_FOR_CLIMBING = 0.795;  // Delta to min is (0.45-0.325 = 0.125)
+    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_CLIMB = 50.5;
+    public static final double TROLLEY_NEO_DISTANCE_FROM_MAX_TO_BUMPERCLEAR = 28.25;
     public static final double TROLLEY_NEO_MIN_POSITION_RESET_VALUE = 110;
   }
 
@@ -86,7 +77,7 @@ public final class Constants {
     public static final double PIVOT_SPEED = 0.2;
     public static final double ZERO_OFFSET = 0.0;
     public static final double HOME_SETPOINT_POS = 0.192314154807854;
-    public static final double INTAKE_SETPOINT_POS = 0.15332;//0.15122307873;
+    public static final double INTAKE_SETPOINT_POS = 0.149223078730577;
     public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;
@@ -94,19 +85,18 @@ public final class Constants {
     public static final double WING_SETPOINT_POS = 0.0;
     public static final double AMP_SETPOINT_POS = 0.44;
     public static final double SOURCE_SETPOINT_POS = 0.396183559904589;
-    public static final double kP = 4.1;
+    public static final double kP = 4.2;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
+    public static final double kTolerance = 0.01;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
     public static final double PIVOT_MIN_DOWN = 0.052; // This is the lowest point the intake can be down. Just past the subwoofer.
     public static final double PIVOT_MAX_UP = 0.46; // This is also the Amp scoring position.
     
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235;
-    // TODO: Redo these numbers with real robot
     public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.149223078730577;
-    //public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_UNDERBELLY = 0.2;
   }
 
   public static final class IndexerConstants {
@@ -142,13 +132,11 @@ public final class Constants {
 
     private static BotState ROBOT_STATE = BotState.UNKNOWN_POSITION;
     
-    public static boolean isManualMode()
-    {
+    public static boolean isManualMode() {
       return SmartDashboard.getBoolean(MANUAL_MODE_KEY, true);
     }
 
-    public static void setRobotState(BotState state)
-    {
+    public static void setRobotState(BotState state) {
       if (ROBOT_STATE == state) { return; }
 
       // If we're entering the Shooter Position, we need to switch out our Intake Button Mapping
@@ -161,7 +149,6 @@ public final class Constants {
       return ROBOT_STATE;
     }
   }
-
 
   public enum BotState {
     UNKNOWN_POSITION,
