@@ -68,6 +68,13 @@ public class Intake extends SubsystemBase {
       return false;
     }
   }
+  public boolean shotTheNote(){
+    if(leftSensor.get()|| rightSensor.get()){
+      return false;
+    }else {
+      return true;
+    }
+  }
 
   public void resetEncoder() {
     intakeMotor.getEncoder().setPosition(0.0);
