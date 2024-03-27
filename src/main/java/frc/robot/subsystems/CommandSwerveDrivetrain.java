@@ -96,6 +96,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (result.hasTargets())
         {
             this.applyRequest(() -> angle.withTargetDirection(Rotation2d.fromDegrees(result.getBestTarget().getYaw())));
+            this.applyRequest(() -> autoRequest.withSpeeds(getCurrentRobotChassisSpeeds()));
         }
         });
     }

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase {
@@ -27,6 +28,7 @@ public class Pivot extends SubsystemBase {
 
   private Trolley trolleyRef; 
   private Wrist wristRef;
+  private double encoderMultiplyer;
   /** Creates a new Pivot. */
   public Pivot() {
     pivotMotorLeader = new CANSparkFlex(PivotConstants.MOTOR1_ID, MotorType.kBrushless);
@@ -126,7 +128,7 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPosition() {
-    return pivotEncoder.getAbsolutePosition();
+    return pivotEncoder.getAbsolutePosition()*Constants.PivotConstants.PIVOT_ENCODER_MULTIPLIER;
   }
 
   public void setPosition(double setpoint) {
