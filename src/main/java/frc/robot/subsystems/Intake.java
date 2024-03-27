@@ -84,5 +84,6 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Note?", hasNote());
     SmartDashboard.putNumber("Intake Pos", getPosition());
+    SmartDashboard.putBoolean("ShotTheNote?", shotTheNote());
   }
 }

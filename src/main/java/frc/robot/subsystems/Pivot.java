@@ -28,7 +28,6 @@ public class Pivot extends SubsystemBase {
 
   private Trolley trolleyRef; 
   private Wrist wristRef;
-  private double encoderMultiplyer;
   /** Creates a new Pivot. */
   public Pivot() {
     pivotMotorLeader = new CANSparkFlex(PivotConstants.MOTOR1_ID, MotorType.kBrushless);

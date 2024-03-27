@@ -86,11 +86,11 @@ public final class Constants {
     public static final double WING_SETPOINT_POS = 0.0*PIVOT_ENCODER_MULTIPLIER;
     public static final double AMP_SETPOINT_POS = 0.44*PIVOT_ENCODER_MULTIPLIER;
     public static final double SOURCE_SETPOINT_POS = 0.396183559904589*PIVOT_ENCODER_MULTIPLIER;
-    public static final double kP = 4.2;
+    public static final double kP = 3.7;//4.2
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
-    public static final double kTolerance = 0.01;
+    public static final double kTolerance = 0.0059;//0.004
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
     public static final double PIVOT_MIN_DOWN = 0.052*PIVOT_ENCODER_MULTIPLIER; // This is the lowest point the intake can be down. Just past the subwoofer.

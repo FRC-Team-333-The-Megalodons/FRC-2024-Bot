@@ -34,6 +34,7 @@ import frc.robot.commands.advanced.AutoIndexer;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoShooter;
 import frc.robot.commands.advanced.AutoWrist;
+import frc.robot.commands.auto.AutoGoHome;
 import frc.robot.commands.auto.AutonIntake;
 import frc.robot.commands.auto.EventMarkIntake;
 import frc.robot.commands.auto.Shoot;
@@ -217,7 +218,7 @@ public class RobotContainer {
     pivot.setWristRef(wrist);
 
     NamedCommands.registerCommand("SubWooferShot",new SubWooferShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, leds));
-    NamedCommands.registerCommand("GoHome", new GoHome(pivot, trolley, wrist, leds));
+    NamedCommands.registerCommand("GoHome", new AutoGoHome(pivot, trolley, wrist, leds));
     NamedCommands.registerCommand("AutonIntake", new AutonIntake(intake, wrist, trolley, pivot, leds));
     NamedCommands.registerCommand("SpikeMarkShot", new SpikeMarkShot(intake, wrist, trolley, pivot, indexer, shooter, leds));
     NamedCommands.registerCommand("EventMarkIntake", new EventMarkIntake( wrist, trolley, pivot));
