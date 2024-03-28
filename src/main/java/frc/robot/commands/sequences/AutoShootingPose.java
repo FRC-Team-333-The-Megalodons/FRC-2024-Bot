@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoWrist;
+import frc.robot.commands.auto.AutonPivot;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
@@ -20,7 +21,7 @@ public class AutoShootingPose extends SequentialCommandGroup {
     addCommands(
       // new MarkBotState(BotState.UNKNOWN_POSITION),
       //new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS),
-      new AutoPivot(pivot,position)
+      new AutonPivot(pivot,position)
       // new MarkBotState(BotState.SHOOTER_POSITION)
     );
   }

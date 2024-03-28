@@ -90,7 +90,12 @@ public final class Constants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
-    public static final double kTolerance = 0.0059;//0.004
+    public static final double kAutoP = 3.7;//4.2
+    public static final double kAutoI = 0.0;
+    public static final double kAutoD = 0.0;
+    public static final double kAutoFF = 0.0;
+    public static final double kTolerance = 0.004;//0.004
+    public static final double kAutoTolerance = 0.0059;
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
     public static final double PIVOT_MIN_DOWN = 0.052*PIVOT_ENCODER_MULTIPLIER; // This is the lowest point the intake can be down. Just past the subwoofer.

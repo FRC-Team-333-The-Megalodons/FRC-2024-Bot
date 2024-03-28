@@ -21,7 +21,7 @@ public class EventMarkIntake extends SequentialCommandGroup {
     addCommands(
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS),
-      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS)
+      new AutonPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS)
     );
   }
 }

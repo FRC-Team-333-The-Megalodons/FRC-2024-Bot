@@ -27,7 +27,7 @@ public class PrepareToShoot extends SequentialCommandGroup {
     addCommands(
       //new MarkBotState(BotState.UNKNOWN_POSITION),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS),
-      new AutoPivot(pivot, position)
+      new AutonPivot(pivot, position)
     );
   }
 }

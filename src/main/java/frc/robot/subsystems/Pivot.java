@@ -25,6 +25,7 @@ public class Pivot extends SubsystemBase {
   private DutyCycleEncoder pivotEncoder;
 
   private PIDController pivotController;
+  private PIDController autoPivotController;
 
   private Trolley trolleyRef; 
   private Wrist wristRef;
@@ -47,6 +48,7 @@ public class Pivot extends SubsystemBase {
 
 
     pivotEncoder = new DutyCycleEncoder(PivotConstants.PIVOT_ENCODER_ID);
+    autoPivotController = new PIDController(PivotConstants.kAutoP,PivotConstants.kAutoI,PivotConstants.kAutoD);
 
     pivotController = new PIDController(PivotConstants.kP, PivotConstants.kI, PivotConstants.kD);
     pivotController.setTolerance(PivotConstants.kTolerance);
@@ -134,9 +136,16 @@ public class Pivot extends SubsystemBase {
     double speed = pivotController.calculate(getPosition(), setpoint);
     runPivot(-speed);
   }
+  public void setAutoPosition(double setpoint) {
+    double speed = autoPivotController.calculate(getPosition(), setpoint);
+    runPivot(-speed);
+  }
 
   public boolean atSetpoint() {
     return pivotController.atSetpoint();
+  }
+  public boolean atAutoSetpoint(){
+    return autoPivotController.atSetpoint();
   }
 
   // pivot shoot to look at april tag

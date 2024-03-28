@@ -24,7 +24,7 @@ public class AutoGoHome extends SequentialCommandGroup {
   /** Creates a new AutoGoHome. */
   public AutoGoHome(Pivot pivot, Trolley trolley, Wrist wrist, LEDStrip leds) {
     addCommands(
-      new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS),
+      new AutonPivot(pivot, PivotConstants.HOME_SETPOINT_POS),
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
     );
