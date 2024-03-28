@@ -93,7 +93,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     public Command aimAtTarget(PhotonCamera camera) {
         return run(() -> {
         PhotonPipelineResult result = camera.getLatestResult();
-        if (result.hasTargets())
+        if (!result.hasTargets())
         {
             this.applyRequest(() -> angle.withTargetDirection(Rotation2d.fromDegrees(result.getBestTarget().getYaw())));
             this.applyRequest(() -> autoRequest.withSpeeds(getCurrentRobotChassisSpeeds()));
