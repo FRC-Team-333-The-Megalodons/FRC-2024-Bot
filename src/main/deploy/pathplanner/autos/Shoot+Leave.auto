@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
+      "x": 1.3087611360407905,
       "y": 5.5
     },
     "rotation": 0
@@ -42,36 +42,6 @@
                       "data": {
                         "pathName": "Leave - Center"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutonIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "GoHome"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SpikeMarkShot"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "GoHome"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Leave - Center Step2"
-                      }
                     }
                   ]
                 }
@@ -82,6 +52,6 @@
       ]
     }
   },
-  "folder": "2pc-auto",
+  "folder": "shootAndLeave",
   "choreoAuto": false
 }

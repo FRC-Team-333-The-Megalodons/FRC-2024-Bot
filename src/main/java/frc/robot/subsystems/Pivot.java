@@ -52,6 +52,7 @@ public class Pivot extends SubsystemBase {
 
     pivotController = new PIDController(PivotConstants.kP, PivotConstants.kI, PivotConstants.kD);
     pivotController.setTolerance(PivotConstants.kTolerance);
+    autoPivotController.setTolerance(PivotConstants.kAutoTolerance);
   }
 
   public void setTrolleyRef(Trolley _trolleyRef) {

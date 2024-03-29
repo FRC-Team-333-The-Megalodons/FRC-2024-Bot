@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
-      "y": 5.5
+      "x": 1.2809151544229016,
+      "y": 5.571203241171914
     },
     "rotation": 0
   },
@@ -38,15 +38,21 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Leave - Center"
+                        "name": "GoHome"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AutonIntake"
+                        "name": "EventMarkIntake"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Center Step 1"
                       }
                     },
                     {
