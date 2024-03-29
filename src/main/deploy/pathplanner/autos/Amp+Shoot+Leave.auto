@@ -38,6 +38,18 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "EventMarkIntake"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "AmpLeave"
@@ -46,7 +58,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AutonIntake"
+                        "name": "GoHome"
                       }
                     }
                   ]

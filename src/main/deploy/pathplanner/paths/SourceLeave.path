@@ -55,41 +55,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.15,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "GoHome"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.75,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "EventMarkIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.55,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "parallel",
         "data": {

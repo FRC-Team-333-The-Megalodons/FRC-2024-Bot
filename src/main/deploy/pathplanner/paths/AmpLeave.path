@@ -71,16 +71,6 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.44999999999999996,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
       "waypointRelativePos": 1.5,
       "command": {
         "type": "parallel",
@@ -89,7 +79,7 @@
             {
               "type": "named",
               "data": {
-                "name": "EventMarkIntake"
+                "name": "AutonIntake"
               }
             }
           ]

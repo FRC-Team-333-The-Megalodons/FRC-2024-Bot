@@ -38,9 +38,21 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "SourceLeave"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
                       }
                     }
                   ]

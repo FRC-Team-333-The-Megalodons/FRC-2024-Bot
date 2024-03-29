@@ -70,6 +70,8 @@ public class Wrist extends SubsystemBase {
   }
 
   public boolean atSetpoint() {
+    // Oddly, the SparkPIDController doesn't have an atSetpoint function, so we
+    //  have to do it manually based on the Encoder Position.
     return Math.abs(wristEncoder.getPosition() - mostRecentWristControllerSetpoint) <= WristConstants.kTolerance;
   }
 

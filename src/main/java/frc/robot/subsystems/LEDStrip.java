@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LEDStrip extends SubsystemBase {
   private AddressableLED m_led;
 
-  private AddressableLEDBuffer offBuffer, redBuffer, orangeBuffer, yellowBuffer, greenBuffer, blueBuffer, violetBuffer;
+  private AddressableLEDBuffer offBuffer, redBuffer, orangeBuffer, yellowBuffer, greenBuffer, blueBuffer, violetBuffer, whiteBuffer;
 
-  private final int LED_COUNT = 100; 
+  private final int LED_COUNT = 33; 
   private LEDColor lastColor;
 
   public enum LEDColor {
-    OFF, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET;
+    OFF, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, WHITE;
   }
 
   /** Creates a new LEDS. */
@@ -39,6 +39,7 @@ public class LEDStrip extends SubsystemBase {
       case GREEN: return greenBuffer;
       case BLUE: return blueBuffer;
       case VIOLET: return violetBuffer;
+      case WHITE: return whiteBuffer;
       default: return offBuffer;
     }
   }
@@ -59,6 +60,7 @@ public class LEDStrip extends SubsystemBase {
     greenBuffer = makeBuffer(LED_COUNT, 0, 250, 0);
     blueBuffer = makeBuffer(LED_COUNT, 0, 59, 174);
     violetBuffer = makeBuffer(LED_COUNT, 255, 0, 255);
+    whiteBuffer = makeBuffer(LED_COUNT, 221, 222, 223);
   }
 
   public void setBlinkColor(LEDColor color) {
@@ -74,12 +76,23 @@ public class LEDStrip extends SubsystemBase {
     }
   }
 
+  public String colorToString(LEDColor color)
+  {
+    if (color == null) {
+      return "NULL";
+    }
+    return color.toString();
+  }
+
   public void setColor(LEDColor color) {
     // We cache the last color we set, so that we don't have
     //  to overwrite it except for when we actually are changing the colors.
+
     if (color == lastColor) {
       return;
     }
+
+    System.out.println("Changing LED color from "+colorToString(lastColor)+" to "+colorToString(color));
 
     // If we've made it this far, it means we're actually changing the colors!
     lastColor = color;
@@ -137,5 +150,15 @@ public class LEDStrip extends SubsystemBase {
 
   public void blinkViolet() {
     setBlinkColor(LEDColor.VIOLET);
+  }
+
+  public void white()
+  {
+    setColor(LEDColor.WHITE);
+  }
+
+  public void blinkWhite()
+  {
+    setBlinkColor(LEDColor.WHITE);
   }
 }

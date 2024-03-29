@@ -42,6 +42,7 @@ import frc.robot.commands.auto.SpikeMarkShot;
 import frc.robot.commands.auto.SubWooferShootingPosition;
 import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
+import frc.robot.commands.basic.RunLEDs;
 import frc.robot.commands.basic.RunPivot;
 import frc.robot.commands.basic.RunTrolley;
 import frc.robot.commands.basic.RunWrist;
@@ -51,6 +52,7 @@ import frc.robot.commands.sequences.AutoShootingPoseToFloorIntake;
 import frc.robot.commands.sequences.GoHome;
 import frc.robot.commands.sequences.ShootingPosition;
 import frc.robot.commands.sequences.SourceIntake;
+import frc.robot.commands.sequences.AutoClimb;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Indexer;
@@ -60,6 +62,7 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Trolley;
 import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.LEDStrip.LEDColor;
 
 public class RobotContainer {
   private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
@@ -145,7 +148,7 @@ public class RobotContainer {
 
   public void configureOperatorControllerManualModeBindings() {
     leds.violet();
-    operatorController.circle().whileTrue((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)).andThen(new RunCommand(() -> leds.blinkGreen(), leds)));
+    operatorController.circle().whileTrue((new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)).andThen(new RunLEDs(leds, LEDColor.GREEN)));
     operatorController.cross().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED));
     operatorController.triangle().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_EJECT_SPEED));
 
@@ -166,7 +169,7 @@ public class RobotContainer {
 
     operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist, leds));
     operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
-    operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
+    operatorController.PS().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));
   }
 
   public void configureOperatorControllerSmartModeBindings() {
@@ -185,14 +188,13 @@ public class RobotContainer {
 
     operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
     operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS, leds));
-    operatorController.triangle().whileFalse(new RunCommand(() -> leds.off(), leds));
-    operatorController.square().whileFalse(new RunCommand(() -> leds.off(), leds));
     operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS, leds));
-    operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot));
+    operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));
     operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
     
     operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
     operatorController.PS().whileTrue(new AutoShootingPoseToFloorIntake(intake, wrist, trolley, pivot, leds));
+    operatorController.create().whileTrue(new AutoClimb(intake, wrist, trolley, pivot, leds));
   }
 
   public void toggleManualModeWhenButtonPressed() {

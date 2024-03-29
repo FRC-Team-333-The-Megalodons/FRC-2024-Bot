@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.390085595705172,
-        "y": 7.0152967490400995
+        "x": 1.651040292371847,
+        "y": 6.613827984937524
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.301934480412171,
-        "y": 6.954220328193742
+        "x": 2.5392899329487983,
+        "y": 6.799507288334965
       },
       "prevControl": {
-        "x": 1.301934480412171,
-        "y": 6.954220328193742
+        "x": 1.5205629440385096,
+        "y": 6.653974861347781
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "GoHome"
+                "name": "AutonIntake"
               }
             }
           ]
@@ -50,14 +50,14 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 32.00538320808359,
     "rotateFast": false
   },
   "reversed": false,
