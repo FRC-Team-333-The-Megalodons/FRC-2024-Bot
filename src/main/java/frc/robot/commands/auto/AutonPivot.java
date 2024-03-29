@@ -26,7 +26,7 @@ public class AutonPivot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    pivot.setAutoPosition(value);
+    pivot.setAutoSetpoint(value);
   }
 
   // Called once the command ends or is interrupted.

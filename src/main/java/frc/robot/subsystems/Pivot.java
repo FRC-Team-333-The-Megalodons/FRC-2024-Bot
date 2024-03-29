@@ -48,10 +48,13 @@ public class Pivot extends SubsystemBase {
 
 
     pivotEncoder = new DutyCycleEncoder(PivotConstants.PIVOT_ENCODER_ID);
-    autoPivotController = new PIDController(PivotConstants.kAutoP,PivotConstants.kAutoI,PivotConstants.kAutoD);
 
     pivotController = new PIDController(PivotConstants.kP, PivotConstants.kI, PivotConstants.kD);
     pivotController.setTolerance(PivotConstants.kTolerance);
+
+    // We keep the Autonomous PID Controller separate so that we can safely tweak
+    //  autonomous values without impacting the teleop operator experience.
+    autoPivotController = new PIDController(PivotConstants.kAutoP,PivotConstants.kAutoI,PivotConstants.kAutoD);
     autoPivotController.setTolerance(PivotConstants.kAutoTolerance);
   }
 
@@ -133,11 +136,11 @@ public class Pivot extends SubsystemBase {
     return pivotEncoder.getAbsolutePosition()*Constants.PivotConstants.PIVOT_ENCODER_MULTIPLIER;
   }
 
-  public void setPosition(double setpoint) {
+  public void setSetpoint(double setpoint) {
     double speed = pivotController.calculate(getPosition(), setpoint);
     runPivot(-speed);
   }
-  public void setAutoPosition(double setpoint) {
+  public void setAutoSetpoint(double setpoint) {
     double speed = autoPivotController.calculate(getPosition(), setpoint);
     runPivot(-speed);
   }

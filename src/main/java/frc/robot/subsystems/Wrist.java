@@ -64,12 +64,12 @@ public class Wrist extends SubsystemBase {
     return (getPosition() >= WristConstants.WRIST_DOWN_THRESHOLD);
   }
 
-  public void setReferencePosition(double setpoint) {
+  public void setSetpoint(double setpoint) {
     mostRecentWristControllerSetpoint = setpoint;
     wristController.setReference(setpoint, ControlType.kPosition);
   }
 
-  public boolean hasReachedReferencePosition() {
+  public boolean atSetpoint() {
     return Math.abs(wristEncoder.getPosition() - mostRecentWristControllerSetpoint) <= WristConstants.kTolerance;
   }
 

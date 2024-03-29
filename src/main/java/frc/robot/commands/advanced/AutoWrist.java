@@ -26,7 +26,7 @@ public class AutoWrist extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wrist.setReferencePosition(value);
+    wrist.setSetpoint(value);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +39,6 @@ public class AutoWrist extends Command {
   @Override
   public boolean isFinished() {
     // return false;
-    return wrist.hasReachedReferencePosition();
+    return wrist.atSetpoint();
   }
 }
