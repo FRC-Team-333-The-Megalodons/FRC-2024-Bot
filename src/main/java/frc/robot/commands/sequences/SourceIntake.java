@@ -32,7 +32,12 @@ public class SourceIntake extends SequentialCommandGroup {
       new AutoPivot(pivot, PivotConstants.SOURCE_SETPOINT_POS).alongWith(
         new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS)),
       //new MarkBotState(BotState.SOURCE_INTAKE_POSITION),
-      new RunIntake(intake, leds, 0.25).until(intake::hasNote),
+      new RunIntake(intake, leds, 0.25).until(intake::hasNote)
+      // Continuously try to get to the setpoints, so even if we had an early exit.
+        .alongWith(
+      new AutoPivot(pivot, PivotConstants.SOURCE_SETPOINT_POS))
+        .alongWith(
+      new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS)),
       new RunLEDs(leds, LEDColor.GREEN)
     );
   }

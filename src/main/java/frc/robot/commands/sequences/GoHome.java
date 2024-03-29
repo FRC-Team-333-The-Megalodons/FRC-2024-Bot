@@ -28,8 +28,13 @@ public class GoHome extends SequentialCommandGroup {
       new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS)
       .alongWith(
       new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS)),
-      new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)
-      .andThen(new RunLEDs(leds, LEDColor.BLUE, LEDRunMode.RUN_PAST_INTERRUPT))
+      new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch),
+      new RunLEDs(leds, LEDColor.BLUE, LEDRunMode.RUN_PAST_INTERRUPT)
+        .alongWith(
+      // We're gonna keep running the pivots here so that we keep as close to home as we can
+      new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS))
+        .alongWith(
+      new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS))
     );
   }
 }
