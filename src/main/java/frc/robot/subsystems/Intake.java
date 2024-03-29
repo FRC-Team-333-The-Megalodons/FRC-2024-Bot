@@ -62,18 +62,21 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    if (leftSensor.get() || rightSensor.get()) {
+    boolean leftTriggered = leftSensor.get(), rightTriggered = rightSensor.get();
+    if (leftTriggered || rightTriggered) {
+      //System.out.println("HAS NOTE! (left="+leftTriggered+", right="+rightTriggered+")");
       return true;
     } else {
       return false;
     }
   }
   public boolean shotTheNote(){
-    if(leftSensor.get()|| rightSensor.get()){
-      return false;
-    }else {
-      return true;
-    }
+    return !hasNote();
+    // if(leftSensor.get()|| rightSensor.get()){
+    //   return false;
+    // }else {
+    //   return true;
+    // }
   }
 
   public void resetEncoder() {
@@ -83,6 +86,8 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Note?", hasNote());
+    SmartDashboard.putBoolean("Left Note Sensor", leftSensor.get());
+    SmartDashboard.putBoolean("Right Note Sensor", rightSensor.get());
     SmartDashboard.putNumber("Intake Pos", getPosition());
     SmartDashboard.putBoolean("ShotTheNote?", shotTheNote());
   }
