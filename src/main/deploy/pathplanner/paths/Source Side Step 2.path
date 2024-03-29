@@ -1,0 +1,103 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.366908437520579,
+        "y": 4.308852074494272
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.199832547813244,
+        "y": 3.5848565524291542
+      },
+      "isLocked": false,
+      "linkedName": "Source Side Step1"
+    },
+    {
+      "anchor": {
+        "x": 3.8056174877781856,
+        "y": 1.570663882068504
+      },
+      "prevControl": {
+        "x": 2.8056174877781856,
+        "y": 1.570663882068504
+      },
+      "nextControl": {
+        "x": 4.805617487778182,
+        "y": 1.570663882068504
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.7133369081552985,
+        "y": 0.7909763967676083
+      },
+      "prevControl": {
+        "x": 6.924367428981771,
+        "y": 0.5125165805887157
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Source Side Step 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "EventMarkIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Source Side",
+  "previewStartingState": {
+    "rotation": -29.60445074600488,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

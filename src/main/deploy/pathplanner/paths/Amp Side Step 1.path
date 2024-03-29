@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8692301133119473,
+        "y": 6.495374509135732
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.9501694993900078,
+        "y": 6.553803665139952
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.39,
+        "y": 6.6
+      },
+      "prevControl": {
+        "x": 1.429427056384977,
+        "y": 6.536530603925405
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Amp Side Step 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 36.51105611949533,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Amp Side",
+  "previewStartingState": {
+    "rotation": 58.75090526478581,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

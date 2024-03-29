@@ -1,0 +1,57 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7226437753846381,
+      "y": 4.47098845654002
+    },
+    "rotation": -57.99461679191647
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SubWooferShot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "1pc-auto",
+  "choreoAuto": false
+}

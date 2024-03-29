@@ -1,0 +1,23 @@
+{
+  "robotWidth": 0.8,
+  "robotLength": 0.8,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Amp Side",
+    "Center",
+    "Leave",
+    "DefensivePaths",
+    "Source Side",
+    "Under Stage"
+  ],
+  "autoFolders": [
+    "1pc-auto",
+    "2pc-auto",
+    "shootAndLeave"
+  ],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "maxModuleSpeed": 5.0
+}

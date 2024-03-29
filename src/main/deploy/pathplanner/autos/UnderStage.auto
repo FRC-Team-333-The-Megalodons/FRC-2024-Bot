@@ -1,0 +1,105 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3,
+      "y": 5.5
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SubWooferShot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Leave - Center"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutonIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpikeMarkShot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "GoUnderStage"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutonIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "StageShot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpikeMarkShot"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "2pc-auto",
+  "choreoAuto": false
+}

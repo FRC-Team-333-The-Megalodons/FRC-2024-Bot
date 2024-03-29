@@ -1,0 +1,69 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.767809011346178,
+        "y": 4.5111353329502775
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3298652810897853,
+        "y": 3.3017106810912646
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.873806135961787,
+        "y": 0.8075859841040064
+      },
+      "prevControl": {
+        "x": 6.809913911089956,
+        "y": 0.5014660514757924
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Defense-Step1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 5.301181587196594,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 66.80140948635186,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "DefensivePaths",
+  "previewStartingState": {
+    "rotation": -56.65473741585467,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

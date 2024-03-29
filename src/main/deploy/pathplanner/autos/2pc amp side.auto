@@ -1,0 +1,75 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7518415036830074,
+      "y": 6.647914530396961
+    },
+    "rotation": 59.03624346792656
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SubWooferShot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Leave - Amp Side"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutonIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpikeMarkShot"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "2pc-auto",
+  "choreoAuto": false
+}

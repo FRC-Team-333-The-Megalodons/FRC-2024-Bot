@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.43,
+        "y": 5.5
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.226805191474461,
+        "y": 5.364256456668252
+      },
+      "isLocked": false,
+      "linkedName": "Leave - Center Step 1"
+    },
+    {
+      "anchor": {
+        "x": 4.757404854615534,
+        "y": 4.536227130706688
+      },
+      "prevControl": {
+        "x": 3.5931454387180626,
+        "y": 5.118356838655425
+      },
+      "nextControl": {
+        "x": 6.062054803250344,
+        "y": 3.883902156389283
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.547612765128444,
+        "y": 4.06450133288616
+      },
+      "prevControl": {
+        "x": 6.498775618910461,
+        "y": 4.08457477109129
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Leave",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7815863793056181,
+        "y": 4.499045012324901
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.772860829672277,
+        "y": 4.485209958074236
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.366908437520579,
+        "y": 4.308852074494272
+      },
+      "prevControl": {
+        "x": 1.5872209522196823,
+        "y": 4.457363976456348
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Source Side Step1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -24.940375886247605,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Source Side",
+  "previewStartingState": {
+    "rotation": -61.50436138175507,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
