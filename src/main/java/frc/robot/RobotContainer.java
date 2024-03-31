@@ -191,8 +191,9 @@ public class RobotContainer {
     operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS, leds));
     operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));
     operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
-    
-    operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
+    operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.TRUSS_SETPOINT_POS, leds));
+
+    operatorController.L3().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
     operatorController.PS().whileTrue(new AutoShootingPoseToFloorIntake(intake, wrist, trolley, pivot, leds));
     operatorController.create().whileTrue(new AutoClimb(intake, wrist, trolley, pivot, leds));
   }
