@@ -72,14 +72,15 @@ public final class Constants {
   }
 
   public static final class PivotConstants { 
+    //0.03685825
     public static final double PIVOT_ENCODER_MULTIPLIER = 1;
     public static final int MOTOR1_ID = 6; 
     public static final int MOTOR2_ID = 7; 
-    public static final int PIVOT_ENCODER_ID = 9; 
+    public static final int PIVOT_ENCODER_ID = 4; 
     public static final double PIVOT_SPEED = 0.2;
-    public static final double ZERO_OFFSET = 0.0;
+    public static final double ZERO_OFFSET = 0.053656; // 0.097498702437468
     public static final double HOME_SETPOINT_POS = 0.192314154807854*PIVOT_ENCODER_MULTIPLIER;
-    public static final double INTAKE_SETPOINT_POS = 0.149223078730577*PIVOT_ENCODER_MULTIPLIER;
+    public static final double INTAKE_SETPOINT_POS = 0.143458553586464*PIVOT_ENCODER_MULTIPLIER;
     public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16*PIVOT_ENCODER_MULTIPLIER;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058*PIVOT_ENCODER_MULTIPLIER;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056*PIVOT_ENCODER_MULTIPLIER;
@@ -105,7 +106,7 @@ public final class Constants {
     public static final double PIVOT_MAX_UP = 0.465*PIVOT_ENCODER_MULTIPLIER; // This is also the Amp scoring position.
     public static final double PIVOT_CLIMB_POS = 0.465*PIVOT_ENCODER_MULTIPLIER;
     public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235;
-    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.149223078730577;
+    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.143458553586464;
   }
 
   public static final class IndexerConstants {
@@ -122,9 +123,9 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int TOP_MOTOR_ID = 8;
+    public static final int RIGHT_MOTOR_ID = 8;
     public static final double SPEED = 0.9;
-    public static final int BOTTOM_MOTOR_ID = 9;
+    public static final int LEFT_MOTOR_ID = 9;
     public static final int INDEX_MOTOR_ID = 15;
     public static final double SHOT_RPM = 6000;
     public static final double IDLE_RPM = 1000;

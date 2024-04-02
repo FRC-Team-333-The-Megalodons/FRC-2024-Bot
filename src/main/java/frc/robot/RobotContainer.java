@@ -44,6 +44,7 @@ import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunIntake;
 import frc.robot.commands.basic.RunLEDs;
 import frc.robot.commands.basic.RunPivot;
+import frc.robot.commands.basic.RunShooter;
 import frc.robot.commands.basic.RunTrolley;
 import frc.robot.commands.basic.RunWrist;
 import frc.robot.commands.sequences.AutoAmp;
@@ -165,7 +166,7 @@ public class RobotContainer {
     operatorController.create().whileTrue(new AutoPivot(pivot, PivotConstants.HOME_SETPOINT_POS));
     operatorController.options().whileTrue(new AutoPivot(pivot, PivotConstants.SUBWOFFER_SETPOINT_POS));
 
-    operatorController.square().whileTrue(new AutoShooter(shooter, ShooterConstants.IDLE_RPM).alongWith(new AutoIndexer(indexer, IndexerConstants.IDLE_RPM)));
+    operatorController.square().whileTrue(new RunShooter(shooter, ShooterConstants.SPEED).alongWith(new AutoIndexer(indexer, IndexerConstants.SPEED)));
 
     operatorController.povLeft().whileTrue(new GoHome(pivot, trolley, wrist, leds));
     operatorController.povRight().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));

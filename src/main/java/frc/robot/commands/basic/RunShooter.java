@@ -26,7 +26,6 @@ public class RunShooter extends Command {
   @Override
   public void execute() {
     shooter.runShooter(value);
-    // shooter.setSpeed(value);
   }
 
   // Called once the command ends or is interrupted.

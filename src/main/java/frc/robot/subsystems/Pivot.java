@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase {
@@ -43,6 +42,7 @@ public class Pivot extends SubsystemBase {
     
     pivotMotorFollower.follow(pivotMotorLeader);
 
+
     pivotMotorLeader.burnFlash();
     pivotMotorFollower.burnFlash();
 
@@ -53,9 +53,11 @@ public class Pivot extends SubsystemBase {
     pivotController.setTolerance(PivotConstants.kTolerance);
 
     // We keep the Autonomous PID Controller separate so that we can safely tweak
-    //  autonomous values without impacting the teleop operator experience.
+    // autonomous values without impacting the teleop operator experience.
     autoPivotController = new PIDController(PivotConstants.kAutoP,PivotConstants.kAutoI,PivotConstants.kAutoD);
     autoPivotController.setTolerance(PivotConstants.kAutoTolerance);
+    pivotEncoder.setPositionOffset(PivotConstants.ZERO_OFFSET);
+
   }
 
   public void setTrolleyRef(Trolley _trolleyRef) {
@@ -133,7 +135,7 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPosition() {
-    return pivotEncoder.getAbsolutePosition()*Constants.PivotConstants.PIVOT_ENCODER_MULTIPLIER;
+    return pivotEncoder.getAbsolutePosition()-pivotEncoder.getPositionOffset();
   }
 
   public void setSetpoint(double setpoint) {

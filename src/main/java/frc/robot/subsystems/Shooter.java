@@ -16,51 +16,53 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
-  private CANSparkFlex topMotor, bottomMotor;
+  private CANSparkFlex rightMotor, leftMotor;
 
   private SparkPIDController shooterController;
 
   /** Creates a new Shooter. */
   public Shooter() {
-    topMotor = new CANSparkFlex(ShooterConstants.TOP_MOTOR_ID, MotorType.kBrushless);
-    bottomMotor = new CANSparkFlex(ShooterConstants.BOTTOM_MOTOR_ID, MotorType.kBrushless);
+    rightMotor = new CANSparkFlex(ShooterConstants.RIGHT_MOTOR_ID, MotorType.kBrushless);
+    leftMotor = new CANSparkFlex(ShooterConstants.LEFT_MOTOR_ID, MotorType.kBrushless);
 
-    topMotor.restoreFactoryDefaults();
-    bottomMotor.restoreFactoryDefaults();
+    rightMotor.restoreFactoryDefaults();
+    leftMotor.restoreFactoryDefaults();
 
-    shooterController = topMotor.getPIDController();
-    shooterController.setFeedbackDevice(topMotor.getEncoder());
+    shooterController = rightMotor.getPIDController();
+    shooterController.setFeedbackDevice(rightMotor.getEncoder());
     shooterController.setP(ShooterConstants.kP);
     shooterController.setI(ShooterConstants.kI);
     shooterController.setD(ShooterConstants.kD);
     shooterController.setFF(ShooterConstants.kFF);
     shooterController.setOutputRange(ShooterConstants.MIN_INPUT, ShooterConstants.MAX_INPUT);
 
-    topMotor.setInverted(true);
-    topMotor.setIdleMode(IdleMode.kCoast);
-    bottomMotor.setIdleMode(IdleMode.kCoast);
+    rightMotor.setInverted(false);
+    rightMotor.setIdleMode(IdleMode.kCoast);
+    
+    leftMotor.setIdleMode(IdleMode.kCoast);
 
-    topMotor.burnFlash();
-    bottomMotor.burnFlash();
+    rightMotor.burnFlash();
+    leftMotor.burnFlash();
   }
 
   public double getVelocity() {
-    return topMotor.getEncoder().getVelocity();
+    return rightMotor.getEncoder().getVelocity();
   }
 
   public void runShooter(double value) {
-    topMotor.set(value);
-    bottomMotor.follow(topMotor);
+    rightMotor.set(value);
+    // leftMotor.follow(rightMotor, true);
+    leftMotor.set(-(value - 0.1));
   }
 
   public void stopShooter() {
-    topMotor.set(0.0);
-    bottomMotor.set(0.0);
+    rightMotor.set(0.0);
+    leftMotor.set(0.0);
   }
 
   public void setSpeed(double speed) {
     shooterController.setReference(speed, ControlType.kVelocity);
-    bottomMotor.follow(topMotor);
+    leftMotor.follow(rightMotor);
   }
 
   @Override
