@@ -6,6 +6,7 @@ package frc.robot.commands.sequences;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.advanced.AutoPivot;
 import frc.robot.commands.advanced.AutoWrist;
@@ -33,7 +34,7 @@ public class ShootingPosition extends ParallelCommandGroup {
       new RunShooter(shooter, 0.75))
       .andThen(new RunLEDs(leds, LEDColor.GREEN))*/
       new RunLEDs(leds, LEDColor.OFF, LEDRunMode.RUN_ONCE),
-      new PrepareToShoot(intake, wrist, trolley, pivot, indexer, shooter, position, leds).andThen(new RunLEDs(leds, LEDColor.GREEN)).alongWith(new RunShooter(shooter, 0.85))
+      new PrepareToShoot(intake, wrist, trolley, pivot, indexer, shooter, position, leds).andThen(new RunLEDs(leds, LEDColor.GREEN)).alongWith(new RunShooter(shooter, ShooterConstants.SPEED))
     );
   }
 }

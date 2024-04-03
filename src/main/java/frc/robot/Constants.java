@@ -84,7 +84,7 @@ public final class Constants {
     public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16*PIVOT_ENCODER_MULTIPLIER;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058*PIVOT_ENCODER_MULTIPLIER;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056*PIVOT_ENCODER_MULTIPLIER;
-    public static final double PODIUM_SETPOINT_POS = 0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
+    public static final double PODIUM_SETPOINT_POS = 0.148212880046722; //0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
     public static final double AUTO_PODIUM_SETPOINT_POSE = 0.104947403023685;
     public static final double WING_SETPOINT_POS = 0.0*PIVOT_ENCODER_MULTIPLIER;
     public static final double TRUSS_SETPOINT_POS =0.14333*PIVOT_ENCODER_MULTIPLIER;
@@ -124,7 +124,7 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static final int RIGHT_MOTOR_ID = 8;
-    public static final double SPEED = 0.9;
+    public static final double SPEED = 1.0;
     public static final int LEFT_MOTOR_ID = 9;
     public static final int INDEX_MOTOR_ID = 15;
     public static final double SHOT_RPM = 6000;
