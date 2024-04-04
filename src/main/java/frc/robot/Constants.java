@@ -84,10 +84,10 @@ public final class Constants {
     public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16*PIVOT_ENCODER_MULTIPLIER;
     public static final double SUBWOFFER_SETPOINT_POS = 0.058*PIVOT_ENCODER_MULTIPLIER;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056*PIVOT_ENCODER_MULTIPLIER;
-    public static final double PODIUM_SETPOINT_POS = 0.148212880046722; //0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
-    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.104947403023685;
+    public static final double PODIUM_SETPOINT_POS = 0.107335552880046722; //0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
+    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.1229847403023685;
     public static final double WING_SETPOINT_POS = 0.0*PIVOT_ENCODER_MULTIPLIER;
-    public static final double TRUSS_SETPOINT_POS =0.14333*PIVOT_ENCODER_MULTIPLIER;
+    public static final double TRUSS_SETPOINT_POS =0.1247*PIVOT_ENCODER_MULTIPLIER;
     public static final double AMP_SETPOINT_POS = 0.44*PIVOT_ENCODER_MULTIPLIER;
     public static final double SOURCE_SETPOINT_POS = 0.396183559904589*PIVOT_ENCODER_MULTIPLIER;
     public static final double kP = 4.2;

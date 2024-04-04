@@ -54,6 +54,10 @@ public class Shooter extends SubsystemBase {
     // leftMotor.follow(rightMotor, true);
     leftMotor.set(-(value - 0.25));
   }
+  public void runAutoShooter(double value){
+    rightMotor.set(value);
+    leftMotor.set(-value);
+  }
 
   public void stopShooter() {
     rightMotor.set(0.0);

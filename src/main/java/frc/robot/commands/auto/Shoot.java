@@ -5,6 +5,7 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.basic.RunAutoShooter;
 import frc.robot.commands.basic.RunIndexer;
 import frc.robot.commands.basic.RunShooter;
 import frc.robot.subsystems.Indexer;
@@ -14,7 +15,7 @@ public class Shoot extends SequentialCommandGroup {
   /** Creates a new Shoot. */
   public Shoot(Shooter shooter, Indexer indexer) {
     addCommands(
-      new RunShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.75))
+      new RunAutoShooter(shooter, 0.75).alongWith(new RunIndexer(indexer, 0.75))
     );
   }
 }
