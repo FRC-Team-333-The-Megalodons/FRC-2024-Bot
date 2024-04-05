@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6824968989743805,
-        "y": 6.664011580450345
+        "x": 8.01964270595208,
+        "y": 7.548267936042045
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4535216733541423,
-        "y": 6.709614747817872
+        "x": 6.200512069755743,
+        "y": 6.358902327224275
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpLeave2"
     },
     {
       "anchor": {
-        "x": 2.583152022769052,
-        "y": 6.7972584818242
+        "x": 4.260435187541613,
+        "y": 5.311307412741912
       },
       "prevControl": {
-        "x": 1.9599076920573777,
-        "y": 6.738829325819981
+        "x": 4.622432948569601,
+        "y": 6.907810358830593
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Leave - Amp Side"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": 29.499869190840563,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AutonIntake"
+                "name": "GoHome"
               }
             }
           ]
@@ -63,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 28.70595254340101,
+    "rotation": 0.5475829758170521,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Leave",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 60.751173663453,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": false

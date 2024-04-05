@@ -16,48 +16,48 @@
     },
     {
       "anchor": {
-        "x": 2.744608291247039,
-        "y": 7.792580864349546
+        "x": 2.9516740514962514,
+        "y": 7.70606183187675
       },
       "prevControl": {
-        "x": 0.9096283804770284,
-        "y": 7.684640869598368
+        "x": 1.116694140726241,
+        "y": 7.598121837125572
       },
       "nextControl": {
-        "x": 4.161441175674231,
-        "y": 7.875923975198204
+        "x": 4.36850693592345,
+        "y": 7.789404942725408
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.978320992174978,
-        "y": 7.559220153973303
+        "x": 5.97760405397354,
+        "y": 7.548267936042045
       },
       "prevControl": {
-        "x": 4.944866417651617,
-        "y": 7.667566198076559
+        "x": 4.906213304064513,
+        "y": 7.592448997893963
       },
       "nextControl": {
-        "x": 6.971543735641654,
-        "y": 7.455091963125991
+        "x": 6.877957459618623,
+        "y": 7.511139960551526
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.72,
-        "y": 7.51
+        "x": 8.01964270595208,
+        "y": 7.548267936042045
       },
       "prevControl": {
-        "x": 6.378367924248539,
-        "y": 7.459208420954914
+        "x": 7.0635973370712195,
+        "y": 7.5204219544241555
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpLeave2"
     }
   ],
   "rotationTargets": [
@@ -71,7 +71,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.2000000000000002,
       "command": {
         "type": "parallel",
         "data": {
@@ -85,11 +85,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GoHome"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

@@ -3,16 +3,17 @@
   "robotLength": 0.8,
   "holonomicMode": true,
   "pathFolders": [
-    "Amp Side",
-    "Center",
+    "Under Stage",
+    "Source Side",
     "Leave",
     "DefensivePaths",
-    "Source Side",
-    "Under Stage"
+    "Center",
+    "Amp Side"
   ],
   "autoFolders": [
     "1pc-auto",
     "2pc-auto",
+    "3pc-auto",
     "shootAndLeave"
   ],
   "defaultMaxVel": 3.0,

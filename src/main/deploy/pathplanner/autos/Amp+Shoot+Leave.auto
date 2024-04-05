@@ -38,27 +38,21 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "GoHome"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "EventMarkIntake"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "AmpLeave"
                       }
                     },
                     {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AmpLeave2"
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
-                        "name": "GoHome"
+                        "name": "SpikeMarkShot"
                       }
                     }
                   ]

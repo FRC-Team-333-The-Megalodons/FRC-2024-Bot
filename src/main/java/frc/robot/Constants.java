@@ -27,10 +27,10 @@ public final class Constants {
   public static final class WristConstants {
     public static final int MOTOR_ID = 4;
     public static final double ZERO_OFFSET = 0.55;
-    public static final double INTAKE_SETPOINT_POS = 0.642;
+    public static final double INTAKE_SETPOINT_POS = 0.639;
     public static final double SHOOTING_SETPOINT_POS = 0.441275894641876;
     public static final double AMP_SETPOINT_POS = 0.803184986114502;
-    public static final double SOURCE_SETPOINT_POS = 0.599242329597473;
+    public static final double SOURCE_SETPOINT_POS = 0.637242329597473;
     public static final double kP = 6.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
@@ -85,7 +85,7 @@ public final class Constants {
     public static final double SUBWOFFER_SETPOINT_POS = 0.058*PIVOT_ENCODER_MULTIPLIER;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056*PIVOT_ENCODER_MULTIPLIER;
     public static final double PODIUM_SETPOINT_POS = 0.107335552880046722; //0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
-    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.1229847403023685;
+    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.10073627;
     public static final double WING_SETPOINT_POS = 0.0*PIVOT_ENCODER_MULTIPLIER;
     public static final double TRUSS_SETPOINT_POS =0.1247*PIVOT_ENCODER_MULTIPLIER;
     public static final double AMP_SETPOINT_POS = 0.44*PIVOT_ENCODER_MULTIPLIER;
@@ -94,7 +94,7 @@ public final class Constants {
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kFF = 0.0;
-    public static final double kAutoP = 3.7;//4.2
+    public static final double kAutoP = 3.9;//4.2
     public static final double kAutoI = 0.0;
     public static final double kAutoD = 0.0;
     public static final double kAutoFF = 0.0;

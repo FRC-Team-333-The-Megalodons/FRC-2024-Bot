@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7577722922446928,
-      "y": 4.50109861384734
+      "x": 0.6824968989743805,
+      "y": 6.664011580450345
     },
-    "rotation": -59.79676224505735
+    "rotation": 58.54086530745039
   },
   "command": {
     "type": "sequential",
@@ -38,21 +38,45 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "SourceLeave"
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "EventMarkIntake"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceLeave2"
+                        "pathName": "Leave - Amp Side"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "SpikeMarkShot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Leave-Amp Side 2"
                       }
                     }
                   ]
@@ -64,6 +88,6 @@
       ]
     }
   },
-  "folder": "shootAndLeave",
+  "folder": "3pc-auto",
   "choreoAuto": false
 }

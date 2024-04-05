@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.898897933718199,
-        "y": 0.7222738717322083
+        "x": 7.909943411820395,
+        "y": 2.463762744844589
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.523867416666873,
-        "y": 0.752384029039902
+        "x": 7.18931715443502,
+        "y": 4.109517305630104
       },
       "isLocked": false,
       "linkedName": "SourceLeave1"
     },
     {
       "anchor": {
-        "x": 3.0712360453868293,
-        "y": 2.93537043385074
+        "x": 4.472361400238816,
+        "y": 5.404696930390302
       },
       "prevControl": {
-        "x": 4.0447977983355825,
-        "y": 2.1324329056455866
+        "x": 4.501575978240926,
+        "y": 3.7297277916026785
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -57,7 +57,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.87498365163153,
+    "rotation": 1.397181027296594,
     "rotateFast": false
   },
   "reversed": false,
