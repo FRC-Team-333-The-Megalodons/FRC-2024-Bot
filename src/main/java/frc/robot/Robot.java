@@ -22,6 +22,8 @@ public class Robot extends TimedRobot {
     // Put any constants we need to modify on the dashboard.
     SmartDashboard.putNumber(Constants.PivotConstants.PODIUM_SETPOINT_DASHBOARD_KEY, 
                              Constants.PivotConstants.PODIUM_SETPOINT_POS);
+    SmartDashboard.putNumber(Constants.PivotConstants.SUBWOFFER_SETPOINT_DASHBOARD_KEY, 
+                             Constants.PivotConstants.SUBWOFFER_SETPOINT_POS);
   }
 
   @Override
@@ -30,6 +32,9 @@ public class Robot extends TimedRobot {
     
     m_robotContainer.toggleManualModeWhenButtonPressed();
     m_robotContainer.updateDashboard();
+
+    // We can set the top color of the buffer here.
+    //m_robotContainer.updateTopLeds();
   }
 
   @Override
