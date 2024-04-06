@@ -3,6 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import java.util.HashMap;
+
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,11 +15,21 @@ public class LEDStrip extends SubsystemBase {
 
   private AddressableLEDBuffer offBuffer, redBuffer, orangeBuffer, yellowBuffer, greenBuffer, blueBuffer, violetBuffer, whiteBuffer;
 
-  private final int LED_COUNT = 33; 
-  private LEDColor lastColor;
+  private final int LED_COUNT_BOTTOM = 23; 
+  private final int LED_COUNT_TOP = 10;
+  private LEDColor lastColorBottom, lastColorTop;
 
   public enum LEDColor {
     OFF, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, WHITE;
+  }
+
+  public class RGB {
+    public int r, g, b;
+    public RGB(int _r, int _g, int _b) { 
+      r = _r;
+      g = _g;
+      b = _b;
+    }
   }
 
   /** Creates a new LEDS. */
@@ -25,8 +38,8 @@ public class LEDStrip extends SubsystemBase {
 
     m_led = new AddressableLED(6); // LEDs
 
-    m_led.setLength(LED_COUNT);
-    setColor(LEDColor.OFF);
+    m_led.setLength(LED_COUNT_BOTTOM+LED_COUNT_TOP);
+    setBottomColor(LEDColor.OFF);
     m_led.start();
   }
 
@@ -44,6 +57,29 @@ public class LEDStrip extends SubsystemBase {
     }
   }
 
+  private AddressableLEDBuffer makeBuffer(int count, LEDColor color)
+  {
+    RGB rgb = colorToRGB(color);
+    return makeBuffer(count, rgb.r, rgb.g, rgb.b);
+  }
+
+
+  private RGB colorToRGB(LEDColor color)
+  {
+    switch(color) {
+      case RED: return new RGB(250, 0, 0);
+      case ORANGE: return new RGB(255, 43, 0);
+      case YELLOW: return new RGB(230, 223, 0);
+      case GREEN: return new RGB(0, 250, 0);
+      case BLUE: return new RGB(0, 59, 174);
+      case VIOLET: return new RGB(255, 0, 255);
+      case WHITE: return new RGB(221, 222, 223);
+      case OFF: 
+      default: return new RGB(0, 0, 0);
+    }
+  }
+
+
   private AddressableLEDBuffer makeBuffer(int count, int r, int g, int b) {
     AddressableLEDBuffer buffer = new AddressableLEDBuffer(count);
     for (int i = 0; i < buffer.getLength(); ++i) {
@@ -53,28 +89,28 @@ public class LEDStrip extends SubsystemBase {
   }
 
   private void initializeBuffers() {
-    offBuffer = makeBuffer(LED_COUNT, 0, 0, 0);
-    redBuffer = makeBuffer(LED_COUNT, 250, 0, 0);
-    orangeBuffer = makeBuffer(LED_COUNT, 255, 43, 0);
-    yellowBuffer = makeBuffer(LED_COUNT, 230, 223, 0);
-    greenBuffer = makeBuffer(LED_COUNT, 0, 250, 0);
-    blueBuffer = makeBuffer(LED_COUNT, 0, 59, 174);
-    violetBuffer = makeBuffer(LED_COUNT, 255, 0, 255);
-    whiteBuffer = makeBuffer(LED_COUNT, 221, 222, 223);
+    offBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.OFF);
+    redBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.RED);
+    orangeBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.ORANGE);
+    yellowBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.YELLOW);
+    greenBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.GREEN);
+    blueBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.BLUE);
+    violetBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.VIOLET);
+    whiteBuffer = makeBuffer(LED_COUNT_BOTTOM, LEDColor.WHITE);
   }
 
-  public void setBlinkColor(LEDColor color) {
-    final long interval = 250;
-    long millis = System.currentTimeMillis() % 1000;
+  // public void setBlinkColor(LEDColor color) {
+  //   final long interval = 250;
+  //   long millis = System.currentTimeMillis() % 1000;
 
-    // If we're between [250,500) ms, or [750,1000)ms, then make the color "off":
-    if ((millis >= 1*interval && millis < 2*interval) || (millis >= 3*interval && millis < 4*interval)) {
-      setColor(LEDColor.OFF);
-    }
-    else {
-      setColor(color);
-    }
-  }
+  //   // If we're between [250,500) ms, or [750,1000)ms, then make the color "off":
+  //   if ((millis >= 1*interval && millis < 2*interval) || (millis >= 3*interval && millis < 4*interval)) {
+  //     setColor(LEDColor.OFF);
+  //   }
+  //   else {
+  //     setColor(color);
+  //   }
+  // }
 
   public String colorToString(LEDColor color)
   {
@@ -84,81 +120,134 @@ public class LEDStrip extends SubsystemBase {
     return color.toString();
   }
 
-  public void setColor(LEDColor color) {
+  public void setBottomColor(LEDColor color) {
     // We cache the last color we set, so that we don't have
     //  to overwrite it except for when we actually are changing the colors.
 
-    if (color == lastColor) {
+    if (color == lastColorBottom) {
       return;
     }
 
-    System.out.println("Changing LED color from "+colorToString(lastColor)+" to "+colorToString(color));
+    System.out.println("Changing LED bottom color from "+colorToString(lastColorBottom)+" to "+colorToString(color));
 
     // If we've made it this far, it means we're actually changing the colors!
-    lastColor = color;
-    AddressableLEDBuffer buff = getBufferByColorEnum(color);
+    lastColorBottom = color;
+    //AddressableLEDBuffer buff = getBufferByColorEnum(color);
+    AddressableLEDBuffer buff = getTwoColorBuffer(lastColorBottom, lastColorTop);
     m_led.setData(buff);
   }
 
+    public void setTopColor(LEDColor color) {
+    // We cache the last color we set, so that we don't have
+    //  to overwrite it except for when we actually are changing the colors.
+
+    if (color == lastColorTop) {
+      return;
+    }
+
+    System.out.println("Changing LED top color from "+colorToString(lastColorTop)+" to "+colorToString(color));
+
+    // If we've made it this far, it means we're actually changing the colors!
+    lastColorTop = color;
+    //AddressableLEDBuffer buff = getBufferByColorEnum(color);
+    AddressableLEDBuffer buff = getTwoColorBuffer(lastColorBottom, lastColorTop);
+    m_led.setData(buff);
+  }
+  
+  public Pair<LEDColor, LEDColor> makeKey(LEDColor first, LEDColor second)
+  {
+    return new Pair<LEDColor, LEDColor>(first, second);
+  }
+
+  public HashMap<Pair<LEDColor, LEDColor>, AddressableLEDBuffer> bufferCache = new HashMap<>();
+
+  public AddressableLEDBuffer getTwoColorBuffer(LEDColor bottomColor, LEDColor topColor)
+  {
+    Pair<LEDColor, LEDColor> key = makeKey(bottomColor, topColor);
+    if (bufferCache.containsKey(key)) {
+      System.out.println("Cache hit for Buffer Factory for "+colorToString(bottomColor)+":"+colorToString(topColor));
+
+      return bufferCache.get(key);
+    }
+
+    
+    System.out.println("Cache MISS, making Buffer for "+colorToString(bottomColor)+":"+colorToString(topColor));
+
+    // If we didn't have it cached, we have to create it and cache it.
+    AddressableLEDBuffer buff = new AddressableLEDBuffer(LED_COUNT_BOTTOM+LED_COUNT_TOP);
+    RGB bottomRGB = colorToRGB(bottomColor);
+    RGB topRGB = colorToRGB(topColor);
+    for (int i = 0; i < buff.getLength(); ++i) {
+      if (i < LED_COUNT_BOTTOM) {
+        buff.setRGB(i, bottomRGB.r, bottomRGB.g, bottomRGB.b);
+      } else {
+        buff.setRGB(i, topRGB.r, topRGB.g, topRGB.b);
+      }
+    }
+
+    bufferCache.put(key, buff);
+    return buff;
+  }
+
   public void off() {
-    setColor(LEDColor.OFF);
+    setBottomColor(LEDColor.OFF);
   }
 
   public void red() {
-    setColor(LEDColor.RED);
+    setBottomColor(LEDColor.RED);
   }
 
-  public void blinkRed() {
-    setBlinkColor(LEDColor.RED);
-  }
+  // public void blinkRed() {
+  //   setBlinkColor(LEDColor.RED);
+  // }
 
   public void orange() {
-    setColor(LEDColor.ORANGE);
+    setBottomColor(LEDColor.ORANGE);
   }
 
-  public void blinkOrange() {
-    setBlinkColor(LEDColor.ORANGE);
-  }
+  // public void blinkOrange() {
+  //   setBlinkColor(LEDColor.ORANGE);
+  // }
   
   public void yellow() {
-    setColor(LEDColor.YELLOW);
+    setBottomColor(LEDColor.YELLOW);
   }
 
-  public void blinkYellow() {
-    setBlinkColor(LEDColor.YELLOW);
-  }
+  // public void blinkYellow() {
+  //   setBlinkColor(LEDColor.YELLOW);
+  // }
 
   public void green() {
-    setColor(LEDColor.GREEN);
+    setBottomColor(LEDColor.GREEN);
   }
 
-  public void blinkGreen() {
-    setBlinkColor(LEDColor.GREEN);
-  }
+  // public void blinkGreen() {
+  //   setBlinkColor(LEDColor.GREEN);
+  // }
 
   public void blue() {
-    setColor(LEDColor.BLUE);
+    setBottomColor(LEDColor.BLUE);
   }
 
-  public void blinkBlue() {
-    setBlinkColor(LEDColor.BLUE);
-  }
+  // public void blinkBlue() {
+  //   setBlinkColor(LEDColor.BLUE);
+  // }
 
   public void violet() {
-    setColor(LEDColor.VIOLET);
+    setBottomColor(LEDColor.VIOLET);
   }
 
-  public void blinkViolet() {
-    setBlinkColor(LEDColor.VIOLET);
-  }
+  // public void blinkViolet() {
+  //   setBlinkColor(LEDColor.VIOLET);
+  // }
 
   public void white()
   {
-    setColor(LEDColor.WHITE);
+    setBottomColor(LEDColor.WHITE);
   }
 
-  public void blinkWhite()
-  {
-    setBlinkColor(LEDColor.WHITE);
-  }
+  // public void blinkWhite()
+  // {
+  //   setBlinkColor(LEDColor.WHITE);
+  // }
 }

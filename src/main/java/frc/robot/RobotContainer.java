@@ -258,12 +258,12 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-  // public void updateTopLeds()
-  // {
-  //   if (intake.hasNote()) {
-  //     leds.setTopColor(LEDColor.GREEN);
-  //   } else {
-  //     leds.setTopColor(LEDColor.OFF);
-  //   }
-  // }
+  public void updateTopLeds()
+  {
+    if (intake.hasNote()) {
+      leds.setTopColor(LEDColor.GREEN);
+    } else {
+      leds.setTopColor(LEDColor.OFF);
+    }
+  }
 }

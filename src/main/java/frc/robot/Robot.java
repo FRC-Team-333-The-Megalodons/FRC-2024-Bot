@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.updateDashboard();
 
     // We can set the top color of the buffer here.
-    //m_robotContainer.updateTopLeds();
+    m_robotContainer.updateTopLeds();
   }
 
   @Override
