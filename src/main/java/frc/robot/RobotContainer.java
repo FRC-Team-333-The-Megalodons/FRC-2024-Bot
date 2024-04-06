@@ -176,6 +176,8 @@ public class RobotContainer {
   public void configureOperatorControllerSmartModeBindings() {
     leds.yellow();
 
+    double podium_setpoint_pos = SmartDashboard.getNumber(PivotConstants.PODIUM_SETPOINT_DASHBOARD_KEY, PivotConstants.PODIUM_SETPOINT_POS);
+
     operatorController.L2().whileTrue(new GoHome(pivot, trolley, wrist, leds));
 
     operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
@@ -189,7 +191,7 @@ public class RobotContainer {
 
     operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
     operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.SUBWOFFER_SETPOINT_POS, leds));
-    operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.PODIUM_SETPOINT_POS, leds));
+    operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, podium_setpoint_pos, leds));
     operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));
     operatorController.circle().whileTrue(new SourceIntake(intake, wrist, trolley, pivot, leds));
     operatorController.options().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.TRUSS_SETPOINT_POS, leds));

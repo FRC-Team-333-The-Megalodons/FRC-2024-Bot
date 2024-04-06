@@ -44,12 +44,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SourceLeave2"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "SpikeMarkShot"

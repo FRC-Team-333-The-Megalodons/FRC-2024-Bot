@@ -13,7 +13,10 @@ public final class Constants {
     public static final int LEFT_SENSOR_ID = 0;
     public static final int RIGHT_SENSOR_ID = 1;
     public static final double INTAKE_SPEED = 0.4;
-    public static final double INTAKE_EJECT_SPEED = -0.5;
+    public static final double INTAKE_FLOOR_SPEED_EXTRA = 0.05;
+    public static final double INTAKE_SOURCE_SPEED = 0.25;
+    public static final double INTAKE_SOURCE_SPEED_EXTRA = 0.1;
+    public static final double INTAKE_EJECT_SPEED = -0.4;
     public static final double INTAKE_FIRE_SPEED =  0.375;
     public static final double NOTE_SETPOINT = 0.0;
     public static final double kP = 5.0;
@@ -22,6 +25,8 @@ public final class Constants {
     public static final double kFF = 0.0;
     public static final double MIN_INPUT = -1.0;
     public static final double MAX_INPUT = 1.0;
+    public static final double INTAKE_HAS_NOTE_EXTRA_S = 0.06;
+    public static final double INTAKE_SOURCE_HAS_NOTE_EXTRA_S = 0.12;
   }
 
   public static final class WristConstants {
@@ -73,23 +78,33 @@ public final class Constants {
 
   public static final class PivotConstants { 
     //0.03685825
-    public static final double PIVOT_ENCODER_MULTIPLIER = 1;
     public static final int MOTOR1_ID = 6; 
     public static final int MOTOR2_ID = 7; 
-    public static final int PIVOT_ENCODER_ID = 4; 
+    public static final int PIVOT_ENCODER_ID = 6; 
     public static final double PIVOT_SPEED = 0.2;
+
+    public static final double PIVOT_ENCODER_OFFSET = 0.0;
+    public static final double PIVOT_ENCODER_ROLLOVER = 0.15;
+
     public static final double ZERO_OFFSET = 0.053656; // 0.097498702437468
-    public static final double HOME_SETPOINT_POS = 0.192314154807854*PIVOT_ENCODER_MULTIPLIER;
-    public static final double INTAKE_SETPOINT_POS = 0.143458553586464*PIVOT_ENCODER_MULTIPLIER;
-    public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16*PIVOT_ENCODER_MULTIPLIER;
-    public static final double SUBWOFFER_SETPOINT_POS = 0.058*PIVOT_ENCODER_MULTIPLIER;
-    public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056*PIVOT_ENCODER_MULTIPLIER;
-    public static final double PODIUM_SETPOINT_POS = 0.107335552880046722; //0.120947403023685*PIVOT_ENCODER_MULTIPLIER;
-    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.10073627;
-    public static final double WING_SETPOINT_POS = 0.0*PIVOT_ENCODER_MULTIPLIER;
-    public static final double TRUSS_SETPOINT_POS =0.1247*PIVOT_ENCODER_MULTIPLIER;
-    public static final double AMP_SETPOINT_POS = 0.44*PIVOT_ENCODER_MULTIPLIER;
-    public static final double SOURCE_SETPOINT_POS = 0.396183559904589*PIVOT_ENCODER_MULTIPLIER;
+    public static final double HOME_SETPOINT_POS = 0.192314154807854+PIVOT_ENCODER_OFFSET;
+    public static final double INTAKE_SETPOINT_POS = 0.143458553586464+PIVOT_ENCODER_OFFSET;
+    public static final double INTAKE_WITH_BUFFER_SETPOINT_POS = 0.16+PIVOT_ENCODER_OFFSET;
+    public static final double SUBWOFFER_SETPOINT_POS = 0.058+PIVOT_ENCODER_OFFSET;
+    public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056+PIVOT_ENCODER_OFFSET;
+    public static double PODIUM_SETPOINT_POS = 0.103+PIVOT_ENCODER_OFFSET;
+    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.09873627+PIVOT_ENCODER_OFFSET;
+    public static final double TRUSS_SETPOINT_POS =0.1247+PIVOT_ENCODER_OFFSET;
+    public static final double AMP_SETPOINT_POS = 0.44+PIVOT_ENCODER_OFFSET;
+    public static final double SOURCE_SETPOINT_POS = 0.396183559904589+PIVOT_ENCODER_OFFSET;
+    public static final double PIVOT_MIN_DOWN = 0.052+PIVOT_ENCODER_OFFSET; // This is the lowest point the intake can be down. Just past the subwoofer.
+    public static final double PIVOT_MAX_UP = 0.465+PIVOT_ENCODER_OFFSET; // This is also the Amp scoring position.
+    public static final double PIVOT_CLIMB_POS = 0.465+PIVOT_ENCODER_OFFSET;
+    public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235+PIVOT_ENCODER_OFFSET;
+    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.143458553586464+PIVOT_ENCODER_OFFSET;
+
+    public static final String PODIUM_SETPOINT_DASHBOARD_KEY = "PODIUM_SETPOINT";
+
     public static final double kP = 4.2;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
@@ -100,13 +115,9 @@ public final class Constants {
     public static final double kAutoFF = 0.0;
     public static final double kTolerance = 0.004;//0.004
     public static final double kAutoTolerance = 0.0059;
+
     public static final double MIN_INPUT = -0.3;
     public static final double MAX_INPUT = 0.3;
-    public static final double PIVOT_MIN_DOWN = 0.052*PIVOT_ENCODER_MULTIPLIER; // This is the lowest point the intake can be down. Just past the subwoofer.
-    public static final double PIVOT_MAX_UP = 0.465*PIVOT_ENCODER_MULTIPLIER; // This is also the Amp scoring position.
-    public static final double PIVOT_CLIMB_POS = 0.465*PIVOT_ENCODER_MULTIPLIER;
-    public static final double PIVOT_UP_FAR_ENOUGH_THAT_TROLLEY_COULD_HIT_BACK_BUMPER = 0.235;
-    public static final double PIVOT_FURTHEST_DOWN_WHERE_TROLLEY_CAN_MOVE = 0.143458553586464;
   }
 
   public static final class IndexerConstants {

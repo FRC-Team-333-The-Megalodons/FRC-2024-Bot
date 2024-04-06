@@ -135,7 +135,14 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPosition() {
-    return pivotEncoder.getAbsolutePosition()-pivotEncoder.getPositionOffset();
+    // Implement the offset manually, since we can't quite figure out how it's factoring in under the hood.
+    double absPos = pivotEncoder.getAbsolutePosition();
+    if (absPos > 1-PivotConstants.PIVOT_ENCODER_ROLLOVER) {
+      // This means we should actually be in a low-range.
+      double delta = 1 - absPos;
+      absPos = 0 - delta;
+    }
+    return absPos-pivotEncoder.getPositionOffset();
   }
 
   public void setSetpoint(double setpoint) {
@@ -168,6 +175,8 @@ public class Pivot extends SubsystemBase {
   public void periodic() {
     final String PREFIX = "Pivot ";
     SmartDashboard.putNumber(PREFIX+"Position", getPosition());
+    SmartDashboard.putNumber(PREFIX+"Abs Pos", pivotEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber(PREFIX+"Pos Offset", pivotEncoder.getPositionOffset());
     SmartDashboard.putBoolean(PREFIX+"Setpoint", atSetpoint());
   }
 }

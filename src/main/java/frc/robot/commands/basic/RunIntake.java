@@ -32,10 +32,12 @@ public class RunIntake extends Command {
   @Override
   public void execute() {
     intake.runIntake(value);
-    if (value < 0) {
-      leds.blue();
-    } else {
-      leds.red();
+    if (leds != null) {
+      if (value < 0) {
+        leds.blue();
+      } else {
+        leds.red();
+      }
     }
   }
 
@@ -43,7 +45,9 @@ public class RunIntake extends Command {
   @Override
   public void end(boolean interrupted) {
     intake.stopIntake();
-    leds.off();
+    if (leds != null) {
+      leds.off();
+    }
   }
 
   // Returns true when the command should end.

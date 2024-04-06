@@ -22,9 +22,11 @@ public class Intake extends SubsystemBase {
   private DigitalInput rightSensor;
 
   private SparkPIDController intakeController;
+  Long noteSensorTime = null;
 
   /** Creates a new Intake. */
   public Intake() {
+    
     intakeMotor = new CANSparkFlex(IntakeConstants.MOTOR_ID, MotorType.kBrushless);
 
     intakeMotor.restoreFactoryDefaults();
@@ -70,6 +72,25 @@ public class Intake extends SubsystemBase {
       return false;
     }
   }
+
+  // public boolean hasNoteWithDelay()
+  // {
+  //   if (!hasNote()) {
+  //     noteSensorTime = null;
+  //     return false;
+  //   }
+
+  //   // We only get this far if hasNote is true!
+  //   if (noteSensorTime == null) {
+  //     // We just got the note! Write down when we got it.
+  //     noteSensorTime = System.currentTimeMillis();
+  //   }
+
+  //   long elapsed = System.currentTimeMillis() - noteSensorTime;
+
+  //   return (elapsed >= IntakeConstants.INTAKE_HAS_NOTE_DELAY);
+  // }
+  
   public boolean shotTheNote(){
     return !hasNote();
     // if(leftSensor.get()|| rightSensor.get()){

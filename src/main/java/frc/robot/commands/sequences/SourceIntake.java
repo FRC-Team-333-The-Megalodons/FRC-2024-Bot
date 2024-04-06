@@ -6,6 +6,7 @@ package frc.robot.commands.sequences;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.TrolleyConstants;
 import frc.robot.Constants.WristConstants;
@@ -30,15 +31,11 @@ public class SourceIntake extends SequentialCommandGroup {
       new RunLEDs(leds, LEDColor.OFF, LEDRunMode.RUN_ONCE),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoPivot(pivot, PivotConstants.SOURCE_SETPOINT_POS).alongWith(
-        new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS)),
+        new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS)).alongWith(
       //new MarkBotState(BotState.SOURCE_INTAKE_POSITION),
-      new RunIntake(intake, leds, 0.25).until(intake::hasNote)
-      // Continuously try to get to the setpoints, so even if we had an early exit.
-        .alongWith(
-      new AutoPivot(pivot, PivotConstants.SOURCE_SETPOINT_POS))
-        .alongWith(
-      new AutoWrist(wrist, WristConstants.SOURCE_SETPOINT_POS)),
-      new RunLEDs(leds, LEDColor.GREEN)
+        new RunIntake(intake, leds, IntakeConstants.INTAKE_SOURCE_SPEED).until(intake::hasNote).andThen(
+          new RunLEDs(leds, LEDColor.GREEN).alongWith(
+            (new RunIntake(intake, null, IntakeConstants.INTAKE_SOURCE_SPEED_EXTRA)).withTimeout(IntakeConstants.INTAKE_SOURCE_HAS_NOTE_EXTRA_S))))
     );
   }
 }

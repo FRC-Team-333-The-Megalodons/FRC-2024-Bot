@@ -23,7 +23,7 @@ public class LEDStrip extends SubsystemBase {
   public LEDStrip() {
     initializeBuffers();
 
-    m_led = new AddressableLED(0); // LEDs
+    m_led = new AddressableLED(6); // LEDs
 
     m_led.setLength(LED_COUNT);
     setColor(LEDColor.OFF);

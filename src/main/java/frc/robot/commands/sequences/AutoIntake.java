@@ -32,10 +32,10 @@ public class AutoIntake extends SequentialCommandGroup {
       new RunLEDs(leds, LEDColor.OFF, LEDRunMode.RUN_ONCE),
       new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch),
       new AutoWrist(wrist, WristConstants.INTAKE_SETPOINT_POS),
-      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS),
-      //new MarkBotState(BotState.FLOOR_INTAKE_POSITION),
-      new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote),
-      new RunLEDs(leds, LEDColor.GREEN)
+      new AutoPivot(pivot, PivotConstants.INTAKE_SETPOINT_POS).alongWith(
+        new RunIntake(intake, leds, IntakeConstants.INTAKE_SPEED).until(intake::hasNote)),
+        new RunLEDs(leds, LEDColor.GREEN).alongWith(
+          (new RunIntake(intake, null, IntakeConstants.INTAKE_FLOOR_SPEED_EXTRA)).withTimeout(IntakeConstants.INTAKE_HAS_NOTE_EXTRA_S))
     );
   }
 }
