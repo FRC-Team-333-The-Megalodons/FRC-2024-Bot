@@ -18,6 +18,7 @@ public final class Constants {
     public static final double INTAKE_SOURCE_SPEED_EXTRA = 0.1;
     public static final double INTAKE_EJECT_SPEED = -0.4;
     public static final double INTAKE_FIRE_SPEED =  0.375;
+    public static final double INTAKE_R2_SPEED = 0.25;
     public static final double NOTE_SETPOINT = 0.0;
     public static final double kP = 5.0;
     public static final double kI = 0.0;
@@ -33,7 +34,7 @@ public final class Constants {
     public static final int MOTOR_ID = 4;
     public static final double ZERO_OFFSET = 0.55;
     public static final double INTAKE_SETPOINT_POS = 0.639;
-    public static final double SHOOTING_SETPOINT_POS = 0.4762;
+    public static final double SHOOTING_SETPOINT_POS = 0.4412758; // 0.4762;
     public static final double AMP_SETPOINT_POS = 0.803184986114502;
     public static final double SOURCE_SETPOINT_POS = 0.637242329597473;
     public static final double kP = 6.0;
@@ -136,6 +137,7 @@ public final class Constants {
   public static final class ShooterConstants {
     public static final int RIGHT_MOTOR_ID = 8;
     public static final double SPEED = 1.0;
+    public static final double TRAP_SHOOTER_SPEED = 0.5;
     public static final int LEFT_MOTOR_ID = 9;
     public static final int INDEX_MOTOR_ID = 15;
     public static final double SHOT_RPM = 6000;

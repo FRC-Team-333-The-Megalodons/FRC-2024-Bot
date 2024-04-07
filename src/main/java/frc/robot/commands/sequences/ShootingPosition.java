@@ -27,6 +27,10 @@ public class ShootingPosition extends ParallelCommandGroup {
 
   /** Creates a new ShootingPosition. */
   public ShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, double position, LEDStrip leds) {
+    this(intake, wrist, trolley, pivot, indexer, shooter, position, leds, ShooterConstants.SPEED);
+  }
+  
+  public ShootingPosition(Intake intake, Wrist wrist, Trolley trolley, Pivot pivot, Indexer indexer, Shooter shooter, double position, LEDStrip leds, double shooterSpeed) {
     addCommands(
       //new MarkBotState(BotState.UNKNOWN_POSITION),
       /*  new AutoWrist(wrist, WristConstants.SHOOTING_SETPOINT_POS),
@@ -34,7 +38,7 @@ public class ShootingPosition extends ParallelCommandGroup {
       new RunShooter(shooter, 0.75))
       .andThen(new RunLEDs(leds, LEDColor.GREEN))*/
       new RunLEDs(leds, LEDColor.OFF, LEDRunMode.RUN_ONCE),
-      new PrepareToShoot(intake, wrist, trolley, pivot, indexer, shooter, position, leds).andThen(new RunLEDs(leds, LEDColor.GREEN)).alongWith(new RunShooter(shooter, ShooterConstants.SPEED)) 
+      new PrepareToShoot(intake, wrist, trolley, pivot, indexer, shooter, position, leds).andThen(new RunLEDs(leds, LEDColor.GREEN)).alongWith(new RunShooter(shooter, shooterSpeed)) 
     );
   }
 }

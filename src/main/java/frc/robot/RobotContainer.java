@@ -184,13 +184,13 @@ public class RobotContainer {
     operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
 
     operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)); // eject
-    operatorController.R2().whileTrue(new RunIntake(intake, leds, 0.25)); // intake
+    operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_R2_SPEED)); // intake
 
     
     operatorController.povUp().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)); // trolley out
     operatorController.povDown().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)); // trolley in
 
-    operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
+    operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds, ShooterConstants.TRAP_SHOOTER_SPEED));
     operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, subwoofer_setpoint_pos, leds));
     operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, podium_setpoint_pos, leds));
     operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));

@@ -56,6 +56,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "GoHome"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "GoUnderStage"
