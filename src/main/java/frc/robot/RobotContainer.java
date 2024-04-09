@@ -133,7 +133,7 @@ public class RobotContainer {
     driverController.povLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(2)));
     driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-2)));
     
-    driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
+    driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FAST_FIRE_SPEED).alongWith(new RunIndexer(indexer, IndexerConstants.FEED_SPEED)));
 
     driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
   }
@@ -258,12 +258,12 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-  // public void updateTopLeds()
-  // {
-  //   if (intake.hasNote()) {
-  //     leds.setTopColor(LEDColor.GREEN);
-  //   } else {
-  //     leds.setTopColor(LEDColor.OFF);
-  //   }
-  // }
+  public void updateTopLeds()
+  {
+    if (intake.hasNote()) {
+      leds.setTopColor(LEDColor.GREEN);
+    } else {
+      leds.setTopColor(LEDColor.OFF);
+    }
+  }
 }

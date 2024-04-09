@@ -7,6 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Constants {
+  
+  public static final LED_MODE_OPTIONS LED_MODE = 
+    LED_MODE_OPTIONS.SINGLE_COLOR;
 
   public static final class IntakeConstants {
     public static final int MOTOR_ID = 3;
@@ -18,6 +21,7 @@ public final class Constants {
     public static final double INTAKE_SOURCE_SPEED_EXTRA = 0.1;
     public static final double INTAKE_EJECT_SPEED = -0.4;
     public static final double INTAKE_FIRE_SPEED =  0.375;
+    public static final double INTAKE_FAST_FIRE_SPEED = 0.6;
     public static final double INTAKE_R2_SPEED = 0.25;
     public static final double NOTE_SETPOINT = 0.0;
     public static final double kP = 5.0;
@@ -93,7 +97,7 @@ public final class Constants {
     public static final double SUBWOFFER_SETPOINT_POS = 0.050 ;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;
     public static final double PODIUM_SETPOINT_POS = 0.103;
-    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.09273627;
+    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.085; // 0.09273627;
     public static final double TRUSS_SETPOINT_POS =0.1247;
     public static final double AMP_SETPOINT_POS = 0.44;
     public static final double SOURCE_SETPOINT_POS = 0.396183559904589;
@@ -124,6 +128,7 @@ public final class Constants {
   public static final class IndexerConstants {
     public static final int MOTOR_ID = 15;
     public static final double SPEED = 0.9;
+    public static final double FEED_SPEED = 0.75;
     public static final double SHOT_RPM = 6000;
     public static final double IDLE_RPM = 1000;
     public static final double kP = 0.0004;
@@ -171,6 +176,11 @@ public final class Constants {
     {
       return ROBOT_STATE;
     }
+  }
+
+  public enum LED_MODE_OPTIONS {
+    SINGLE_COLOR,
+    TWO_COLOR
   }
 
   public enum BotState {

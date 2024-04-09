@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.LED_MODE_OPTIONS;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -33,8 +34,10 @@ public class Robot extends TimedRobot {
     m_robotContainer.toggleManualModeWhenButtonPressed();
     m_robotContainer.updateDashboard();
 
-    // We can set the top color of the buffer here.
-    //m_robotContainer.updateTopLeds();
+    if (Constants.LED_MODE == LED_MODE_OPTIONS.TWO_COLOR) {
+      // We can set the top color of the buffer here.
+      m_robotContainer.updateTopLeds();
+    }
   }
 
   @Override

@@ -16,41 +16,35 @@
     },
     {
       "anchor": {
-        "x": 4.014666344872429,
-        "y": 2.1716169648234906
+        "x": 3.615400445510263,
+        "y": 1.538634441444447
       },
       "prevControl": {
-        "x": 3.076323228055319,
-        "y": 2.517322323650847
+        "x": 2.6770573286931527,
+        "y": 1.8843398002718037
       },
       "nextControl": {
-        "x": 5.254201154039136,
-        "y": 1.7149462456568094
+        "x": 4.85493525467697,
+        "y": 1.0819637222777658
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.909943411820395,
-        "y": 2.463762744844589
+        "x": 8.112462644678375,
+        "y": 0.9116423171117937
       },
       "prevControl": {
-        "x": 6.663454750397047,
-        "y": 1.947638533473984
+        "x": 6.865973983255028,
+        "y": 0.3955181057411886
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "SourceLeave1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -43.73305275318831,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -63,7 +57,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AutonIntake"
+                "name": "GoHome"
               }
             }
           ]
@@ -79,7 +73,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 106.92751306414684,
     "rotateFast": false
   },
   "reversed": false,

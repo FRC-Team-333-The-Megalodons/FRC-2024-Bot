@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.01964270595208,
+        "x": 8.103180650805745,
         "y": 7.548267936042045
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.200512069755743,
-        "y": 6.358902327224275
+        "x": 8.103180650805745,
+        "y": 5.311307412738282
       },
       "isLocked": false,
       "linkedName": "AmpLeave2"
     },
     {
       "anchor": {
-        "x": 4.260435187541613,
-        "y": 5.311307412741912
+        "x": 8.103180650805745,
+        "y": 0.9580522864749434
       },
       "prevControl": {
-        "x": 4.622432948569601,
-        "y": 6.907810358830593
+        "x": 8.103180650805745,
+        "y": 4.002546276697491
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,20 +50,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.5475829758170521,
+    "rotation": -143.13010235415584,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -6.952957468173878,
     "velocity": 0
   },
   "useDefaultConstraints": false
