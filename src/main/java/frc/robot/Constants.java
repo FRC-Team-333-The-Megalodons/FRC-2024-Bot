@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public final class Constants {
   
   public static final LED_MODE_OPTIONS LED_MODE = 
-    LED_MODE_OPTIONS.SINGLE_COLOR;
+    LED_MODE_OPTIONS.TWO_COLOR;
 
   public static final class IntakeConstants {
     public static final int MOTOR_ID = 3;

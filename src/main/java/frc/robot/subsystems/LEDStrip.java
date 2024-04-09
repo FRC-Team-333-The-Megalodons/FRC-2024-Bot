@@ -132,11 +132,11 @@ public class LEDStrip extends SubsystemBase {
 
   private AddressableLEDBuffer makeBuffer(int count1, RGB rgb1, int count2, RGB rgb2) {
     AddressableLEDBuffer buffer = new AddressableLEDBuffer(count1+count2);
-    for (int i = 0; i < count1; ++i) {
+    for (int i = 0; i < count1 && i < buffer.getLength(); ++i) {
       buffer.setRGB(i, rgb1.r, rgb1.g, rgb1.b);
     }
-    for (int i = 0; i < count2; ++i) {
-      buffer.setRGB(i, rgb2.r, rgb2.g, rgb2.b);
+    for (int i = 0; i < count2 && i < buffer.getLength(); ++i) {
+      buffer.setRGB(i+count1, rgb2.r, rgb2.g, rgb2.b);
     }
     return buffer;
   }

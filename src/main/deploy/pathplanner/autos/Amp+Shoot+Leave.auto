@@ -42,6 +42,12 @@
                       "data": {
                         "pathName": "AmpLeave"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AmpLeave2"
+                      }
                     }
                   ]
                 }

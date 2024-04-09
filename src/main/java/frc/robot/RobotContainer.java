@@ -93,7 +93,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
 
-  PhotonCamera camera = new PhotonCamera("shooterCam");
+  //PhotonCamera camera = new PhotonCamera("shooterCam");
 
   private final boolean startInManualMode = false;
 
@@ -135,7 +135,7 @@ public class RobotContainer {
     
     driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FAST_FIRE_SPEED).alongWith(new RunIndexer(indexer, IndexerConstants.FEED_SPEED)));
 
-    driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
+    //driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
   }
 
   public void removeOperatorControllerBindings() {
@@ -241,17 +241,17 @@ public class RobotContainer {
   private int dashboardErrorCounter = 0;
 
   public void updateDashboard() {
-    try {
-      SmartDashboard.putBoolean("CAMERA_HAS_TARGET",camera.getLatestResult().hasTargets());
-    } catch (Exception e) {
-      // Avoid printing this constantly. Maybe just every 50 iterations or so.
-      if (dashboardErrorCounter >= 50) {
-        System.out.println("UpdateDashboard Exception:"+e.getMessage());
-        dashboardErrorCounter = 0;
-      } else {
-        ++dashboardErrorCounter;
-      }
-    }
+    // try {
+    //   //SmartDashboard.putBoolean("CAMERA_HAS_TARGET",camera.getLatestResult().hasTargets());
+    // } catch (Exception e) {
+    //   // Avoid printing this constantly. Maybe just every 50 iterations or so.
+    //   if (dashboardErrorCounter >= 50) {
+    //     System.out.println("UpdateDashboard Exception:"+e.getMessage());
+    //     dashboardErrorCounter = 0;
+    //   } else {
+    //     ++dashboardErrorCounter;
+    //   }
+    // }
   }
 
   public Command getAutonomousCommand() {
@@ -263,7 +263,7 @@ public class RobotContainer {
     if (intake.hasNote()) {
       leds.setTopColor(LEDColor.GREEN);
     } else {
-      leds.setTopColor(LEDColor.OFF);
+      leds.setTopColor(LEDColor.RED);
     }
   }
 }
