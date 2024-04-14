@@ -34,10 +34,10 @@ public class Robot extends TimedRobot {
     m_robotContainer.updateDashboard();
 
     // We can set the top color of the buffer here.
-    if (Constants.LED_MODE == LED_MODE_OPTIONS.TWO_COLOR) {
+    
       // We can set the top color of the buffer here.
       m_robotContainer.updateTopLeds();
-    }
+
   }
 
   @Override
