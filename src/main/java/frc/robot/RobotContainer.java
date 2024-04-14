@@ -93,7 +93,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LEDStrip leds = new LEDStrip();
 
-  //PhotonCamera camera = new PhotonCamera("shooterCam");
+  PhotonCamera camera = new PhotonCamera("shooterCam");
 
   private final boolean startInManualMode = false;
 
@@ -133,9 +133,9 @@ public class RobotContainer {
     driverController.povLeft().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(2)));
     driverController.povRight().whileTrue(drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0).withVelocityY(-2)));
     
-    driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FAST_FIRE_SPEED).alongWith(new RunIndexer(indexer, IndexerConstants.FEED_SPEED)));
+    driverController.R1().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_FIRE_SPEED).alongWith(new RunIndexer(indexer, 0.75)));
 
-    //driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
+    driverController.square().whileTrue(drivetrain.aimAtTarget(camera));
   }
 
   public void removeOperatorControllerBindings() {
@@ -184,13 +184,13 @@ public class RobotContainer {
     operatorController.R1().whileTrue(new AutoIntake(intake, wrist, trolley, pivot, leds));
 
     operatorController.L1().whileTrue(new RunIntake(intake, leds, -IntakeConstants.INTAKE_SPEED)); // eject
-    operatorController.R2().whileTrue(new RunIntake(intake, leds, IntakeConstants.INTAKE_R2_SPEED)); // intake
+    operatorController.R2().whileTrue(new RunIntake(intake, leds, 0.25)); // intake
 
     
     operatorController.povUp().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_FORWARD_SPEED).until(trolley::isTrolleyAtMaxOutLimitSwitch)); // trolley out
     operatorController.povDown().whileTrue(new RunTrolley(trolley, TrolleyConstants.TROLLEY_REVERSE_SPEED).until(trolley::isTrolleyAtMinInLimitSwitch)); // trolley in
 
-    operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds, ShooterConstants.TRAP_SHOOTER_SPEED));
+    operatorController.touchpad().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, PivotConstants.HOME_SETPOINT_POS, leds));
     operatorController.triangle().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, subwoofer_setpoint_pos, leds));
     operatorController.square().whileTrue(new ShootingPosition(intake, wrist, trolley, pivot, indexer, shooter, podium_setpoint_pos, leds));
     operatorController.cross().whileTrue(new AutoAmp(intake, wrist, trolley, pivot, leds));
@@ -241,17 +241,17 @@ public class RobotContainer {
   private int dashboardErrorCounter = 0;
 
   public void updateDashboard() {
-    // try {
-    //   //SmartDashboard.putBoolean("CAMERA_HAS_TARGET",camera.getLatestResult().hasTargets());
-    // } catch (Exception e) {
-    //   // Avoid printing this constantly. Maybe just every 50 iterations or so.
-    //   if (dashboardErrorCounter >= 50) {
-    //     System.out.println("UpdateDashboard Exception:"+e.getMessage());
-    //     dashboardErrorCounter = 0;
-    //   } else {
-    //     ++dashboardErrorCounter;
-    //   }
-    // }
+    try {
+      SmartDashboard.putBoolean("CAMERA_HAS_TARGET",camera.getLatestResult().hasTargets());
+    } catch (Exception e) {
+      // Avoid printing this constantly. Maybe just every 50 iterations or so.
+      if (dashboardErrorCounter >= 50) {
+        System.out.println("UpdateDashboard Exception:"+e.getMessage());
+        dashboardErrorCounter = 0;
+      } else {
+        ++dashboardErrorCounter;
+      }
+    }
   }
 
   public Command getAutonomousCommand() {
@@ -263,7 +263,7 @@ public class RobotContainer {
     if (intake.hasNote()) {
       leds.setTopColor(LEDColor.GREEN);
     } else {
-      leds.setTopColor(LEDColor.RED);
+      leds.setTopColor(LEDColor.OFF);
     }
   }
 }
