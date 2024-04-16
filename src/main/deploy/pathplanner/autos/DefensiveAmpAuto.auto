@@ -5,7 +5,7 @@
       "x": 0.7577722922444827,
       "y": 6.60880962538607
     },
-    "rotation": 61.893730179295055
+    "rotation": 59.68388876259801
   },
   "command": {
     "type": "sequential",
@@ -42,6 +42,12 @@
                       "data": {
                         "pathName": "AmpLeave"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AmpLeave2"
+                      }
                     }
                   ]
                 }
@@ -52,6 +58,6 @@
       ]
     }
   },
-  "folder": "shootAndLeave",
+  "folder": null,
   "choreoAuto": false
 }
