@@ -97,7 +97,7 @@ public final class Constants {
     public static final double SUBWOFFER_SETPOINT_POS = 0.050 ;
     public static final double AUTO_SUBWOFFER_SETPOINT_POS = 0.056;
     public static final double PODIUM_SETPOINT_POS = 0.103;
-    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.085; // 0.09273627;
+    public static final double AUTO_PODIUM_SETPOINT_POSE = 0.09; // 0.09273627;
     public static final double TRUSS_SETPOINT_POS =0.1247;
     public static final double AMP_SETPOINT_POS = 0.44;
     public static final double SOURCE_SETPOINT_POS = 0.396183559904589;
