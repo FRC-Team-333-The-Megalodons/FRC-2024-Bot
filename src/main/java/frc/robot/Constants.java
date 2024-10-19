@@ -61,8 +61,8 @@ public final class Constants {
     public static final int TROLLEY_OUT_LIMIT_SWITCH_ID = 7; // digital sensor port
     public static final int TROLLEY_IN_LIMIT_SWITCH_ID = 2; // digital sensor port
     public static final int TROLLEY_POTENTIOMETER_ID = 0; // analog sensor port
-    public static final double TROLLEY_FORWARD_SPEED = -1.0;
-    public static final double TROLLEY_REVERSE_SPEED = 1.0;
+    public static final double TROLLEY_FORWARD_SPEED = -0.85;
+    public static final double TROLLEY_REVERSE_SPEED = 0.85;
     public static final double HOME_SETPOINT_POS = 0.0;
     
     public static final double kP = 0.5;
